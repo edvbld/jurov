@@ -221,3 +221,30 @@ TEST(LexSingleToken, Semicolon)
     ASSERT_EQ(SEMICOLON, yylex());
     ASSERT_EQ(0, yylex());
 }
+
+TEST(LexSingleToken, Number)
+{
+    yy_scan_string("42");
+    ASSERT_EQ(NUMBER, yylex());
+    ASSERT_EQ(42, yylval.num);
+    ASSERT_EQ(0, yylex());
+}
+
+TEST(LexSingleToken, Id)
+{
+    yy_scan_string("x");
+    ASSERT_EQ(ID, yylex());
+    ASSERT_EQ(0, strcmp("x", yylval.id));
+    ASSERT_EQ(0, yylex());
+
+    yy_scan_string("publicc");
+    ASSERT_EQ(ID, yylex());
+    ASSERT_EQ(0, strcmp("publicc", yylval.id));
+    ASSERT_EQ(0, yylex());
+    
+    yy_scan_string("foo01");
+    ASSERT_EQ(ID, yylex());
+    ASSERT_EQ(0, strcmp("foo01", yylval.id));
+    ASSERT_EQ(0, yylex());
+}
+

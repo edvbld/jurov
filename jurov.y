@@ -4,6 +4,11 @@ void yyerror(const char *s) {}
 void clear_stack();
 %}
 
+%union {
+    char* id;
+    int num;
+}
+
 %token MAIN PUBLIC CLASS
 %token PRINT LENGTH
 %token LCURLY RCURLY LPAREN RPAREN LSQUARE RSQUARE
@@ -12,6 +17,7 @@ void clear_stack();
 %token THIS NEW
 %token BOOLEAN INT STRING
 %token AND LESS PLUS MINUS MUL BANG DOT COMMA SEMICOLON
+%token ID NUMBER
 
 %%
 program:
