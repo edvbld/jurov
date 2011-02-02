@@ -247,4 +247,3 @@ TEST(LexSingleToken, Id)
     ASSERT_EQ(0, strcmp("foo01", yylval.id));
     ASSERT_EQ(0, yylex());
 }
-
