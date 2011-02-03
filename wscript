@@ -18,5 +18,4 @@ def configure(conf):
     conf.load('bison')
 
 def build(bld):
-    print(bld.env.FLEXFLAGS)
     bld.recurse(['src', 'tests'])

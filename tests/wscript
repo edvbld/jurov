@@ -5,7 +5,7 @@ def build(bld):
    bld(features = 'cxx cxxprogram',
        source = sources,
        target = 'run_all',
-       inlcude = '../build/src/',
+       includes = ['../build', '../build/src'],
        lib = ['gtest', 'pthread'],
        use = ['lexer', 'parser'])
 
