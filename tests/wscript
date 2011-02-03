@@ -1,0 +1,11 @@
+def build(bld):
+   sources = ['lex_multiple_tokens.cpp',
+              'lex_single_token.cpp',
+              'run_all.cpp']
+   bld(features = 'cxx cxxprogram',
+       source = sources,
+       target = 'run_all',
+       inlcude = '../build/src/',
+       lib = ['gtest', 'pthread'],
+       use = ['lexer', 'parser'])
+
