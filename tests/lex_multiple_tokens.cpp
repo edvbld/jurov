@@ -1,6 +1,6 @@
 extern "C" {
-#include "../jurov.tab.h"
-#include "../lex.yy.h"
+#include "jurov.tab.h"
+#include "lex.yy.h"
 }
 
 #include <gtest/gtest.h>
