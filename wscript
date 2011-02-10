@@ -1,4 +1,5 @@
 import os.path
+import Options
 
 APPNAME = 'jurov' 
 VERSION = '0.1'
@@ -6,8 +7,12 @@ out = 'build'
 top = '.'
 
 def options(opt):
-    opt.load('compiler_cxx')
     opt.load('compiler_c')
+    opt.add_option('--test', action = 'store_true', default = False, 
+                   help = 'Runs the unit tests')
+
+def run_tests(bld):
+    bld.exec_command('{0}/tests/run_all'.format(os.path.abspath(out)))
 
 def configure(conf):
     conf.env.C_FLAGS = ['-g', '-Wall', '-ansi', '-pedantic', '-std=c89']
@@ -20,3 +25,5 @@ def configure(conf):
 
 def build(bld):
     bld.recurse(['src', 'tests', 'lib'])
+    if Options.options.test:
+        bld.add_post_fun(run_tests)
