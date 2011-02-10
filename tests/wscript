@@ -1,6 +1,7 @@
 def build(bld):
     sources = ['lexer_lex_single_token.c',
                'lexer_lex_multiple_tokens.c',
+               'parser_parse_main_class.c',
                'all_tests.c']
     bld(features = 'c cprogram',
         source = sources,

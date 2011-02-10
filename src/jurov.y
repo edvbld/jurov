@@ -20,6 +20,15 @@ void clear_stack();
 %token ID NUMBER
 
 %%
-program:
-       ;
+program: main_class
+
+main_class: CLASS ID LCURLY 
+            MAIN LPAREN STRING LSQUARE RSQUARE ID RPAREN LCURLY 
+            statements RCURLY
+            RCURLY
+            ;
+
+statements: /* nothing for now */
+          ;
+
 %%

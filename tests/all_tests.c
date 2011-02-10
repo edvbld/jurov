@@ -3,6 +3,7 @@
 
 CuSuite* lexer_lex_single_token_test_suite();
 CuSuite* lexer_lex_multiple_tokens_test_suite();
+CuSuite* parser_parse_main_class_test_suite();
 
 void run_all_tests()
 {
@@ -11,6 +12,7 @@ void run_all_tests()
 
     CuSuiteAddSuite(suite, lexer_lex_single_token_test_suite());
     CuSuiteAddSuite(suite, lexer_lex_multiple_tokens_test_suite());
+    CuSuiteAddSuite(suite, parser_parse_main_class_test_suite());
     
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);
