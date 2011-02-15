@@ -31,7 +31,7 @@ together with jurov. To run all the unit test, just run
 
 Documentation
 -------------
-jurov uses (Sphinx)[http://sphinx.pocoo.org/] for all its documentation. 
+jurov uses [Sphinx](http://sphinx.pocoo.org/) for all its documentation. 
 To use Sphinx, you need to have Python >= 2.4 (as of version 1.0.7 it does not 
 work with Jython). To install Sphinx, you need to have 
 [setuptools](http://pypi.python.org/pypi/setuptools) installed. Once 
