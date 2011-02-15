@@ -247,41 +247,41 @@ void should_lex_an_id_to_ID_and_save_name(CuTest *tc)
 
 CuSuite* lexer_lex_single_token_test_suite()
 {
-    CuSuite *suite = CuSuiteNew();
+    CuSuite *the_lexer = CuSuiteNew();
 
-    SUITE_ADD_TEST(suite, should_lex_public_static_void_main_to_MAIN);
-    SUITE_ADD_TEST(suite, should_lex_public_to_PUBLIC);
-    SUITE_ADD_TEST(suite, should_lex_system_out_println_to_PRINT);
-    SUITE_ADD_TEST(suite, should_lex_left_curly_bracket_to_LCURLY);
-    SUITE_ADD_TEST(suite, should_lex_right_curly_bracket_to_RCURLY);
-    SUITE_ADD_TEST(suite, should_lex_left_bracket_to_LSQUARE);
-    SUITE_ADD_TEST(suite, should_lex_right_bracket_to_RSQUARE);
-    SUITE_ADD_TEST(suite, should_lex_left_parantheses_to_LPAREN);
-    SUITE_ADD_TEST(suite, should_lex_right_parentheses_to_RPAREN);
-    SUITE_ADD_TEST(suite, should_lex_if_to_IF);
-    SUITE_ADD_TEST(suite, should_lex_else_to_ELSE);
-    SUITE_ADD_TEST(suite, should_lex_while_to_WHILE);
-    SUITE_ADD_TEST(suite, should_lex_true_to_TRUE);
-    SUITE_ADD_TEST(suite, should_lex_false_to_FALSE);
-    SUITE_ADD_TEST(suite, should_lex_this_to_THIS);
-    SUITE_ADD_TEST(suite, should_lex_new_to_NEW);
-    SUITE_ADD_TEST(suite, should_lex_return_to_RETURN);
-    SUITE_ADD_TEST(suite, should_lex_length_to_LENGTH);
-    SUITE_ADD_TEST(suite, should_lex_boolean_to_BOOLEAN);
-    SUITE_ADD_TEST(suite, should_lex_int_to_INT);
-    SUITE_ADD_TEST(suite, should_lex_String_to_STRING);
-    SUITE_ADD_TEST(suite, should_lex_ampersand_ampersand_to_AND);
-    SUITE_ADD_TEST(suite, should_lex_less_than_to_LESS);
-    SUITE_ADD_TEST(suite, should_lex_plus_to_PLUS);
-    SUITE_ADD_TEST(suite, should_lex_dash_to_MINUS);
-    SUITE_ADD_TEST(suite, should_lex_star_to_MUL);
-    SUITE_ADD_TEST(suite, should_lex_star_to_MUL);
-    SUITE_ADD_TEST(suite, should_lex_bang_to_BANG);
-    SUITE_ADD_TEST(suite, should_lex_dot_to_DOT);
-    SUITE_ADD_TEST(suite, should_lex_comma_to_COMMA);
-    SUITE_ADD_TEST(suite, should_lex_semicolon_to_SEMICOLON);
-    SUITE_ADD_TEST(suite, should_lex_an_number_to_NUMBER_and_save_value);
-    SUITE_ADD_TEST(suite, should_lex_an_id_to_ID_and_save_name);
+    SUITE_ADD_TEST(the_lexer, should_lex_public_static_void_main_to_MAIN);
+    SUITE_ADD_TEST(the_lexer, should_lex_public_to_PUBLIC);
+    SUITE_ADD_TEST(the_lexer, should_lex_system_out_println_to_PRINT);
+    SUITE_ADD_TEST(the_lexer, should_lex_left_curly_bracket_to_LCURLY);
+    SUITE_ADD_TEST(the_lexer, should_lex_right_curly_bracket_to_RCURLY);
+    SUITE_ADD_TEST(the_lexer, should_lex_left_bracket_to_LSQUARE);
+    SUITE_ADD_TEST(the_lexer, should_lex_right_bracket_to_RSQUARE);
+    SUITE_ADD_TEST(the_lexer, should_lex_left_parantheses_to_LPAREN);
+    SUITE_ADD_TEST(the_lexer, should_lex_right_parentheses_to_RPAREN);
+    SUITE_ADD_TEST(the_lexer, should_lex_if_to_IF);
+    SUITE_ADD_TEST(the_lexer, should_lex_else_to_ELSE);
+    SUITE_ADD_TEST(the_lexer, should_lex_while_to_WHILE);
+    SUITE_ADD_TEST(the_lexer, should_lex_true_to_TRUE);
+    SUITE_ADD_TEST(the_lexer, should_lex_false_to_FALSE);
+    SUITE_ADD_TEST(the_lexer, should_lex_this_to_THIS);
+    SUITE_ADD_TEST(the_lexer, should_lex_new_to_NEW);
+    SUITE_ADD_TEST(the_lexer, should_lex_return_to_RETURN);
+    SUITE_ADD_TEST(the_lexer, should_lex_length_to_LENGTH);
+    SUITE_ADD_TEST(the_lexer, should_lex_boolean_to_BOOLEAN);
+    SUITE_ADD_TEST(the_lexer, should_lex_int_to_INT);
+    SUITE_ADD_TEST(the_lexer, should_lex_String_to_STRING);
+    SUITE_ADD_TEST(the_lexer, should_lex_ampersand_ampersand_to_AND);
+    SUITE_ADD_TEST(the_lexer, should_lex_less_than_to_LESS);
+    SUITE_ADD_TEST(the_lexer, should_lex_plus_to_PLUS);
+    SUITE_ADD_TEST(the_lexer, should_lex_dash_to_MINUS);
+    SUITE_ADD_TEST(the_lexer, should_lex_star_to_MUL);
+    SUITE_ADD_TEST(the_lexer, should_lex_star_to_MUL);
+    SUITE_ADD_TEST(the_lexer, should_lex_bang_to_BANG);
+    SUITE_ADD_TEST(the_lexer, should_lex_dot_to_DOT);
+    SUITE_ADD_TEST(the_lexer, should_lex_comma_to_COMMA);
+    SUITE_ADD_TEST(the_lexer, should_lex_semicolon_to_SEMICOLON);
+    SUITE_ADD_TEST(the_lexer, should_lex_an_number_to_NUMBER_and_save_value);
+    SUITE_ADD_TEST(the_lexer, should_lex_an_id_to_ID_and_save_name);
 
-    return suite;
+    return the_lexer;
 }

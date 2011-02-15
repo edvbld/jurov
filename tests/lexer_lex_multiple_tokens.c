@@ -116,13 +116,13 @@ void should_lex_a_small_program_with_print(CuTest *tc)
 
 CuSuite* lexer_lex_multiple_tokens_test_suite()
 {
-    CuSuite *suite = CuSuiteNew();
+    CuSuite *the_lexer = CuSuiteNew();
 
-    SUITE_ADD_TEST(suite, should_lex_two_tokens_separated_by_space);
-    SUITE_ADD_TEST(suite, 
+    SUITE_ADD_TEST(the_lexer, should_lex_two_tokens_separated_by_space);
+    SUITE_ADD_TEST(the_lexer, 
                    should_lex_public_static_void_main_with_different_spaces);
-    SUITE_ADD_TEST(suite, should_lex_multiple_different_parentheses);
-    SUITE_ADD_TEST(suite, should_lex_a_small_program_with_print);
+    SUITE_ADD_TEST(the_lexer, should_lex_multiple_different_parentheses);
+    SUITE_ADD_TEST(the_lexer, should_lex_a_small_program_with_print);
 
-    return suite;
+    return the_lexer;
 }
