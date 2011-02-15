@@ -223,7 +223,7 @@ void should_lex_an_number_to_NUMBER_and_save_value(CuTest *tc)
 {
     yy_scan_string("42");
     CuAssertIntEquals(tc, NUMBER, yylex());
-    CuAssertIntEquals(tc, 42, yylval.num);
+    CuAssertIntEquals(tc, 42, yylval.number);
     CuAssertIntEquals(tc, 0, yylex());
 }
 
@@ -245,7 +245,7 @@ void should_lex_an_id_to_ID_and_save_name(CuTest *tc)
     CuAssertIntEquals(tc, 0, yylex());
 }
 
-CuSuite* lexer_lex_single_token_test_suite()
+CuSuite* lexer_test_single_token()
 {
     CuSuite *the_lexer = CuSuiteNew();
 

@@ -11,8 +11,7 @@
 int parse_program(char *program)
 {
     int res = 0;
-    YY_BUFFER_STATE b = yy_scan_string(program);
-    yy_switch_to_buffer(b);
+    yy_scan_string(program);
     res = yyparse();
     yylex_destroy();
     return res;
@@ -106,7 +105,7 @@ void should_fail_when_missing_class_around_main_function(CuTest *tc)
     CuAssertIntEquals(tc, 1, res);
 }
 
-CuSuite* parser_parse_main_class_test_suite()
+CuSuite* parser_test_main_class()
 {
     CuSuite *the_parser = CuSuiteNew();
 

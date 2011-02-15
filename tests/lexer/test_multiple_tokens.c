@@ -92,7 +92,7 @@ void should_lex_a_small_program_with_print(CuTest *tc)
     CuAssertIntEquals(tc, PRINT, yylex());
     CuAssertIntEquals(tc, LPAREN, yylex());
     CuAssertIntEquals(tc, NUMBER, yylex());
-    CuAssertIntEquals(tc, 42, yylval.num);
+    CuAssertIntEquals(tc, 42, yylval.number);
     CuAssertIntEquals(tc, RPAREN, yylex());
     CuAssertIntEquals(tc, SEMICOLON, yylex());
     /* } else { */
@@ -103,7 +103,7 @@ void should_lex_a_small_program_with_print(CuTest *tc)
     CuAssertIntEquals(tc, PRINT, yylex());
     CuAssertIntEquals(tc, LPAREN, yylex());
     CuAssertIntEquals(tc, NUMBER, yylex());
-    CuAssertIntEquals(tc, 1337, yylval.num);
+    CuAssertIntEquals(tc, 1337, yylval.number);
     CuAssertIntEquals(tc, RPAREN, yylex());
     CuAssertIntEquals(tc, SEMICOLON, yylex());
     /* }}} */
@@ -114,7 +114,7 @@ void should_lex_a_small_program_with_print(CuTest *tc)
 }
 
 
-CuSuite* lexer_lex_multiple_tokens_test_suite()
+CuSuite* lexer_test_multiple_tokens()
 {
     CuSuite *the_lexer = CuSuiteNew();
 

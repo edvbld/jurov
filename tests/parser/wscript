@@ -1,5 +1,6 @@
 def build(bld):
-    sources = ['test_main_class.c']
+    sources = ['test_main_class.c',
+               'test_statements.c']
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],

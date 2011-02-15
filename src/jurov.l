@@ -41,7 +41,7 @@ WS      ([\t\n ])
 ";"                                                 { return SEMICOLON; }
 [a-zA-Z][a-zA-Z0-9]*                                { yylval.id = yytext;
                                                       return ID; }
-[0-9]+                                              { yylval.num = 
+[0-9]+                                              { yylval.number = 
                                                           atoi(yytext);
                                                       return NUMBER; }
 [\t\n ]

@@ -1,3 +1,5 @@
 def build(bld):
-    bld(features = 'c bison', source = 'jurov.y', name = 'parser')
-    bld(features = 'c flex', source = 'jurov.l', name = 'lexer')
+    bld(features = 'c bison', source = 'jurov.y', 
+        includes = '.', name = 'parser')
+    bld(features = 'c flex', source = 'jurov.l', 
+        includes = '.', name = 'lexer')
