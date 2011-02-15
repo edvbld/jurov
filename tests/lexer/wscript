@@ -3,6 +3,6 @@ def build(bld):
                'test_multiple_tokens.c']
     bld(features = 'c',
         source = sources,
-        includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],
+        includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_CUTEST],
         name = 'lexer_tests',
-        use = ['lexer', 'parser', 'cutest'])
+        )

@@ -3,3 +3,7 @@ def build(bld):
         includes = '.', name = 'parser')
     bld(features = 'c flex', source = 'jurov.l', 
         includes = '.', name = 'lexer')
+    sources = ['ast.c',
+               'utils.c']
+    bld(features = 'c', source = sources, includes = '.', 
+        name = 'objects')

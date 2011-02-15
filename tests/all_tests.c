@@ -5,6 +5,7 @@ CuSuite* lexer_test_single_token();
 CuSuite* lexer_test_multiple_tokens();
 CuSuite* parser_test_main_class();
 CuSuite* parser_test_statements();
+CuSuite* ast_test_identifier_node();
 
 void run_all_tests()
 {
@@ -15,6 +16,7 @@ void run_all_tests()
     CuSuiteAddSuite(suite, lexer_test_multiple_tokens());
     CuSuiteAddSuite(suite, parser_test_main_class());
     CuSuiteAddSuite(suite, parser_test_statements());
+    CuSuiteAddSuite(suite, ast_test_identifier_node());
     
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);

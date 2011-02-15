@@ -3,7 +3,7 @@ def build(bld):
                'test_statements.c']
     bld(features = 'c',
         source = sources,
-        includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],
-        name = 'parser_tests',
-        use = ['lexer', 'parser', 'cutest'])
+        includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_CUTEST],
+        name = 'parser_tests')
+ 
 

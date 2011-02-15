@@ -1,6 +1,7 @@
 %{
 #include "ast.h"
 #include "stddef.h"
+void yyerror(char *s);
 %}
 
 %union {
@@ -24,7 +25,7 @@
 
 %%
 /* This rule is just for retuning the created AST */
-start: program {result = $1;}
+start: program {ast_parser_result = $1;}
 
 program: main_class {$$ = NULL}
 
@@ -49,3 +50,8 @@ expression: TRUE
           | FALSE
 
 %%
+
+void yyerror(char *s)
+{
+    // do nothing for now
+}
