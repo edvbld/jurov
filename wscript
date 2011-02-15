@@ -12,7 +12,7 @@ def options(opt):
                    help = 'Runs the unit tests')
 
 def run_tests(bld):
-    bld.exec_command('{0}/tests/run_all'.format(os.path.abspath(out)))
+    bld.exec_command('{0}/tests/run_all_tests'.format(os.path.abspath(out)))
 
 def configure(conf):
     conf.env.C_FLAGS = ['-g', '-Wall', '-ansi', '-pedantic', '-std=c89']

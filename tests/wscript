@@ -1,11 +1,9 @@
 def build(bld):
-    sources = ['lexer_lex_single_token.c',
-               'lexer_lex_multiple_tokens.c',
-               'parser_parse_main_class.c',
-               'all_tests.c']
+    bld.recurse(['lexer', 'parser'])
+    sources = ['all_tests.c']
     bld(features = 'c cprogram',
         source = sources,
         includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],
-        target = 'run_all',
-        use = ['lexer', 'parser', 'cutest'])
+        target = 'run_all_tests',
+        use = ['lexer_tests', 'parser_tests', 'cutest'])
 

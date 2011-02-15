@@ -1,0 +1,8 @@
+def build(bld):
+    sources = ['test_single_token.c',
+               'test_multiple_tokens.c']
+    bld(features = 'c',
+        source = sources,
+        includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],
+        name = 'lexer_tests',
+        use = ['lexer', 'parser', 'cutest'])
