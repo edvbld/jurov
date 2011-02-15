@@ -22,11 +22,17 @@ void clear_stack();
 %%
 program: main_class
 
-main_class: CLASS ID LCURLY 
-            MAIN LPAREN STRING LSQUARE RSQUARE ID RPAREN LCURLY 
-            statements RCURLY
+main_class: class_declaration 
+            MAIN LPAREN STRING LSQUARE RSQUARE ID RPAREN 
+            function_body
             RCURLY
             ;
+
+class_declaration: CLASS ID LCURLY
+                 ;
+
+function_body: LCURLY statements RCURLY
+             ;
 
 statements: /* nothing for now */
           ;
