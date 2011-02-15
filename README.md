@@ -43,3 +43,8 @@ to install Sphinx. Once Sphinx is installed, run
 Now open 
     doc/build/index.html 
 in your favorite browser to read the documentation!
+
+License
+-------
+jurov is licensed under the BSD license (3-clause BSD), see the LICENSE file 
+for more details.
