@@ -196,6 +196,15 @@ typedef struct {
  */
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result);
 
-void ast_descend(ast* tree, void *result);
+/**
+ * This function visits the given node, that is, it calls the 
+ * callback that is registered for the nodes type.
+ * This function should typically be called from the callback functions 
+ * in order to evaluate child nodes.
+ *
+ * @param node[in] The node to visit
+ * @param result[out] The result from the visit
+ */
+void ast_visit(ast* node, void *result);
 
 #endif // __AST_H__

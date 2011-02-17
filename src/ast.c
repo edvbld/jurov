@@ -46,47 +46,47 @@ ast_callbacks _callbacks;
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
 {
     _callbacks = callbacks;
-    ast_descend(tree, result);
+    ast_visit(tree, result);
 }
 
-void ast_descend(ast *tree, void *result)
+void ast_visit(ast *node, void *result)
 {
-    if(tree == NULL) {
+    if(node == NULL) {
         return;
     }
-    switch(tree->type) {
+    switch(node->type) {
         case IDENTIFIER: 
-            _callbacks.on_identifier((identifier *) tree, result);
+            _callbacks.on_identifier((identifier *) node, result);
             break;
         case ADDITION:
-            _callbacks.on_addition((binary_operation *) tree, result);
+            _callbacks.on_addition((binary_operation *) node, result);
             break;
         case SUBTRACTION:
-            _callbacks.on_subtraction((binary_operation *) tree, result);
+            _callbacks.on_subtraction((binary_operation *) node, result);
             break;
         case DIVISION:
-            _callbacks.on_division((binary_operation *) tree, result);
+            _callbacks.on_division((binary_operation *) node, result);
             break;
         case MULTIPLICATION:
-            _callbacks.on_multiplication((binary_operation *) tree, result);
+            _callbacks.on_multiplication((binary_operation *) node, result);
             break;
         case LESS_THAN:
-            _callbacks.on_less_than((binary_operation *) tree, result);
+            _callbacks.on_less_than((binary_operation *) node, result);
             break;
         case ARRAY_LOOKUP:
-            _callbacks.on_array_lookup((unary_operation *) tree, result);
+            _callbacks.on_array_lookup((unary_operation *) node, result);
             break;
         case ARRAY_LENGTH:
-            _callbacks.on_array_length((unary_operation *) tree, result);
+            _callbacks.on_array_length((unary_operation *) node, result);
             break;
         case NOT:
-            _callbacks.on_not((unary_operation *) tree, result);
+            _callbacks.on_not((unary_operation *) node, result);
             break;
         case NEW_ARRAY:
-            _callbacks.on_new_array((unary_operation *) tree, result);
+            _callbacks.on_new_array((unary_operation *) node, result);
             break;
         case INTEGER:
-            _callbacks.on_integer((integer *) tree, result);
+            _callbacks.on_integer((integer *) node, result);
             break;
         default:
             die("Unknown AST node found");
