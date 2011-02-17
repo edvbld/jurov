@@ -5,10 +5,28 @@
  * Represents all different kinds of nodes that can exists in the AST
  */
 typedef enum {
-    /** An ast struct */
-    AST = 0, 
-    /** An indentifier_node struct */
-    IDENTIFIER
+    /** An identifier struct */
+    IDENTIFIER,
+    /** Addition, a binary_operation struct */
+    ADDITION,
+    /** Subtraction, a binary_operation struct */
+    SUBTRACTION,
+    /** Division, a binary_operation struct */
+    DIVISION,
+    /** Multiplication, a binary_operation struct */
+    MULTIPLICATION,
+    /** Less than, a binary_operation struct */
+    LESS_THAN,
+    /** Array lookup, a binary_operation struct */
+    ARRAY_LOOKUP,
+    /** Array length, an unary_operation struct */
+    ARRAY_LENGTH,
+    /** Logical not, an unary_operation struct */
+    NOT,
+    /** New array, an unary_operation struct */
+    NEW_ARRAY,
+    /** An integer struct */
+    INTEGER
 } nodetype;
 
 /**
@@ -36,19 +54,82 @@ ast* new_ast(ast* left, ast* right);
  * Represents an identifier node in the AST.
  */
 typedef struct {
-    /** The type of the node (nodetype.INDENTIFIER) */
+    /** The type of the node (nodetype.IDENTIFIER) */
     nodetype type;
-    /** The name of the indentifier */
+    /** The name of the identifier */
     char *name;
 } identifier;
 
 /**
- * Creates a new indentifier with the given id.
+ * Creates a new identifier with the given name.
  *
- * @param name The name of the indentifier
+ * @param name The name of the identifier
  * @return A pointer to an ast struct
  */
 ast* new_identifier(char *name);
+
+/**
+ * Represents a binary operation (such as +,-,*,< etc.)
+ */
+typedef struct {
+    /** The type of the node */
+    nodetype type;
+    /** The left operand to the operation */
+    ast *left_operand;
+    /** The right operand to the operation */
+    ast *right_operand;
+
+} binary_operation;
+
+/**
+ * Creates a new binary operation with the given type and 
+ * operands.
+ *
+ * @param type The type of the operation
+ * @param left_operand The left operand of the expression
+ * @param right_operand The right operand of the expression
+ * @return A point to an ast struct
+ */
+ast* new_binary_operation(nodetype type, ast* left_operand, ast* right_operand);
+
+/**
+ * Represents an unary operation (such as .length, new, not)
+ */
+typedef struct {
+    /** The type of the node */
+    nodetype type;
+    /** The argument to the operation */
+    ast *operand;
+} unary_operation;
+
+/**
+ * Creates a new unary operation with the given type and 
+ * operand.
+ *
+ * @param type The type of the operation
+ * @param operand The operand of the expression
+ * @return A point to an ast struct
+ */
+ast* new_unary_operation(nodetype type, ast* operand);
+
+/**
+ * Represents an integer
+ */
+typedef struct {
+    /** the type of the integer (nodetype.INTEGER) */
+    nodetype type;
+    /** the value of the integer */
+    int value;
+} integer;
+
+/**
+ * Creates a new integer with the given value.
+ *
+ * @param value The value of the integer
+ * @return A pointer to an ast representation of the integer
+ */
+ast* new_integer(int value);
+    
 
 /**
  * The result from the parser. After calling yyparse(), this variable will hold 
@@ -61,26 +142,60 @@ ast* ast_parser_result;
  * ast_walk function encounters a node of a given type, the corresponding 
  * callback will be called.
  *
- * For example, if ast_walk function encounters a indentifier node, 
- * the the function pointer in member identifier_node will be 
+ * For example, if ast_walk function encounters a identifier node, 
+ * the function pointer in member identifier_node will be 
  * dereferenced and called.
  */
 typedef struct {
     /** The callback for an identifier node */
-    void (*on_identifier)(identifier *node);
-    /** The callback for an ast node */
-    void (*on_ast)(ast *tree);
+    void (*on_identifier)(identifier *node, void *result);
+    
+    /** The callback for the addition binary operation */
+    void (*on_addition)(binary_operation *node, void *result);
+    
+    /** The callback for the subtraction binary operation */
+    void (*on_subtraction)(binary_operation *node, void *result);
+    
+    /** The callback for the division binary operation */
+    void (*on_division)(binary_operation *node, void *result);
+
+    /** The callback for the multiplication binary operation */
+    void (*on_multiplication)(binary_operation *node, void *result);
+
+    /** The callback for the logical and binary operation */
+    void (*on_and)(binary_operation *node, void *result);
+
+    /** The callback for the less than binary operation */
+    void (*on_less_than)(binary_operation *node, void *result);
+    
+    /** The callback for the array lookup unary operation */
+    void (*on_array_lookup)(unary_operation *node, void *result);
+
+    /** The callback for the array length unary operation */
+    void (*on_array_length)(unary_operation *node, void *result);
+    
+    /** The callback for the logical not unary operation */
+    void (*on_not)(unary_operation *node, void *result);
+   
+    /** The callback for the new array unary operation */
+    void (*on_new_array)(unary_operation *node, void *result);
+
+    /** The callback for an integer */
+    void (*on_integer)(integer *node, void *result);
 } ast_callbacks;
 
 /**
  * This function walks an AST depth-first, left to right. 
  * Each time a node is encountered, the registered callback in 
- * the paramter callback will be called.
+ * the parameter callback will be called.
  *
  * @param tree The AST to walk
- * @param callbacks All the callbacks to call upon encontering nodes of 
+ * @param callbacks All the callbacks to call upon encountering nodes of 
  *                  specific types
+ * @param result A pointer to the result of the walk
  */
-void ast_walker(ast* tree, ast_callbacks* callbacks);
+void ast_walk(ast* tree, ast_callbacks callbacks, void *result);
+
+void ast_descend(ast* tree, void *result);
 
 #endif // __AST_H__
