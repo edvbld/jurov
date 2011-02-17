@@ -1,16 +1,16 @@
 #include "ast.h"
 #include "utils.h"
 
-struct ast* new_identifier_node(char *name)
+ast* new_identifier(char *name)
 {
-    struct identifier_node* id_node = j_malloc(sizeof(struct identifier_node));
+    identifier* id_node = j_malloc(sizeof(identifier));
     id_node->name = name; 
-    return (struct ast*) id_node;
+    return (ast*) id_node;
 }
 
-struct ast* new_ast(struct ast* left, struct ast* right)
+ast* new_ast(ast* left, ast* right)
 {
-    struct ast* node = j_malloc(sizeof(struct ast));
+    ast* node = j_malloc(sizeof(ast));
     node->left = left;
     node->right = right;
     return node;

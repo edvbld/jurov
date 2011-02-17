@@ -6,10 +6,10 @@
 void should_have_an_id_member(CuTest *tc)
 {
     char *name = "name";
-    struct ast* node = new_identifier_node(name);
-    struct identifier_node* id_node = (struct identifier_node *) node;
-    CuAssertStrEquals(tc, name, id_node->name);
-    free(id_node);
+    ast* node = new_identifier(name);
+    identifier* id = (identifier *) node;
+    CuAssertStrEquals(tc, name, id->name);
+    free(id);
 }
 
 CuSuite* ast_test_identifier_node()

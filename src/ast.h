@@ -4,24 +4,24 @@
 /**
  * Represents all different kinds of nodes that can exists in the AST
  */
-enum nodetype {
+typedef enum {
     /** An ast struct */
     AST = 0, 
     /** An indentifier_node struct */
     IDENTIFIER
-};
+} nodetype;
 
 /**
  * Represents an abstract syntax tree (AST). 
  */
-struct ast {
+typedef struct ast {
     /**  The type of the node */
-    enum nodetype type; 
+    nodetype type; 
     /** The left branch of the tree */
     struct ast* left; 
     /** The right branch of the tree */
     struct ast* right;
-};
+} ast;
 
 /**
  * Creates an AST with the given left branch and the given right branch.
@@ -30,31 +30,31 @@ struct ast {
  * @param right The right branch
  * @return A pointer to the newly created ast node
  */
-struct ast* new_ast(struct ast* left, struct ast*right);
+ast* new_ast(ast* left, ast* right);
 
 /**
  * Represents an identifier node in the AST.
  */
-struct identifier_node {
+typedef struct {
     /** The type of the node (nodetype.INDENTIFIER) */
-    enum nodetype type;
+    nodetype type;
     /** The name of the indentifier */
     char *name;
-};
+} identifier;
 
 /**
- * Creates a new indentifier node with the given id.
+ * Creates a new indentifier with the given id.
  *
  * @param name The name of the indentifier
  * @return A pointer to an ast struct
  */
-struct ast* new_identifier_node(char *name);
+ast* new_identifier(char *name);
 
 /**
  * The result from the parser. After calling yyparse(), this variable will hold 
  * the generated AST.
  */
-struct ast* ast_parser_result;
+ast* ast_parser_result;
 
 /**
  * This struct is used together with the ast_walk function. Each time the 
@@ -65,12 +65,12 @@ struct ast* ast_parser_result;
  * the the function pointer in member identifier_node will be 
  * dereferenced and called.
  */
-struct walker_callbacks {
+typedef struct {
     /** The callback for an identifier node */
-    void (*identifier_node)(struct identifier_node *node);
+    void (*on_identifier)(identifier *node);
     /** The callback for an ast node */
-    void (*ast)(struct ast *tree);
-};
+    void (*on_ast)(ast *tree);
+} ast_callbacks;
 
 /**
  * This function walks an AST depth-first, left to right. 
@@ -81,6 +81,6 @@ struct walker_callbacks {
  * @param callbacks All the callbacks to call upon encontering nodes of 
  *                  specific types
  */
-void ast_walker(struct ast* tree, struct walker_callbacks* callbacks);
+void ast_walker(ast* tree, ast_callbacks* callbacks);
 
 #endif // __AST_H__
