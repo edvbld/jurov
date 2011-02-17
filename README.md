@@ -31,18 +31,15 @@ together with jurov. To run all the unit test, just run
 
 Documentation
 -------------
-jurov uses [Sphinx](http://sphinx.pocoo.org/) for all its documentation. 
-To use Sphinx, you need to have Python >= 2.4 (as of version 1.0.7 it does not 
-work with Jython). To install Sphinx, you need to have 
-[setuptools](http://pypi.python.org/pypi/setuptools) installed. Once 
-setuptools is installed, run
-    easy_install -U Sphinx
-to install Sphinx. Once Sphinx is installed, run
-    cd doc/
-    sphinx-build -b html source build
-Now open 
-    doc/build/index.html 
-in your favorite browser to read the documentation!
+jurov uses [Doxygen](http://www.stack.nl/~dimitri/doxygen/) for all its 
+documentation. To build the documentation you first need to install 
+Doxygen. When doxygen is installed, run
+    cd doc/ && doxygen
+
+To view the documentation, just open 
+    doc/build/html/index.html
+
+with your favorite browser.
 
 License
 -------
