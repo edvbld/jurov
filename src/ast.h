@@ -69,7 +69,7 @@ typedef struct {
 ast* new_identifier(char *name);
 
 /**
- * Represents a binary operation (such as +,-,*,< etc.)
+ * Represents a binary operation (such as +,-,*,< etc.) node in the AST
  */
 typedef struct {
     /** The type of the node */
@@ -93,7 +93,7 @@ typedef struct {
 ast* new_binary_operation(nodetype type, ast* left_operand, ast* right_operand);
 
 /**
- * Represents an unary operation (such as .length, new, not)
+ * Represents an unary operation (such as .length, new, not) node in the AST
  */
 typedef struct {
     /** The type of the node */
@@ -113,7 +113,7 @@ typedef struct {
 ast* new_unary_operation(nodetype type, ast* operand);
 
 /**
- * Represents an integer
+ * Represents an integer node in the AST
  */
 typedef struct {
     /** the type of the integer (nodetype.INTEGER) */
@@ -138,12 +138,12 @@ ast* new_integer(int value);
 ast* ast_parser_result;
 
 /**
- * This struct is used together with the ast_walk function. Each time the 
+ * This struct stores the callbacks for the ast_walk function. Each time the 
  * ast_walk function encounters a node of a given type, the corresponding 
  * callback will be called.
  *
  * For example, if ast_walk function encounters a identifier node, 
- * the function pointer in member identifier_node will be 
+ * the function pointer in the member on_identifier will be 
  * dereferenced and called.
  */
 typedef struct {
@@ -189,10 +189,10 @@ typedef struct {
  * Each time a node is encountered, the registered callback in 
  * the parameter callback will be called.
  *
- * @param tree The AST to walk
- * @param callbacks All the callbacks to call upon encountering nodes of 
- *                  specific types
- * @param result A pointer to the result of the walk
+ * @param[in] tree The AST to walk
+ * @param[in] callbacks All the callbacks to call upon encountering nodes of 
+ *                      specific types
+ * @param[out] result A pointer to the result of the walk
  */
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result);
 
@@ -202,8 +202,8 @@ void ast_walk(ast* tree, ast_callbacks callbacks, void *result);
  * This function should typically be called from the callback functions 
  * in order to evaluate child nodes.
  *
- * @param node[in] The node to visit
- * @param result[out] The result from the visit
+ * @param[in] node The node to visit
+ * @param[out] result The result from the visit
  */
 void ast_visit(ast* node, void *result);
 
