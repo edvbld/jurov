@@ -1,9 +1,10 @@
 #include "utils.h"
 #include "stdio.h"
 
-void die(char *s)
+void die(char *msg)
 {
-    fprintf(stderr, "%s\n", s);
+    fprintf(stderr, "%s\n", msg);
+    exit(1);
 }
 
 void* j_malloc(size_t n)
