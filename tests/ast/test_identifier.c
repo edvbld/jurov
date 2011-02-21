@@ -5,8 +5,7 @@
 
 identifier* create(char *name)
 {
-    ast* node = new_identifier(name);
-    return (identifier *) node;
+    return (identifier *) new_identifier(name);
 }
 
 void should_have_an_id_member(CuTest *tc)
