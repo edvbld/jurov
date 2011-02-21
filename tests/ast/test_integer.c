@@ -15,7 +15,7 @@ void should_have_integer_as_type(CuTest *tc)
     free(node);
 }
 
-void should_have_the_give_value(CuTest *tc)
+void should_have_the_given_value(CuTest *tc)
 {
     int value = 5;
     integer *node = create(value);
@@ -28,7 +28,7 @@ CuSuite* ast_test_integer()
     CuSuite *integer = CuSuiteNew();
 
     SUITE_ADD_TEST(integer, should_have_integer_as_type);
-    SUITE_ADD_TEST(integer, should_have_the_give_value);
+    SUITE_ADD_TEST(integer, should_have_the_given_value);
 
     return integer;
 }
