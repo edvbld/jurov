@@ -8,6 +8,7 @@ CuSuite* parser_test_statements();
 CuSuite* ast_test_identifier();
 CuSuite* ast_test_ast_walk();
 CuSuite* ast_test_binary_operation();
+CuSuite* ast_test_integer();
 
 void run_all_tests()
 {
@@ -21,6 +22,7 @@ void run_all_tests()
     CuSuiteAddSuite(suite, ast_test_identifier());
     CuSuiteAddSuite(suite, ast_test_ast_walk());
     CuSuiteAddSuite(suite, ast_test_binary_operation());
+    CuSuiteAddSuite(suite, ast_test_integer());
     
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);
