@@ -1,6 +1,6 @@
 def build(bld):
-    sources = ['test_identifier_node.c',
-               'test_walk.c']
+    sources = ['test_identifier.c',
+               'test_ast_walk.c']
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],
