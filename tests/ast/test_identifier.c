@@ -3,7 +3,7 @@
 #include "stddef.h"
 #include "stdlib.h"
 
-identifier* create(char *name)
+static identifier* create(char *name)
 {
     return (identifier *) new_identifier(name);
 }
