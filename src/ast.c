@@ -33,6 +33,14 @@ ast* new_integer(int value)
     return (ast *) i;
 }
 
+ast* new_boolean(int value)
+{
+    boolean *b = j_malloc(sizeof(boolean));
+    b->type = BOOL;
+    b->value = value;
+    return (ast *) b;
+}
+
 ast_callbacks _callbacks;
 
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)

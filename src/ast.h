@@ -26,7 +26,9 @@ typedef enum {
     /** New array, an unary_operation struct */
     NEW_ARRAY,
     /** An integer struct */
-    INTEGER
+    INTEGER,
+    /** A boolean struct */
+    BOOL
 } nodetype;
 
 /**
@@ -113,9 +115,27 @@ typedef struct {
  * Creates a new integer with the given value.
  *
  * @param value The value of the integer
- * @return A pointer to an ast representation of the integer
+ * @return A pointer to an AST representation of the integer
  */
 ast* new_integer(int value);
+
+/**
+ * Represents a boolean in the AST
+ */
+typedef struct {
+    /** The type of the node (nodetype.BOOL) */
+    nodetype type;
+    /** The value of the boolean */
+    int value;
+} boolean;
+
+/**
+ * Creates a new boolean with the given value.
+ *
+ * @param value The value of the boolean expression
+ * @return A pointer to an AST representation of the integer
+ */
+ast* new_boolean(int value);
     
 
 /**
