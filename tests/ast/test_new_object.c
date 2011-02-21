@@ -8,13 +8,6 @@ static new_object* create(identifier *id)
     return (new_object *) new_new_object(id);
 }
 
-void should_return_null_when_getting_null_as_id(CuTest *tc)
-{
-    new_object *node = create(NULL);
-    CuAssertPtrEquals(tc, NULL, node);
-    /* do not free since no memory was allocated */
-}
-
 void should_have_new_object_as_type(CuTest *tc)
 {
     identifier *class_id = (identifier *) new_identifier("foo");
@@ -37,7 +30,6 @@ CuSuite* ast_test_new_object()
 {
     CuSuite *new_object = CuSuiteNew();
 
-    SUITE_ADD_TEST(new_object, should_return_null_when_getting_null_as_id);
     SUITE_ADD_TEST(new_object, should_have_new_object_as_type);
     SUITE_ADD_TEST(new_object, should_have_the_given_class_id_as_member);
 

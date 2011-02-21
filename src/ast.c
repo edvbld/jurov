@@ -43,9 +43,6 @@ ast* new_boolean(int value)
 
 ast* new_new_object(identifier *class_id)
 {
-    if(NULL == class_id) {
-        return NULL;
-    }
     new_object *no = j_malloc(sizeof(new_object));
     no->type = NEW_OBJECT;
     no->class_id = class_id;
