@@ -2,6 +2,7 @@ def build(bld):
     sources = ['test_identifier.c',
                'test_binary_operation.c',
                'test_integer.c',
+               'test_unary_operation.c',
                'test_ast_walk.c']
     bld(features = 'c',
         source = sources,
