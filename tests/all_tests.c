@@ -13,6 +13,7 @@ CuSuite* ast_test_binary_operation();
 CuSuite* ast_test_integer();
 CuSuite* ast_test_unary_operation();
 CuSuite* ast_test_boolean();
+CuSuite* ast_test_new_object();
 
 void run_all_tests()
 {
@@ -29,6 +30,7 @@ void run_all_tests()
     CuSuiteAddSuite(suite, ast_test_integer());
     CuSuiteAddSuite(suite, ast_test_unary_operation());
     CuSuiteAddSuite(suite, ast_test_boolean());
+    CuSuiteAddSuite(suite, ast_test_new_object());
     
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);

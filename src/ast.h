@@ -28,7 +28,9 @@ typedef enum {
     /** An integer struct */
     INTEGER,
     /** A boolean struct */
-    BOOL
+    BOOL,
+    /** A new_object struct */
+    NEW_OBJECT
 } nodetype;
 
 /**
@@ -136,7 +138,25 @@ typedef struct {
  * @return A pointer to an AST representation of the integer
  */
 ast* new_boolean(int value);
-    
+ 
+/**
+ * Represents a new_object operation in the AST
+ */
+typedef struct {
+    /** The type of the node (nodetype.NEW_OBJECT) */
+    nodetype type;
+
+    /** The id of the class of the object */
+    identifier *class_id;
+} new_object;
+
+/**
+ * Creates a new new_object with the given id.
+ *
+ * @param id The identifier of the class of the object
+ * @return A pointer to an AST representation of the new object operation
+ */
+ast* new_new_object(identifier *class_id);
 
 /**
  * The result from the parser. After calling yyparse(), this variable will hold 

@@ -41,6 +41,17 @@ ast* new_boolean(int value)
     return (ast *) b;
 }
 
+ast* new_new_object(identifier *class_id)
+{
+    if(NULL == class_id) {
+        return NULL;
+    }
+    new_object *no = j_malloc(sizeof(new_object));
+    no->type = NEW_OBJECT;
+    no->class_id = class_id;
+    return (ast *) no;
+}
+
 ast_callbacks _callbacks;
 
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
