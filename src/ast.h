@@ -35,20 +35,7 @@ typedef enum {
 typedef struct ast {
     /**  The type of the node */
     nodetype type; 
-    /** The left branch of the tree */
-    struct ast* left; 
-    /** The right branch of the tree */
-    struct ast* right;
 } ast;
-
-/**
- * Creates an AST with the given left branch and the given right branch.
- *
- * @param left  The left branch
- * @param right The right branch
- * @return A pointer to the newly created ast node
- */
-ast* new_ast(ast* left, ast* right);
 
 /**
  * Represents an identifier node in the AST.
