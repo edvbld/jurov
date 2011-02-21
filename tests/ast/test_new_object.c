@@ -43,6 +43,3 @@ CuSuite* ast_test_new_object()
 
     return new_object;
 }
-
-
-
