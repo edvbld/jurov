@@ -13,6 +13,7 @@ ast* new_identifier(char *name)
 {
     identifier *id_node = j_malloc(sizeof(identifier));
     id_node->name = name; 
+    id_node->type = IDENTIFIER;
     return (ast*) id_node;
 }
 

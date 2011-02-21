@@ -3,13 +3,25 @@
 #include "stddef.h"
 #include "stdlib.h"
 
+identifier* create(char *name)
+{
+    ast* node = new_identifier(name);
+    return (identifier *) node;
+}
+
 void should_have_an_id_member(CuTest *tc)
 {
     char *name = "name";
-    ast* node = new_identifier(name);
-    identifier* id = (identifier *) node;
-    CuAssertStrEquals(tc, name, id->name);
-    free(id);
+    identifier *node = create(name);
+    CuAssertStrEquals(tc, name, node->name);
+    free(node);
+}
+
+void should_have_identifier_as_type(CuTest *tc)
+{
+    identifier *node = create("name");
+    CuAssertIntEquals(tc, IDENTIFIER, node->type);
+    free(node);
 }
 
 CuSuite* ast_test_identifier()
@@ -17,6 +29,7 @@ CuSuite* ast_test_identifier()
     CuSuite *identifier = CuSuiteNew();
 
     SUITE_ADD_TEST(identifier, should_have_an_id_member);
+    SUITE_ADD_TEST(identifier, should_have_identifier_as_type);
 
     return identifier;
 }
