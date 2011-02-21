@@ -1,14 +1,5 @@
 #include "ast.h"
 #include "utils.h"
-
-ast* new_ast(ast* left, ast* right)
-{
-    ast *node = j_malloc(sizeof(ast));
-    node->left = left;
-    node->right = right;
-    return node;
-}
-
 ast* new_identifier(char *name)
 {
     identifier *id = j_malloc(sizeof(identifier));
