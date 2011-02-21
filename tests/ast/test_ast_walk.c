@@ -74,7 +74,7 @@ void should_handle_all_arithmetic_nodes(CuTest *tc)
     CuAssertIntEquals(tc, 11, result);
 }
 
-CuSuite* ast_test_walk()
+CuSuite* ast_test_ast_walk()
 {
     CuSuite *ast_walk = CuSuiteNew();
 

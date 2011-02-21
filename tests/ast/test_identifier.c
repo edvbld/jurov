@@ -12,11 +12,11 @@ void should_have_an_id_member(CuTest *tc)
     free(id);
 }
 
-CuSuite* ast_test_identifier_node()
+CuSuite* ast_test_identifier()
 {
-    CuSuite *identifier_node = CuSuiteNew();
+    CuSuite *identifier = CuSuiteNew();
 
-    SUITE_ADD_TEST(identifier_node, should_have_an_id_member);
+    SUITE_ADD_TEST(identifier, should_have_an_id_member);
 
-    return identifier_node;
+    return identifier;
 }
