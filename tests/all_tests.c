@@ -5,7 +5,7 @@
 #include "lexer/lexer_tests.h"
 #include "parser/parser_tests.h"
 
-void run_all_tests()
+int run_all_tests()
 {
     CuString *output = CuStringNew();
     CuSuite *suite = CuSuiteNew();
@@ -19,9 +19,10 @@ void run_all_tests()
     CuSuiteSummary(suite, output);
     CuSuiteDetails(suite, output);
     printf("%s\n", output->buffer);
+    return suite->failCount;
 }
 
 int main()
 {
-    run_all_tests();
+    return run_all_tests();
 }

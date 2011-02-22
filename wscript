@@ -12,7 +12,10 @@ def options(opt):
                    help = 'Runs the unit tests')
 
 def run_tests(bld):
-    bld.exec_command('{0}/tests/run_all_tests'.format(os.path.abspath(out)))
+    cmd = '{0}/tests/run_all_tests'.format(os.path.abspath(out))
+    res = bld.exec_command(cmd)
+    if res != 0:
+        bld.fatal("Tests did not pass")
 
 def configure(conf):
     conf.env.C_FLAGS = ['-g', '-Wall', '-ansi', '-pedantic', '-std=c89']
