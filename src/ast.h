@@ -34,10 +34,12 @@ typedef enum {
     NEW_OBJECT,
     /** Represents the this type */
     THIS_OBJECT,
-    /** Represnts an ast_list struct */
+    /** Represents an ast_list struct */
     AST_LIST,
     /** Represents a call struct */
-    CALL
+    CALL,
+    /** Represensts a print struct */
+    SYSTEM_OUT_PRINT
 } nodetype;
 
 /**
@@ -216,6 +218,25 @@ ast* new_call(ast *object, identifier *method, ast_list *parameters);
  * @return A pointer to an AST representation of the THIS variable
  */
 ast* new_this();
+
+/**
+ * This struct represents a print statement
+ */
+typedef struct {
+    /** The type of the node (nodetype.PRINT) */
+    nodetype type;
+
+    /** The expression that will evaluate to the print argument */
+    ast* expression;
+} print;
+
+/**
+ * Creates a new print node with the given expression.
+ *
+ * @param expression The expression which result will be printed
+ * @return An AST representation of a print statement
+ */
+ast* new_print(ast* expression);
 
 /**
  * The result from the parser. After calling yyparse(), this variable will hold 

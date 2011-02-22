@@ -77,6 +77,14 @@ ast* new_call(ast *object, identifier *method, ast_list *parameters)
     return (ast *) c;
 }
 
+ast* new_print(ast* expression)
+{
+    print *p = j_malloc(sizeof(print));
+    p->type = SYSTEM_OUT_PRINT;
+    p->expression = expression;
+    return (ast *) p;
+}
+
 ast_callbacks _callbacks;
 
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
