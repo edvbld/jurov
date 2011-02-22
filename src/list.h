@@ -8,8 +8,8 @@ typedef struct list_element {
     /* The data of the element */
     void *data;
 
-    /* The next element in the list */
-    struct list_element *next;
+    /* The previous element in the list */
+    struct list_element *previous;
 } list_element;
 
 /**
@@ -29,7 +29,7 @@ typedef struct {
 /** 
  * Creates a new list.
  * 
- * @returns A pointer to the newly created list
+ * @return A pointer to the newly created list
  */
 list* new_list();
 
@@ -42,10 +42,10 @@ list* new_list();
 void append(list *list, void *data);
 
 /**
- * Deletes (frees) all the list and all its elements
+ * Frees the list and all its elements
  *
  * @param list The list to delete
  */
-void delete(list *list);
+void free_list(list *list);
 
 #endif /* __LIST_H__ */
