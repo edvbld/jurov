@@ -8,6 +8,7 @@ def build(bld):
                'test_ast_list.c',
                'test_call.c',
                'test_print.c',
+               'test_main_class.c',
                'test_unary_operation.c',
                'test_ast_walk.c']
     bld(features = 'c',

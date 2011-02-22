@@ -12,6 +12,7 @@ CuSuite* ast_test_this();
 CuSuite* ast_test_ast_list();
 CuSuite* ast_test_call();
 CuSuite* ast_test_print();
+CuSuite* ast_test_main_class();
 
 CuSuite *ast_tests()
 {
@@ -28,6 +29,7 @@ CuSuite *ast_tests()
     CuSuiteAddSuite(ast_tests, ast_test_ast_list());
     CuSuiteAddSuite(ast_tests, ast_test_call());
     CuSuiteAddSuite(ast_tests, ast_test_print());
+    CuSuiteAddSuite(ast_tests, ast_test_main_class());
 
     return ast_tests;
 }

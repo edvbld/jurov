@@ -39,7 +39,9 @@ typedef enum {
     /** Represents a call struct */
     CALL,
     /** Represensts a print struct */
-    SYSTEM_OUT_PRINT
+    SYSTEM_OUT_PRINT,
+    /** Represents a main_class struct */
+    MAIN_CLASS
 } nodetype;
 
 /**
@@ -227,7 +229,7 @@ typedef struct {
     nodetype type;
 
     /** The expression that will evaluate to the print argument */
-    ast* expression;
+    ast *expression;
 } print;
 
 /**
@@ -237,6 +239,35 @@ typedef struct {
  * @return An AST representation of a print statement
  */
 ast* new_print(ast* expression);
+
+/**
+ * Represents the main class of a MiniJava program
+ */
+typedef struct {
+    /** The type of the node (nodetype.PRINT) */
+    nodetype type;
+
+    /** The id of the main class */
+    identifier *class_id;
+
+    /** The id of the String[] parameter to the main method */
+    identifier *parameter_id;
+
+    /** The statement inside the main methods body */
+    ast *statement;
+} main_class;
+
+/**
+ * Creates a new main_class node with the given parameters
+ *
+ * @param class_id The identifier of the main class
+ * @param parameter_id The identifier of the String[] parameter to the main 
+ *                     method
+ * @param statement The statement inside the main methods body
+ * @return An AST representation of the main class
+ */
+ast* new_main_class(identifier *class_id, identifier *parameter_id,
+                    ast* statement);
 
 /**
  * The result from the parser. After calling yyparse(), this variable will hold 

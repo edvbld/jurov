@@ -85,6 +85,17 @@ ast* new_print(ast* expression)
     return (ast *) p;
 }
 
+ast* new_main_class(identifier *class_id, identifier *parameter_id,
+                    ast* statement)
+{
+    main_class *mc = j_malloc(sizeof(main_class));
+    mc->type = MAIN_CLASS;
+    mc->class_id = class_id;
+    mc->parameter_id = parameter_id;
+    mc->statement = statement;
+    return (ast *) mc;
+}
+
 ast_callbacks _callbacks;
 
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
