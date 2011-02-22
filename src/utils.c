@@ -1,5 +1,6 @@
 #include "utils.h"
-#include "stdio.h"
+
+void (*j_abort)() = &abort;
 
 void die(char *msg)
 {

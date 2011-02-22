@@ -1,7 +1,10 @@
 #include "ast.h"
 #include "utils.h"
+#include "stdio.h"
+
 ast* new_identifier(char *name)
 {
+    j_assert(name != "", "The name of a variable can't be empty");
     identifier *id = j_malloc(sizeof(identifier));
     id->name = name; 
     id->type = IDENTIFIER;
