@@ -52,14 +52,6 @@ ast* new_new_object(identifier *class_id)
     return (ast *) no;
 }
 
-ast* new_new_array(ast* size_expression)
-{
-    new_array *na = j_malloc(sizeof(new_array));
-    na->type = NEW_ARRAY;
-    na->size_expression = size_expression;
-    return (ast *) na;
-}
-
 ast_callbacks _callbacks;
 
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)

@@ -159,28 +159,6 @@ typedef struct {
 ast* new_new_object(identifier *class_id);
 
 /**
- * Represents a new array operation in the AST
- */
-typedef struct {
-    /** The type of the node (nodetype.NEW_ARRAY) */
-    nodetype type;
-
-    /** 
-     * The expression inside the brackets that determines the size of the 
-     * array
-     * */
-    ast* size_expression;
-} new_array;
-
-/**
- * Creates a new new_array with the given expression.
- *
- * @param size_expression The expression that calculates the size of the array
- * @return A pointer to an AST representation of the new array operation
- */
-ast* new_new_array(ast* size_expression);
-
-/**
  * The result from the parser. After calling yyparse(), this variable will hold 
  * the generated AST.
  */

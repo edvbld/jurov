@@ -4,7 +4,6 @@ def build(bld):
                'test_integer.c',
                'test_boolean.c',
                'test_new_object.c',
-               'test_new_array.c',
                'test_unary_operation.c',
                'test_ast_walk.c']
     bld(features = 'c',
