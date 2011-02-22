@@ -4,28 +4,28 @@
 
 list* new_list()
 {
-    list *list = j_malloc(sizeof(list));
-    list->size = 0;
-    list->first = NULL;
-    list->last = NULL;
-    return list;
+    list *l = j_malloc(sizeof(list));
+    l->size = 0;
+    l->first = NULL;
+    l->last = NULL;
+    return l;
 }
 
-void append(list* list, void *data)
+void append(list* l, void *data)
 {
     list_element *ele = j_malloc(sizeof(list_element));
     ele->data = data;
-    ele->previous = list->last;
-    if(0 == list->size) {
-        list->first = ele;
+    ele->previous = l->last;
+    if(0 == l->size) {
+        l->first = ele;
     }
-    list->last = ele;
-    list->size += 1;
+    l->last = ele;
+    l->size += 1;
 }
 
-void free_list(list* list)
+void free_list(list* l)
 {
-    list_element *current = list->last;
+    list_element *current = l->last;
     list_element *tmp;
 
     /* free all the elements */
@@ -37,5 +37,5 @@ void free_list(list* list)
     }
 
     /* free the list itself */
-    free(list);
+    free(l);
 }

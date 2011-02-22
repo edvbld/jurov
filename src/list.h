@@ -39,13 +39,13 @@ list* new_list();
  * @param list The list to append the element to
  * @param data The data to append
  */
-void append(list *list, void *data);
+void append(list *l, void *data);
 
 /**
  * Frees the list and all its elements
  *
  * @param list The list to delete
  */
-void free_list(list *list);
+void free_list(list *l);
 
 #endif /* __LIST_H__ */
