@@ -1,0 +1,6 @@
+def build(bld):
+    sources = ['test_new.c']
+    bld(features = 'c',
+        source = sources,
+        includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],
+        name = 'list_tests')
