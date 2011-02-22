@@ -52,6 +52,13 @@ ast* new_new_object(identifier *class_id)
     return (ast *) no;
 }
 
+ast* new_this()
+{
+    ast* this = j_malloc(sizeof(ast));
+    this->type = THIS_OBJECT;
+    return this;
+}
+
 ast_callbacks _callbacks;
 
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)

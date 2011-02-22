@@ -30,7 +30,9 @@ typedef enum {
     /** A boolean struct */
     BOOL,
     /** A new_object struct */
-    NEW_OBJECT
+    NEW_OBJECT,
+    /** Represents the this type */
+    THIS_OBJECT
 } nodetype;
 
 /**
@@ -157,6 +159,13 @@ typedef struct {
  * @return A pointer to an AST representation of the new object operation
  */
 ast* new_new_object(identifier *class_id);
+
+/**
+ * Creates a new ast struct with type nodetype.THIS
+ *
+ * @return A pointer to an AST representation of the THIS variable
+ */
+ast* new_this();
 
 /**
  * The result from the parser. After calling yyparse(), this variable will hold 
