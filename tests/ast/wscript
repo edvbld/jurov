@@ -10,6 +10,4 @@ def build(bld):
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],
-        name = 'ast_tests',
-        use = ['ast', 'cutest'])
-
+        name = 'ast_tests')
