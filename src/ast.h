@@ -1,5 +1,6 @@
 #ifndef __AST_H__
 #define __AST_H__
+#include "list.h"
 
 /**
  * Represents all different kinds of nodes that can exists in the AST
@@ -32,7 +33,11 @@ typedef enum {
     /** A new_object struct */
     NEW_OBJECT,
     /** Represents the this type */
-    THIS_OBJECT
+    THIS_OBJECT,
+    /** Represnts an ast_list struct */
+    AST_LIST,
+    /** Represents a call struct */
+    CALL
 } nodetype;
 
 /**
@@ -159,6 +164,51 @@ typedef struct {
  * @return A pointer to an AST representation of the new object operation
  */
 ast* new_new_object(identifier *class_id);
+
+/**
+ * This struct represents a list of ast elements
+ */
+typedef struct {
+    /** The type of the node, this will be nodetype.AST_LIST */
+    nodetype type;
+
+    /** The actual list of ast nodes */
+    list* list;
+} ast_list;
+
+/**
+ * Creates a new ast list with the given list.
+ *
+ * @param list The list of of AST nodes
+ */
+ast* new_ast_list(list* list);
+
+/**
+ * Represents a method call in the AST
+ */
+typedef struct {
+    /** The type of the node, this will be nodetype.CALL */
+    nodetype type;
+    
+    /* The expression that evaluates to the object to call the method on */
+    ast* object;
+
+    /* The id of the method to invoke */
+    identifier *method;
+
+    /* The parameters to the method */
+    ast_list *parameters;
+} call;
+
+/**
+ * Creates a new call node for the AST with the given parameters.
+ *
+ * @param object The object to call the method on
+ * @param method_id The id of the method to call
+ * @param parameters The parameters for the method call
+ * @return An AST representation of the method call
+ */
+ast* new_call(ast *object, identifier *method, ast_list *parameters);
 
 /**
  * Creates a new ast struct with type nodetype.THIS

@@ -59,6 +59,24 @@ ast* new_this()
     return this;
 }
 
+ast* new_ast_list(list *list)
+{
+    ast_list *al = j_malloc(sizeof(ast_list));
+    al->type = AST_LIST;
+    al->list = list;
+    return (ast *) al;
+}
+
+ast* new_call(ast *object, identifier *method, ast_list *parameters)
+{
+    call *c = j_malloc(sizeof(call));
+    c->type = CALL;
+    c->object = object;
+    c->method = method;
+    c->parameters = parameters;
+    return (ast *) c;
+}
+
 ast_callbacks _callbacks;
 
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)

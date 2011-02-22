@@ -9,6 +9,8 @@ CuSuite* ast_test_unary_operation();
 CuSuite* ast_test_boolean();
 CuSuite* ast_test_new_object();
 CuSuite* ast_test_this();
+CuSuite* ast_test_ast_list();
+CuSuite* ast_test_call();
 
 CuSuite *ast_tests()
 {
@@ -22,6 +24,8 @@ CuSuite *ast_tests()
     CuSuiteAddSuite(ast_tests, ast_test_boolean());
     CuSuiteAddSuite(ast_tests, ast_test_new_object());
     CuSuiteAddSuite(ast_tests, ast_test_this());
+    CuSuiteAddSuite(ast_tests, ast_test_ast_list());
+    CuSuiteAddSuite(ast_tests, ast_test_call());
 
     return ast_tests;
 }

@@ -23,6 +23,3 @@ CuSuite* ast_test_this()
 
     return this;
 }
-
-
-
