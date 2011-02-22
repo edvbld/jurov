@@ -4,5 +4,4 @@ def build(bld):
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_CUTEST],
-        name = 'lexer_tests',
-        )
+        name = 'lexer_tests')

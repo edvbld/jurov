@@ -243,4 +243,4 @@ void ast_walk(ast* tree, ast_callbacks callbacks, void *result);
  */
 void ast_visit(ast* node, void *result);
 
-#endif // __AST_H__
+#endif /* __AST_H__ */

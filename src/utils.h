@@ -39,4 +39,4 @@ void die(char *msg);
  */
 void* j_malloc(size_t n);
 
-#endif // __UTILS_H__
+#endif /* __UTILS_H__ */

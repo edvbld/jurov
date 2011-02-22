@@ -5,5 +5,3 @@ def build(bld):
         source = sources,
         includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_CUTEST],
         name = 'parser_tests')
- 
-
