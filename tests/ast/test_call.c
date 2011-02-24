@@ -1,8 +1,9 @@
+#include "stddef.h"
+#include "stdlib.h"
 #include "CuTest.h"
 #include "ast.h"
 #include "list.h"
-#include "stddef.h"
-#include "stdlib.h"
+#include "errors.h"
 
 static call* create(ast *object, ast *method, ast_list *parameters)
 {
@@ -14,10 +15,12 @@ void should_have_call_as_type(CuTest *tc)
     list *list = new_list();
     ast_list *params = (ast_list *) new_ast_list(list);
     ast *method;
-    new_identifier("foo", &method);
+    int res1 = new_identifier("foo", &method);
     ast *obj;
-    new_identifier("bar", &obj);
+    int res2 = new_identifier("bar", &obj);
     call *c = create(obj, method, params);
+    CuAssertIntEquals(tc, JRV_SUCCESS, res1);
+    CuAssertIntEquals(tc, JRV_SUCCESS, res2);
     CuAssertIntEquals(tc, CALL, c->type);
     free(list);
     free(params);

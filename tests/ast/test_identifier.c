@@ -1,13 +1,14 @@
-#include "CuTest.h"
-#include "ast.h"
 #include "stddef.h"
 #include "stdlib.h"
+#include "CuTest.h"
+#include "ast.h"
+#include "errors.h"
 
 static identifier* create(CuTest *tc, char *name)
 {
     ast *id;
     int res = new_identifier(name, &id);
-    CuAssertIntEquals(tc, 0, res);
+    CuAssertIntEquals(tc, JRV_SUCCESS, res);
     return (identifier *) id;
 }
 
@@ -15,7 +16,7 @@ void should_assert_that_name_is_not_empty(CuTest *tc)
 {
     ast *id;
     int ret = new_identifier("", &id);
-    CuAssertIntEquals(tc, -1, ret); /* TODO: Change to error code */
+    CuAssertIntEquals(tc, JRV_INVALID_STRING, ret);
 }
 
 void should_have_an_id_member(CuTest *tc)

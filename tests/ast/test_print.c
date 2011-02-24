@@ -1,7 +1,8 @@
-#include "CuTest.h"
-#include "ast.h"
 #include "stddef.h"
 #include "stdlib.h"
+#include "CuTest.h"
+#include "ast.h"
+#include "errors.h"
 
 static print* create(ast *expression)
 {
@@ -19,7 +20,7 @@ void should_have_the_given_expression_as_member(CuTest *tc)
 {
     ast* id;
     int res = new_identifier("foo", &id);
-    CuAssertIntEquals(tc, 0, res); /* TODO: Use enum instead of int */
+    CuAssertIntEquals(tc, JRV_SUCCESS, res);
     print *p = create(id);
     CuAssertPtrEquals(tc, id, p->expression);
     free(id);

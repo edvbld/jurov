@@ -4,6 +4,7 @@
 #include "list/list_tests.h"
 #include "lexer/lexer_tests.h"
 #include "parser/parser_tests.h"
+#include "errors/errors_tests.h"
 
 int run_all_tests()
 {
@@ -14,6 +15,7 @@ int run_all_tests()
     CuSuiteAddSuite(suite, list_tests());
     CuSuiteAddSuite(suite, lexer_tests());
     CuSuiteAddSuite(suite, parser_tests());
+    CuSuiteAddSuite(suite, errors_tests());
     
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);

@@ -1,7 +1,8 @@
-#include "CuTest.h"
-#include "ast.h"
 #include "stddef.h"
 #include "stdlib.h"
+#include "CuTest.h"
+#include "ast.h"
+#include "errors.h"
 
 static new_object* create(ast *id)
 {
@@ -12,7 +13,7 @@ void should_have_new_object_as_type(CuTest *tc)
 {
     ast *class_id;
     int res = new_identifier("foo", &class_id);
-    CuAssertIntEquals(tc, 0, res);
+    CuAssertIntEquals(tc, JRV_SUCCESS, res);
     new_object *node = create(class_id);
     CuAssertIntEquals(tc, NEW_OBJECT, node->type);
     free(class_id);
@@ -23,7 +24,7 @@ void should_have_the_given_class_id_as_member(CuTest *tc)
 {
     ast *class_id;
     int res = new_identifier("foo", &class_id);
-    CuAssertIntEquals(tc, 0, res);
+    CuAssertIntEquals(tc, JRV_SUCCESS, res);
     new_object *node = create(class_id);
     CuAssertPtrEquals(tc, class_id, node->class_id);
     free(class_id);

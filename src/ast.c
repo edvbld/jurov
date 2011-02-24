@@ -1,17 +1,18 @@
 #include "ast.h"
 #include "utils.h"
 #include "stdio.h"
+#include "errors.h"
 
 int new_identifier(char *name, ast **node)
 {
-    if(name == "") {
-        return -1; // TODO: Change to error code
+    if(name == "" || name == NULL) {
+        return JRV_INVALID_STRING;
     }
     identifier *id = j_malloc(sizeof(identifier));
     id->name = name; 
     id->type = IDENTIFIER;
     *node = (ast *) id;
-    return 0; // TODO: Change to success code
+    return JRV_SUCCESS;
 }
 
 ast* new_binary_operation(nodetype type, ast *left_operand, ast *right_operand)

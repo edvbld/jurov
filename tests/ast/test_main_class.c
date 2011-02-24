@@ -1,7 +1,8 @@
-#include "CuTest.h"
-#include "ast.h"
 #include "stddef.h"
 #include "stdlib.h"
+#include "CuTest.h"
+#include "ast.h"
+#include "errors.h"
 
 static main_class* create(ast *class_id, ast *parameter_id,
                           ast *statement)
@@ -24,8 +25,8 @@ void should_have_the_given_parameters_as_members(CuTest *tc)
     int ret2 = new_identifier("args", &param_id);
     ast* statement = new_print(NULL);
     main_class *mc = create(class_id, param_id, statement);
-    CuAssertIntEquals(tc, 0, ret1); /* TODO */
-    CuAssertIntEquals(tc, 0, ret2); /* TODO */
+    CuAssertIntEquals(tc, JRV_SUCCESS, ret1);
+    CuAssertIntEquals(tc, JRV_SUCCESS, ret2);
     CuAssertPtrEquals(tc, class_id, mc->class_id);
     CuAssertPtrEquals(tc, param_id, mc->parameter_id);
     CuAssertPtrEquals(tc, statement, mc->statement);

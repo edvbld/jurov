@@ -5,23 +5,23 @@
 #include "stdio.h"
 
 /**
- * This is only for unit testing purposes to be able to check 
- * that abort is called
- */
-extern void (*j_abort)();
-
-/**
- * Macro for asserting statements.
+ * Assert the expression e, otherwise abort with message s
  *
  * @param e The expression to check
  * @param s An message describing the error
  */
-#define j_assert(e, s)  \
+#define jrv_assert(e, s)  \
     ((void) ((e) ? 0 : __j_assert (s, __FILE__, __LINE__)))
-#define __j_assert(s, file, line) \
-    (j_abort != abort? j_abort() : \
-        (void)printf ("Internal compiler error: %s [%s:%u]\n", s, file, line), \
-        j_abort())
+#define __jrv_assert(s, file, line) \
+    ((void)printf ("Internal compiler error: %s [%s:%u]\n", s, file, line), \
+     abort())
+
+/**
+ * Calculates the length of an array
+ *
+ * @param array The array to calculcate the length for
+ */
+#define jrv_array_size(a) (a == NULL? 0 : (sizeof(a) / sizeof(a[0])))
 
 
 /**

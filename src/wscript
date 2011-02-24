@@ -5,6 +5,7 @@ def build(bld):
         includes = '.', name = 'lexer')
     sources = ['ast.c',
                'list.c',
+               'errors.c',
                'utils.c']
     bld(features = 'c', source = sources, includes = '.', 
         name = 'objects')
