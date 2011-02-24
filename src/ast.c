@@ -2,13 +2,16 @@
 #include "utils.h"
 #include "stdio.h"
 
-ast* new_identifier(char *name)
+int new_identifier(char *name, ast **node)
 {
-    j_assert(name != "", "The name of a variable can't be empty");
+    if(name == "") {
+        return -1; // TODO: Change to error code
+    }
     identifier *id = j_malloc(sizeof(identifier));
     id->name = name; 
     id->type = IDENTIFIER;
-    return (ast*) id;
+    *node = (ast *) id;
+    return 0; // TODO: Change to success code
 }
 
 ast* new_binary_operation(nodetype type, ast *left_operand, ast *right_operand)
@@ -44,11 +47,11 @@ ast* new_boolean(int value)
     return (ast *) b;
 }
 
-ast* new_new_object(identifier *class_id)
+ast* new_new_object(ast *class_id)
 {
     new_object *no = j_malloc(sizeof(new_object));
     no->type = NEW_OBJECT;
-    no->class_id = class_id;
+    no->class_id = (identifier *) class_id;
     return (ast *) no;
 }
 
@@ -67,12 +70,12 @@ ast* new_ast_list(list *list)
     return (ast *) al;
 }
 
-ast* new_call(ast *object, identifier *method, ast_list *parameters)
+ast* new_call(ast *object, ast *method, ast_list *parameters)
 {
     call *c = j_malloc(sizeof(call));
     c->type = CALL;
     c->object = object;
-    c->method = method;
+    c->method = (identifier *) method;
     c->parameters = parameters;
     return (ast *) c;
 }
@@ -85,13 +88,13 @@ ast* new_print(ast* expression)
     return (ast *) p;
 }
 
-ast* new_main_class(identifier *class_id, identifier *parameter_id,
+ast* new_main_class(ast *class_id, ast *parameter_id,
                     ast* statement)
 {
     main_class *mc = j_malloc(sizeof(main_class));
     mc->type = MAIN_CLASS;
-    mc->class_id = class_id;
-    mc->parameter_id = parameter_id;
+    mc->class_id = (identifier *) class_id;
+    mc->parameter_id = (identifier *) parameter_id;
     mc->statement = statement;
     return (ast *) mc;
 }

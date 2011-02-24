@@ -3,14 +3,16 @@
 #include "stddef.h"
 #include "stdlib.h"
 
-static new_object* create(identifier *id)
+static new_object* create(ast *id)
 {
     return (new_object *) new_new_object(id);
 }
 
 void should_have_new_object_as_type(CuTest *tc)
 {
-    identifier *class_id = (identifier *) new_identifier("foo");
+    ast *class_id;
+    int res = new_identifier("foo", &class_id);
+    CuAssertIntEquals(tc, 0, res);
     new_object *node = create(class_id);
     CuAssertIntEquals(tc, NEW_OBJECT, node->type);
     free(class_id);
@@ -19,7 +21,9 @@ void should_have_new_object_as_type(CuTest *tc)
 
 void should_have_the_given_class_id_as_member(CuTest *tc)
 {
-    identifier *class_id = (identifier *) new_identifier("foo");
+    ast *class_id;
+    int res = new_identifier("foo", &class_id);
+    CuAssertIntEquals(tc, 0, res);
     new_object *node = create(class_id);
     CuAssertPtrEquals(tc, class_id, node->class_id);
     free(class_id);

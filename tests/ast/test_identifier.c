@@ -1,41 +1,34 @@
 #include "CuTest.h"
 #include "ast.h"
-#include "utils.h"
 #include "stddef.h"
 #include "stdlib.h"
 
-static int j_abort_called = 0;
-
-void update_j_abort_called()
+static identifier* create(CuTest *tc, char *name)
 {
-    j_abort_called = 1;
-}
-
-static identifier* create(char *name)
-{
-    return (identifier *) new_identifier(name);
+    ast *id;
+    int res = new_identifier(name, &id);
+    CuAssertIntEquals(tc, 0, res);
+    return (identifier *) id;
 }
 
 void should_assert_that_name_is_not_empty(CuTest *tc)
 {
-    j_abort = &update_j_abort_called;
-    identifier *node = create("");
-    CuAssertIntEquals(tc, 1, j_abort_called);
-    j_abort_called = 0;
-    free(node);
+    ast *id;
+    int ret = new_identifier("", &id);
+    CuAssertIntEquals(tc, -1, ret); /* TODO: Change to error code */
 }
 
 void should_have_an_id_member(CuTest *tc)
 {
     char *name = "name";
-    identifier *node = create(name);
+    identifier *node = create(tc, name);
     CuAssertStrEquals(tc, name, node->name);
     free(node);
 }
 
 void should_have_identifier_as_type(CuTest *tc)
 {
-    identifier *node = create("name");
+    identifier *node = create(tc, "name");
     CuAssertIntEquals(tc, IDENTIFIER, node->type);
     free(node);
 }

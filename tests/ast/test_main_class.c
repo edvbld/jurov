@@ -3,7 +3,7 @@
 #include "stddef.h"
 #include "stdlib.h"
 
-static main_class* create(identifier *class_id, identifier *parameter_id,
+static main_class* create(ast *class_id, ast *parameter_id,
                           ast *statement)
 {
     return (main_class *) new_main_class(class_id, parameter_id, statement);
@@ -18,10 +18,14 @@ void should_have_main_class_as_type(CuTest *tc)
 
 void should_have_the_given_parameters_as_members(CuTest *tc)
 {
-    identifier* class_id = (identifier *) new_identifier("Main");
-    identifier* param_id = (identifier *) new_identifier("args");
+    ast* class_id;
+    int ret1 = new_identifier("Main", &class_id);
+    ast* param_id;
+    int ret2 = new_identifier("args", &param_id);
     ast* statement = new_print(NULL);
     main_class *mc = create(class_id, param_id, statement);
+    CuAssertIntEquals(tc, 0, ret1); /* TODO */
+    CuAssertIntEquals(tc, 0, ret2); /* TODO */
     CuAssertPtrEquals(tc, class_id, mc->class_id);
     CuAssertPtrEquals(tc, param_id, mc->parameter_id);
     CuAssertPtrEquals(tc, statement, mc->statement);

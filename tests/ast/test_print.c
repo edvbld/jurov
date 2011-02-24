@@ -17,7 +17,9 @@ void should_have_print_as_type(CuTest *tc)
 
 void should_have_the_given_expression_as_member(CuTest *tc)
 {
-    ast* id = new_identifier("foo");
+    ast* id;
+    int res = new_identifier("foo", &id);
+    CuAssertIntEquals(tc, 0, res); /* TODO: Use enum instead of int */
     print *p = create(id);
     CuAssertPtrEquals(tc, id, p->expression);
     free(id);

@@ -65,10 +65,12 @@ typedef struct {
 /**
  * Creates a new identifier with the given name.
  *
- * @param name The name of the identifier
- * @return A pointer to an ast struct
+ * @param[in] name The name of the identifier
+ * @param[out] node The addres of the pointer that will point at the result 
+ *                  of the function
+ * @return An integer specyfying the outcome of the function
  */
-ast* new_identifier(char *name);
+int new_identifier(char *name, ast **node);
 
 /**
  * Represents a binary operation (such as +,-,*,< etc.) node in the AST
@@ -167,7 +169,7 @@ typedef struct {
  * @param id The identifier of the class of the object
  * @return A pointer to an AST representation of the new object operation
  */
-ast* new_new_object(identifier *class_id);
+ast* new_new_object(ast *class_id);
 
 /**
  * This struct represents a list of ast elements
@@ -212,7 +214,7 @@ typedef struct {
  * @param parameters The parameters for the method call
  * @return An AST representation of the method call
  */
-ast* new_call(ast *object, identifier *method, ast_list *parameters);
+ast* new_call(ast *object, ast *method, ast_list *parameters);
 
 /**
  * Creates a new ast struct with type nodetype.THIS
@@ -266,7 +268,7 @@ typedef struct {
  * @param statement The statement inside the main methods body
  * @return An AST representation of the main class
  */
-ast* new_main_class(identifier *class_id, identifier *parameter_id,
+ast* new_main_class(ast *class_id, ast *parameter_id,
                     ast* statement);
 
 /**
