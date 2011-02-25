@@ -24,7 +24,7 @@ begin_spec(binary_operation, should_have_the_given_operands)
     free(op);
 end_spec
 
-begin_blueprint(binary_operation)
+begin_description(binary_operation)
     add_spec(should_have_the_given_type)
     add_spec(should_have_the_given_operands)
-end_blueprint
+end_description

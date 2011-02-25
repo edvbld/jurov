@@ -27,7 +27,7 @@ begin_spec(unary_operation, should_have_the_given_operand_as_member)
     free(node);
 end_spec
 
-begin_blueprint(unary_operation)
+begin_description(unary_operation)
     add_spec(should_have_unary_operation_as_type)
     add_spec(should_have_the_given_operand_as_member)
-end_blueprint
+end_description

@@ -80,7 +80,7 @@ begin_spec(ast_walk, should_handle_all_arithmetic_nodes)
     should_eq_int(11, result)
 end_spec
 
-begin_blueprint(ast_walk)
+begin_description(ast_walk)
     add_spec(should_handle_addition_and_integer_nodes)
     add_spec(should_handle_all_arithmetic_nodes)
-end_blueprint
+end_description

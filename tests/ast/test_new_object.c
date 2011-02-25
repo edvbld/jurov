@@ -30,7 +30,7 @@ begin_spec(new_object, should_have_the_given_class_id_as_member)
     free(node);
 end_spec
 
-begin_blueprint(new_object)
+begin_description(new_object)
     add_spec(should_have_new_object_as_type)
     add_spec(should_have_the_given_class_id_as_member)
-end_blueprint
+end_description

@@ -59,7 +59,7 @@ begin_spec(statement_parser, should_parse_several_mixed_statements)
     should_pass(parse_statements(statements))
 end_spec
 
-begin_blueprint(statement_parser)
+begin_description(statement_parser)
     add_spec(should_parse_the_empty_statement)
     add_spec(should_fail_when_missing_rigth_curly_bracket)
     add_spec(should_fail_when_missing_left_curly_bracket)
@@ -67,4 +67,4 @@ begin_blueprint(statement_parser)
     add_spec(should_parse_a_print_statement)
     add_spec(should_fail_if_trying_to_print_a_statement)
     add_spec(should_parse_several_mixed_statements)
-end_blueprint
+end_description

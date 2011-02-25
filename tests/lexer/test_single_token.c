@@ -212,7 +212,7 @@ begin_spec(single_token_lexer, should_lex_an_id_to_ID_and_save_name)
     should_eq_int(0, yylex())
 end_spec
 
-begin_blueprint(single_token_lexer)
+begin_description(single_token_lexer)
     add_spec(should_lex_public_static_void_main_to_MAIN)
     add_spec(should_lex_public_to_PUBLIC)
     add_spec(should_lex_system_out_println_to_PRINT)
@@ -246,4 +246,4 @@ begin_blueprint(single_token_lexer)
     add_spec(should_lex_semicolon_to_SEMICOLON)
     add_spec(should_lex_an_number_to_NUMBER_and_save_value)
     add_spec(should_lex_an_id_to_ID_and_save_name)
-end_blueprint
+end_description

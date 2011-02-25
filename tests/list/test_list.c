@@ -65,9 +65,9 @@ begin_spec(list, should_be_able_to_have_several_elements_appended_and_freed)
     free_list(l);
 end_spec
 
-begin_blueprint(list)
+begin_description(list)
     add_spec(should_have_size_zero_when_created)
     add_spec(should_have_null_as_beginning_and_end_when_created)
     add_spec(should_be_able_to_have_data_appended_to_it)
     add_spec(should_be_able_to_have_several_elements_appended_and_freed)
-end_blueprint
+end_description

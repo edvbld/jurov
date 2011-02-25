@@ -1,9 +1,9 @@
 #include "spectacular.h"
 
-begin_blueprint(lexer)
-    use_blueprint(single_token_lexer)
-    use_blueprint(multiple_token_lexer)
+begin_description(lexer)
+    use_description(single_token_lexer)
+    use_description(multiple_token_lexer)
 
-    add_blueprint(single_token_lexer)
-    add_blueprint(multiple_token_lexer)
-end_blueprint
+    add_description(single_token_lexer)
+    add_description(multiple_token_lexer)
+end_description

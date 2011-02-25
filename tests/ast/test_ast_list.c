@@ -27,7 +27,7 @@ begin_spec(ast_list, should_have_the_given_list_as_member)
     free(list);
 end_spec
 
-begin_blueprint(ast_list)
+begin_description(ast_list)
     add_spec(should_have_ast_list_as_type)
     add_spec(should_have_the_given_list_as_member)
-end_blueprint
+end_description

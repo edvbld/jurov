@@ -24,7 +24,7 @@ begin_spec(print, should_have_the_given_expression_as_member)
     free(p);
 end_spec
 
-begin_blueprint(print)
+begin_description(print)
     add_spec(should_have_print_as_type)
     add_spec(should_have_the_given_expression_as_member)
-end_blueprint
+end_description

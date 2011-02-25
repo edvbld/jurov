@@ -110,9 +110,9 @@ begin_spec(multiple_token_lexer, should_lex_a_small_program_with_print)
     should_eq_int(0, yylex())
 end_spec
 
-begin_blueprint(multiple_token_lexer)
+begin_description(multiple_token_lexer)
     add_spec(should_lex_two_tokens_separated_by_space)
     add_spec(should_lex_public_static_void_main_with_different_spaces)
     add_spec(should_lex_multiple_different_parentheses)
     add_spec(should_lex_a_small_program_with_print)
-end_blueprint
+end_description

@@ -1,19 +1,19 @@
 #include "stdio.h"
 #include "spectacular.h"
 
-begin_blueprint(jurov)
-    use_blueprint(ast)
-    use_blueprint(lexer)
-    use_blueprint(parser)
-    use_blueprint(list)
-    use_blueprint(errors)
+begin_description(jurov)
+    use_description(ast)
+    use_description(lexer)
+    use_description(parser)
+    use_description(list)
+    use_description(errors)
 
-    add_blueprint(ast)
-    add_blueprint(lexer)
-    add_blueprint(parser)
-    add_blueprint(list)
-    add_blueprint(errors)
-end_blueprint
+    add_description(ast)
+    add_description(lexer)
+    add_description(parser)
+    add_description(list)
+    add_description(errors)
+end_description
 
 int run_all_tests()
 {

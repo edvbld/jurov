@@ -86,7 +86,7 @@ begin_spec(main_class_parser,
     should_fail(parse_program(program))
 end_spec
 
-begin_blueprint(main_class_parser)
+begin_description(main_class_parser)
     add_spec(should_parse_a_program_consisting_of_only_main_class)
     add_spec(should_fail_when_missing_main_function)
     add_spec(should_fail_when_missing_static_in_main_function)
@@ -96,4 +96,4 @@ begin_blueprint(main_class_parser)
     add_spec(should_fail_when_missing_left_parenthesis_around_main_function)
     add_spec(should_fail_when_missing_main_function_body)
     add_spec(should_fail_when_missing_class_around_main_function)
-end_blueprint
+end_description

@@ -26,8 +26,8 @@ begin_spec(identifier, should_have_identifier_as_type)
     free(node);
 end_spec
 
-begin_blueprint(identifier)
+begin_description(identifier)
     add_spec(should_fail_if_name_is_empty_or_null)
     add_spec(should_have_the_given_string_as_member)
     add_spec(should_have_identifier_as_type)
-end_blueprint
+end_description
