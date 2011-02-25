@@ -2,7 +2,6 @@
 #define __AST_TESTS_H__
 
 CuSuite* ast_test_unary_operation();
-CuSuite* ast_test_this();
 
 CuSuite *ast_tests()
 {
@@ -16,6 +15,7 @@ CuSuite *ast_tests()
     CuSuite* test_main_class();
     CuSuite* test_new_object();
     CuSuite* test_print();
+    CuSuite* test_this();
     
     CuSuite* suite = CuSuiteNew();
 
@@ -29,8 +29,8 @@ CuSuite *ast_tests()
     CuSuiteAddSuite(suite, test_main_class());
     CuSuiteAddSuite(suite, test_new_object());
     CuSuiteAddSuite(suite, test_print());
+    CuSuiteAddSuite(suite, test_this());
     CuSuiteAddSuite(suite, ast_test_unary_operation());
-    CuSuiteAddSuite(suite, ast_test_this());
 
     return suite;
 }

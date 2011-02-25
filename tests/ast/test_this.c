@@ -1,25 +1,15 @@
-#include "CuTest.h"
+#include "spectacular.h"
 #include "ast.h"
-#include "stddef.h"
-#include "stdlib.h"
 
-static ast* create()
-{
-    return new_this();
-}
+begin_spec(this, should_have_this_object_as_type)
+    ast *node;
+    
+    node = new_this();
+    should_eq_int(THIS_OBJECT, node->type)
 
-void should_have_this_object_as_type(CuTest *tc)
-{
-    ast *node = create();
-    CuAssertIntEquals(tc, THIS_OBJECT, node->type);
     free(node);
-}
+end_spec
 
-CuSuite* ast_test_this()
-{
-    CuSuite *this = CuSuiteNew();
-
-    SUITE_ADD_TEST(this, should_have_this_object_as_type);
-
-    return this;
-}
+begin_suite(this)
+    add_spec(should_have_this_object_as_type)
+end_suite
