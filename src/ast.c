@@ -15,13 +15,15 @@ int new_identifier(char *name, ast **node)
     return JRV_SUCCESS;
 }
 
-ast* new_binary_operation(nodetype type, ast *left_operand, ast *right_operand)
+int new_binary_operation(nodetype type, ast *left_operand, ast *right_operand,
+                         ast **node)
 {
     binary_operation *op = j_malloc(sizeof(binary_operation));
     op->type = type;
     op->left_operand = left_operand;
     op->right_operand = right_operand;
-    return (ast*) op;
+    *node = (ast *) op;
+    return JRV_SUCCESS;
 }
 
 ast* new_unary_operation(nodetype type, ast *operand)

@@ -89,12 +89,15 @@ typedef struct {
  * Creates a new binary operation with the given type and 
  * operands.
  *
- * @param type The type of the operation
- * @param left_operand The left operand of the expression
- * @param right_operand The right operand of the expression
+ * @param[in] type The type of the operation
+ * @param[in] left_operand The left operand of the expression
+ * @param[in] right_operand The right operand of the expression
+ * @param[out] node The addres of the pointer that will point at the result 
+ *                  of the function
  * @return A point to an ast struct
  */
-ast* new_binary_operation(nodetype type, ast* left_operand, ast* right_operand);
+int new_binary_operation(nodetype type, ast* left_operand, ast* right_operand, 
+                         ast **node);
 
 /**
  * Represents an unary operation (such as .length, new, not) node in the AST

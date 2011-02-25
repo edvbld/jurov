@@ -1,16 +1,14 @@
-#include "CuTest.h"
-#include "ast.h"
 #include "stddef.h"
 #include "stdlib.h"
-
-static binary_operation* create(nodetype type, ast* left, ast* right)
-{
-    return (binary_operation *) new_binary_operation(type, left, right);
-}
+#include "CuTest.h"
+#include "ast.h"
+#include "errors.h"
 
 void should_have_the_given_type(CuTest *tc)
 {
-    binary_operation *op = create(ADDITION, NULL, NULL);
+    binary_operation *op;
+    int res = new_binary_operation(ADDITION, NULL, NULL, (ast **) &op);
+    CuAssertIntEquals(tc, JRV_SUCCESS, res);
     CuAssertIntEquals(tc, ADDITION, op->type);
     free(op);
 }
@@ -19,7 +17,9 @@ void should_have_the_given_operands(CuTest *tc)
 {
     ast *left = new_integer(5);
     ast *right = new_integer(7);
-    binary_operation *op = create(ADDITION, left, right);
+    binary_operation *op;
+    int res = new_binary_operation(ADDITION, left, right, (ast **) &op);
+    CuAssertIntEquals(tc, JRV_SUCCESS, res);
     CuAssertPtrEquals(tc, left, op->left_operand);
     CuAssertPtrEquals(tc, right, op->right_operand);
     free(left);
