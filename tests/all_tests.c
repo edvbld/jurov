@@ -1,17 +1,18 @@
 #include "stdio.h"
 #include "spectacular.h"
-#include "errors/errors_tests.h"
 
 begin_blueprint(jurov)
     use_blueprint(ast)
     use_blueprint(lexer)
     use_blueprint(parser)
     use_blueprint(list)
+    use_blueprint(errors)
 
     add_blueprint(ast)
     add_blueprint(lexer)
     add_blueprint(parser)
     add_blueprint(list)
+    add_blueprint(errors)
 end_blueprint
 
 int run_all_tests()
@@ -20,7 +21,6 @@ int run_all_tests()
     CuSuite *suite = CuSuiteNew();
 
     CuSuiteAddSuite(suite, test_jurov());
-    CuSuiteAddSuite(suite, errors_tests());
     
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);

@@ -1,24 +1,13 @@
-#include "CuTest.h"
-#include "errors.h"
+#include "spectacular.h"
 #include "stddef.h"
 
-void should_return_the_correct_description(CuTest *tc)
-{
-    CuAssertStrEquals(tc, "Unknown error", 
-                      jrv_error_description(JRV_SUCCESS));
-    CuAssertStrEquals(tc, "Unspecified error",
-                      jrv_error_description(JRV_ERROR));
-    CuAssertStrEquals(tc, "The object did not have the expected type",
-                      jrv_error_description(JRV_INVALID_TYPE));
-    CuAssertStrEquals(tc, "The string is empty or NULL",
-                      jrv_error_description(JRV_INVALID_STRING));
-}
+begin_spec(errors, should_return_the_correct_description)
+    should_eq_str("Unknown error", jrv_error_description(JRV_SUCCESS))
+    should_eq_str("Unspecified error", jrv_error_description(JRV_ERROR))
+    should_eq_str("The object did not have the expected type", jrv_error_description(JRV_INVALID_TYPE))
+    should_eq_str("The string is empty or NULL", jrv_error_description(JRV_INVALID_STRING))
+end_spec
 
-CuSuite* errors_test_errors()
-{
-    CuSuite *errors = CuSuiteNew();
-
-    SUITE_ADD_TEST(errors, should_return_the_correct_description);
-
-    return errors;
-}
+begin_blueprint(errors)
+    add_spec(should_return_the_correct_description)
+end_blueprint
