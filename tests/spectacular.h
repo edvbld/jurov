@@ -6,9 +6,9 @@
 #include "CuTest.h"
 #include "errors.h"
 
-#define begin_spec(object, property) void _##property(CuTest *tc) {
+#define begin_example(object, property) void _##property(CuTest *tc) {
 
-#define end_spec }
+#define end_example }
 
 #define should_eq_int(exp, act) CuAssertIntEquals(tc, exp, act);
 #define should_eq_str(exp, act) CuAssertStrEquals(tc, exp, act);
@@ -20,7 +20,7 @@
 #define begin_description(name) CuSuite* test_##name() { \
     CuSuite *suite = CuSuiteNew();
 
-#define add_spec(property) SUITE_ADD_TEST(suite, _##property);
+#define add_example(property) SUITE_ADD_TEST(suite, _##property);
 
 #define end_description return suite; }
 

@@ -6,13 +6,13 @@ static print* create(ast *expression)
     return (print *) new_print(expression);
 }
 
-begin_spec(print, should_have_print_as_type)
+begin_example(print, should_have_print_as_type)
     print *p = create(NULL);
     should_eq_int(SYSTEM_OUT_PRINT, p->type)
     free(p);
-end_spec
+end_example
 
-begin_spec(print, should_have_the_given_expression_as_member)
+begin_example(print, should_have_the_given_expression_as_member)
     ast *id;
     print *p;
 
@@ -22,9 +22,9 @@ begin_spec(print, should_have_the_given_expression_as_member)
 
     free(id);
     free(p);
-end_spec
+end_example
 
 begin_description(print)
-    add_spec(should_have_print_as_type)
-    add_spec(should_have_the_given_expression_as_member)
+    add_example(should_have_print_as_type)
+    add_example(should_have_the_given_expression_as_member)
 end_description

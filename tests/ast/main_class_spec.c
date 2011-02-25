@@ -7,13 +7,13 @@ static main_class* create(ast *class_id, ast *parameter_id,
     return (main_class *) new_main_class(class_id, parameter_id, statement);
 }
 
-begin_spec(main_class, should_have_main_class_as_type)
+begin_example(main_class, should_have_main_class_as_type)
     main_class *mc = create(NULL, NULL, NULL);
     should_eq_int(MAIN_CLASS, mc->type)
     free(mc);
-end_spec
+end_example
 
-begin_spec(main_class, should_have_the_given_parameters_as_members)
+begin_example(main_class, should_have_the_given_parameters_as_members)
     ast* class_id;
     ast* param_id;
     ast* statement;
@@ -30,9 +30,9 @@ begin_spec(main_class, should_have_the_given_parameters_as_members)
     free(param_id);
     free(statement);
     free(mc);
-end_spec
+end_example
 
 begin_description(main_class)
-    add_spec(should_have_main_class_as_type)
-    add_spec(should_have_the_given_parameters_as_members)
+    add_example(should_have_main_class_as_type)
+    add_example(should_have_the_given_parameters_as_members)
 end_description

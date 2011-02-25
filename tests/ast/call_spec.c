@@ -7,7 +7,7 @@ static call* create(ast *object, ast *method, ast_list *parameters)
     return (call *) new_call(object, method, parameters);
 }
 
-begin_spec(call, should_have_call_as_type)
+begin_example(call, should_have_call_as_type)
     list *list = new_list();
     ast_list *params = (ast_list *) new_ast_list(list);
     ast *method;
@@ -23,9 +23,9 @@ begin_spec(call, should_have_call_as_type)
     free(method);
     free(obj);
     free(c);
-end_spec
+end_example
 
-begin_spec(call, should_have_the_parameters_as_members)
+begin_example(call, should_have_the_parameters_as_members)
     list *list = new_list();
     ast_list *params = (ast_list *) new_ast_list(list);
     ast *method;
@@ -43,9 +43,9 @@ begin_spec(call, should_have_the_parameters_as_members)
     free(method);
     free(obj);
     free(c);
-end_spec
+end_example
 
 begin_description(call)
-    add_spec(should_have_call_as_type)
-    add_spec(should_have_the_parameters_as_members)
+    add_example(should_have_call_as_type)
+    add_example(should_have_the_parameters_as_members)
 end_description

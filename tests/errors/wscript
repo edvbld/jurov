@@ -1,8 +1,8 @@
 def build(bld):
-    sources = ['test_errors.c']
+    sources = ['errors_spec.c']
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST,
                     bld.env.INCLUDE_SPECTACULAR],
-        name = 'errors_tests')
+        name = 'errors_specs')
 

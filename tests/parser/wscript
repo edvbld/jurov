@@ -1,9 +1,9 @@
 def build(bld):
-    sources = ['parser_tests.c',
-               'test_main_class.c',
-               'test_statements.c']
+    sources = ['parser_specs.c',
+               'main_class_spec.c',
+               'statements_spec.c']
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_SPECTACULAR, 
                     bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],
-        name = 'parser_tests')
+        name = 'parser_specs')

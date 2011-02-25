@@ -22,49 +22,49 @@ int parse_statements(char *statements)
     return res;
 }
 
-begin_spec(statement_parser, should_parse_the_empty_statement)
+begin_example(statement_parser, should_parse_the_empty_statement)
     char *statement = "{}";
     should_pass(parse_statements(statement))
-end_spec
+end_example
 
-begin_spec(statement_parser, should_fail_when_missing_rigth_curly_bracket)
+begin_example(statement_parser, should_fail_when_missing_rigth_curly_bracket)
     char *statement = "{";
     should_fail(parse_statements(statement))
-end_spec
+end_example
 
-begin_spec(statement_parser, should_fail_when_missing_left_curly_bracket)
+begin_example(statement_parser, should_fail_when_missing_left_curly_bracket)
     char *statement = "}";
     should_fail(parse_statements(statement))
-end_spec
+end_example
 
-begin_spec(statement_parser, should_parse_nested_statements)
+begin_example(statement_parser, should_parse_nested_statements)
     char *statement = "{{{}}}";
     should_pass(parse_statements(statement))
-end_spec
+end_example
 
-begin_spec(statement_parser, should_parse_a_print_statement)
+begin_example(statement_parser, should_parse_a_print_statement)
     char *statement = "System.out.println(true);";
     should_pass(parse_statements(statement))
-end_spec
+end_example
 
-begin_spec(statement_parser, should_fail_if_trying_to_print_a_statement)
+begin_example(statement_parser, should_fail_if_trying_to_print_a_statement)
     char *statement = "System.out.println({});"; 
     should_fail(parse_statements(statement))
-end_spec
+end_example
 
-begin_spec(statement_parser, should_parse_several_mixed_statements)
+begin_example(statement_parser, should_parse_several_mixed_statements)
     char *statements = 
         "System.out.println(true);\n"
         "{System.out.println(false);}";
     should_pass(parse_statements(statements))
-end_spec
+end_example
 
 begin_description(statement_parser)
-    add_spec(should_parse_the_empty_statement)
-    add_spec(should_fail_when_missing_rigth_curly_bracket)
-    add_spec(should_fail_when_missing_left_curly_bracket)
-    add_spec(should_parse_nested_statements)
-    add_spec(should_parse_a_print_statement)
-    add_spec(should_fail_if_trying_to_print_a_statement)
-    add_spec(should_parse_several_mixed_statements)
+    add_example(should_parse_the_empty_statement)
+    add_example(should_fail_when_missing_rigth_curly_bracket)
+    add_example(should_fail_when_missing_left_curly_bracket)
+    add_example(should_parse_nested_statements)
+    add_example(should_parse_a_print_statement)
+    add_example(should_fail_if_trying_to_print_a_statement)
+    add_example(should_parse_several_mixed_statements)
 end_description

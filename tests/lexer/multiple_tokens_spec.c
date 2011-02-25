@@ -2,14 +2,14 @@
 #include "jurov.tab.h"
 #include "lex.yy.h"
 
-begin_spec(multiple_token_lexer, should_lex_two_tokens_separated_by_space)
+begin_example(multiple_token_lexer, should_lex_two_tokens_separated_by_space)
     yy_scan_string("public class");
     should_eq_int(PUBLIC, yylex())
     should_eq_int(CLASS, yylex())
     should_eq_int(0, yylex())
-end_spec
+end_example
 
-begin_spec(multiple_token_lexer, 
+begin_example(multiple_token_lexer, 
            should_lex_public_static_void_main_with_different_spaces)
     char *test_str =
         " \t\npublic \n\t\n   \t  public \t \n"
@@ -21,9 +21,9 @@ begin_spec(multiple_token_lexer,
     should_eq_int(PUBLIC, yylex())
     should_eq_int(CLASS, yylex())
     should_eq_int(0, yylex())
-end_spec
+end_example
 
-begin_spec(multiple_token_lexer, should_lex_multiple_different_parentheses)
+begin_example(multiple_token_lexer, should_lex_multiple_different_parentheses)
     char *test_str = " )} {}\n{({}\t)[] {({][]{(";
     yy_scan_string(test_str);
     should_eq_int(RPAREN, yylex())
@@ -46,9 +46,9 @@ begin_spec(multiple_token_lexer, should_lex_multiple_different_parentheses)
     should_eq_int(LCURLY, yylex())
     should_eq_int(LPAREN, yylex())
     should_eq_int(0, yylex())
-end_spec
+end_example
 
-begin_spec(multiple_token_lexer, should_lex_a_small_program_with_print)
+begin_example(multiple_token_lexer, should_lex_a_small_program_with_print)
     char *test_str =
         "public class Program\n"
         "{\n"
@@ -108,11 +108,11 @@ begin_spec(multiple_token_lexer, should_lex_a_small_program_with_print)
     should_eq_int(RCURLY, yylex())
     should_eq_int(RCURLY, yylex())
     should_eq_int(0, yylex())
-end_spec
+end_example
 
 begin_description(multiple_token_lexer)
-    add_spec(should_lex_two_tokens_separated_by_space)
-    add_spec(should_lex_public_static_void_main_with_different_spaces)
-    add_spec(should_lex_multiple_different_parentheses)
-    add_spec(should_lex_a_small_program_with_print)
+    add_example(should_lex_two_tokens_separated_by_space)
+    add_example(should_lex_public_static_void_main_with_different_spaces)
+    add_example(should_lex_multiple_different_parentheses)
+    add_example(should_lex_a_small_program_with_print)
 end_description

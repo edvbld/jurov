@@ -1,16 +1,16 @@
 #include "spectacular.h"
 #include "ast.h"
 
-begin_spec(binary_operation, should_have_the_given_type)
+begin_example(binary_operation, should_have_the_given_type)
     binary_operation *op;
 
     should_pass(new_binary_operation(ADDITION, NULL, NULL, (ast **) &op))
     should_eq_int(ADDITION, op->type)
 
     free(op);
-end_spec
+end_example
 
-begin_spec(binary_operation, should_have_the_given_operands)
+begin_example(binary_operation, should_have_the_given_operands)
     ast *left = new_integer(5);
     ast *right = new_integer(7);
     binary_operation *op;
@@ -22,9 +22,9 @@ begin_spec(binary_operation, should_have_the_given_operands)
     free(left);
     free(right);
     free(op);
-end_spec
+end_example
 
 begin_description(binary_operation)
-    add_spec(should_have_the_given_type)
-    add_spec(should_have_the_given_operands)
+    add_example(should_have_the_given_type)
+    add_example(should_have_the_given_operands)
 end_description

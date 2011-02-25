@@ -6,16 +6,16 @@ static unary_operation* create(nodetype type, ast *operand)
     return (unary_operation *) new_unary_operation(type, operand);
 }
 
-begin_spec(unary_operation, should_have_unary_operation_as_type)
+begin_example(unary_operation, should_have_unary_operation_as_type)
     unary_operation *node;
     
     node = create(NOT, NULL);
     should_eq_int(NOT, node->type)
 
     free(node);
-end_spec
+end_example
 
-begin_spec(unary_operation, should_have_the_given_operand_as_member)
+begin_example(unary_operation, should_have_the_given_operand_as_member)
     ast *b; 
     unary_operation *node;
     
@@ -25,9 +25,9 @@ begin_spec(unary_operation, should_have_the_given_operand_as_member)
     
     free(b);
     free(node);
-end_spec
+end_example
 
 begin_description(unary_operation)
-    add_spec(should_have_unary_operation_as_type)
-    add_spec(should_have_the_given_operand_as_member)
+    add_example(should_have_unary_operation_as_type)
+    add_example(should_have_the_given_operand_as_member)
 end_description

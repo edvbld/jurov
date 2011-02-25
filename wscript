@@ -8,14 +8,14 @@ top = '.'
 
 def options(opt):
     opt.load('compiler_c')
-    opt.add_option('--test', action = 'store_true', default = False, 
-                   help = 'Runs the unit tests')
+    opt.add_option('--spec', action = 'store_true', default = False, 
+                   help = 'Runs all the speficications')
 
-def run_tests(bld):
-    cmd = '{0}/tests/run_all_tests'.format(os.path.abspath(out))
+def run_specs(bld):
+    cmd = '{0}/tests/run_all_specs'.format(os.path.abspath(out))
     res = bld.exec_command(cmd)
     if res != 0:
-        bld.fatal("Tests did not pass")
+        bld.fatal("The specifications were not fulfilled!")
 
 def configure(conf):
     conf.env.C_FLAGS = ['-g', '-Wall', '-ansi', '-pedantic', '-std=c89']
@@ -30,5 +30,5 @@ def configure(conf):
 
 def build(bld):
     bld.recurse(['src', 'tests', 'lib'])
-    if Options.options.test:
-        bld.add_post_fun(run_tests)
+    if Options.options.spec:
+        bld.add_post_fun(run_specs)

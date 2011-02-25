@@ -1,19 +1,19 @@
 def build(bld):
-    sources = ['ast_tests.c',
-               'test_identifier.c',
-               'test_binary_operation.c',
-               'test_integer.c',
-               'test_boolean.c',
-               'test_new_object.c',
-               'test_this.c',
-               'test_ast_list.c',
-               'test_call.c',
-               'test_print.c',
-               'test_main_class.c',
-               'test_unary_operation.c',
-               'test_ast_walk.c']
+    sources = ['ast_specs.c',
+               'identifier_spec.c',
+               'binary_operation_spec.c',
+               'integer_spec.c',
+               'boolean_spec.c',
+               'new_object_spec.c',
+               'this_spec.c',
+               'ast_list_spec.c',
+               'call_spec.c',
+               'print_spec.c',
+               'main_class_spec.c',
+               'unary_operation_spec.c',
+               'ast_walk_spec.c']
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST, 
                     bld.env.INCLUDE_SPECTACULAR], 
-        name = 'ast_tests')
+        name = 'ast_specs')

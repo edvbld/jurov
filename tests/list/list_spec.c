@@ -1,24 +1,24 @@
 #include "spectacular.h"
 #include "list.h"
 
-begin_spec(list, should_have_size_zero_when_created)
+begin_example(list, should_have_size_zero_when_created)
     list* l = new_list();
 
     should_eq_int(0, l->size)
 
     free(l);
-end_spec
+end_example
 
-begin_spec(list, should_have_null_as_beginning_and_end_when_created)
+begin_example(list, should_have_null_as_beginning_and_end_when_created)
     list* l = new_list();
 
     should_eq_ptr(NULL, l->first)
     should_eq_ptr(NULL, l->last)
 
     free(l);
-end_spec
+end_example
 
-begin_spec(list, should_be_able_to_have_data_appended_to_it)
+begin_example(list, should_be_able_to_have_data_appended_to_it)
     list* l = new_list();
     int x = 5;
     
@@ -31,9 +31,9 @@ begin_spec(list, should_be_able_to_have_data_appended_to_it)
     
     free(l->last);
     free(l);
-end_spec
+end_example
 
-begin_spec(list, should_be_able_to_have_several_elements_appended_and_freed)
+begin_example(list, should_be_able_to_have_several_elements_appended_and_freed)
     list* l = new_list();
     int *a = malloc(sizeof(int));
     int *b = malloc(sizeof(int));
@@ -63,11 +63,11 @@ begin_spec(list, should_be_able_to_have_several_elements_appended_and_freed)
     should_eq_ptr(NULL, l->first->previous)
     
     free_list(l);
-end_spec
+end_example
 
 begin_description(list)
-    add_spec(should_have_size_zero_when_created)
-    add_spec(should_have_null_as_beginning_and_end_when_created)
-    add_spec(should_be_able_to_have_data_appended_to_it)
-    add_spec(should_be_able_to_have_several_elements_appended_and_freed)
+    add_example(should_have_size_zero_when_created)
+    add_example(should_have_null_as_beginning_and_end_when_created)
+    add_example(should_be_able_to_have_data_appended_to_it)
+    add_example(should_be_able_to_have_several_elements_appended_and_freed)
 end_description

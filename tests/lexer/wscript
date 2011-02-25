@@ -1,9 +1,9 @@
 def build(bld):
-    sources = ['lexer_tests.c',
-               'test_single_token.c',
-               'test_multiple_tokens.c']
+    sources = ['lexer_specs.c',
+               'single_token_spec.c',
+               'multiple_tokens_spec.c']
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_CUTEST, 
                     bld.env.INCLUDE_SRC, bld.env.INCLUDE_SPECTACULAR],
-        name = 'lexer_tests')
+        name = 'lexer_specs')
