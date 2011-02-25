@@ -1,29 +1,24 @@
 #include "spectacular.h"
 #include "ast.h"
 
-static unary_operation* create(nodetype type, ast *operand)
-{
-    return (unary_operation *) new_unary_operation(type, operand);
-}
-
 begin_example(unary_operation, should_have_unary_operation_as_type)
     unary_operation *node;
-    
-    node = create(NOT, NULL);
+
+    should_pass(new_unary_operation(NOT, NULL, (ast **) &node))
     should_eq_int(NOT, node->type)
 
     free(node);
 end_example
 
 begin_example(unary_operation, should_have_the_given_operand_as_member)
-    ast *b; 
+    ast *operand; 
     unary_operation *node;
     
-    b = new_boolean(0);
-    node = create(NOT, b);
-    should_eq_ptr(b, node->operand)
+    operand = new_boolean(0);
+    should_pass(new_unary_operation(NOT, operand, (ast **) &node))
+    should_eq_ptr(operand, node->operand)
     
-    free(b);
+    free(operand);
     free(node);
 end_example
 

@@ -68,7 +68,7 @@ typedef struct {
  * @param[in] name The name of the identifier
  * @param[out] node The addres of the pointer that will point at the result 
  *                  of the function
- * @return An integer specyfying the outcome of the function
+ * @return An integer describing the result of the function
  */
 int new_identifier(char *name, ast **node);
 
@@ -94,7 +94,7 @@ typedef struct {
  * @param[in] right_operand The right operand of the expression
  * @param[out] node The addres of the pointer that will point at the result 
  *                  of the function
- * @return A point to an ast struct
+ * @return An integer describing the result of the function
  */
 int new_binary_operation(nodetype type, ast* left_operand, ast* right_operand, 
                          ast **node);
@@ -113,11 +113,13 @@ typedef struct {
  * Creates a new unary operation with the given type and 
  * operand.
  *
- * @param type The type of the operation
- * @param operand The operand of the expression
- * @return A point to an ast struct
+ * @param[in] type The type of the operation
+ * @param[in] operand The operand of the expression
+ * @param[out] node The addres of the pointer that will point at the result 
+ *                  of the function
+ * @return An integer describing the result of the function
  */
-ast* new_unary_operation(nodetype type, ast* operand);
+int new_unary_operation(nodetype type, ast* operand, ast **node);
 
 /**
  * Represents an integer node in the AST

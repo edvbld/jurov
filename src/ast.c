@@ -27,12 +27,13 @@ int new_binary_operation(nodetype type, ast *left_operand, ast *right_operand,
     return JRV_SUCCESS;
 }
 
-ast* new_unary_operation(nodetype type, ast *operand)
+int new_unary_operation(nodetype type, ast *operand, ast **node)
 {
     unary_operation *op = j_malloc(sizeof(unary_operation));
     op->type = type;
     op->operand = operand;
-    return (ast *) op;
+    *node = (ast *) op;
+    return JRV_SUCCESS;
 }
 
 ast* new_integer(int value)
