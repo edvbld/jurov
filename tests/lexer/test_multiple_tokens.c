@@ -1,57 +1,54 @@
-#include "CuTest.h"
+#include "spectacular.h"
 #include "jurov.tab.h"
 #include "lex.yy.h"
 
-void should_lex_two_tokens_separated_by_space(CuTest *tc)
-{
+begin_spec(multiple_token_lexer, should_lex_two_tokens_separated_by_space)
     yy_scan_string("public class");
-    CuAssertIntEquals(tc, PUBLIC, yylex());
-    CuAssertIntEquals(tc, CLASS, yylex());
-    CuAssertIntEquals(tc, 0, yylex());
-}
+    should_eq_int(PUBLIC, yylex())
+    should_eq_int(CLASS, yylex())
+    should_eq_int(0, yylex())
+end_spec
 
-void should_lex_public_static_void_main_with_different_spaces(CuTest *tc)
-{
+begin_spec(multiple_token_lexer, 
+           should_lex_public_static_void_main_with_different_spaces)
     char *test_str =
         " \t\npublic \n\t\n   \t  public \t \n"
         "\t  \tstatic\n void\t\n   \n main "
         "public\nclass \t\n";
     yy_scan_string(test_str);
-    CuAssertIntEquals(tc, PUBLIC, yylex());
-    CuAssertIntEquals(tc, MAIN, yylex());
-    CuAssertIntEquals(tc, PUBLIC, yylex());
-    CuAssertIntEquals(tc, CLASS, yylex());
-    CuAssertIntEquals(tc, 0, yylex());
-}
+    should_eq_int(PUBLIC, yylex())
+    should_eq_int(MAIN, yylex())
+    should_eq_int(PUBLIC, yylex())
+    should_eq_int(CLASS, yylex())
+    should_eq_int(0, yylex())
+end_spec
 
-void should_lex_multiple_different_parentheses(CuTest *tc)
-{
+begin_spec(multiple_token_lexer, should_lex_multiple_different_parentheses)
     char *test_str = " )} {}\n{({}\t)[] {({][]{(";
     yy_scan_string(test_str);
-    CuAssertIntEquals(tc, RPAREN, yylex());
-    CuAssertIntEquals(tc, RCURLY, yylex());
-    CuAssertIntEquals(tc, LCURLY, yylex());
-    CuAssertIntEquals(tc, RCURLY, yylex());
-    CuAssertIntEquals(tc, LCURLY, yylex());
-    CuAssertIntEquals(tc, LPAREN, yylex());
-    CuAssertIntEquals(tc, LCURLY, yylex());
-    CuAssertIntEquals(tc, RCURLY, yylex());
-    CuAssertIntEquals(tc, RPAREN, yylex());
-    CuAssertIntEquals(tc, LSQUARE, yylex());
-    CuAssertIntEquals(tc, RSQUARE, yylex());
-    CuAssertIntEquals(tc, LCURLY, yylex());
-    CuAssertIntEquals(tc, LPAREN, yylex());
-    CuAssertIntEquals(tc, LCURLY, yylex());
-    CuAssertIntEquals(tc, RSQUARE, yylex());
-    CuAssertIntEquals(tc, LSQUARE, yylex());
-    CuAssertIntEquals(tc, RSQUARE, yylex());
-    CuAssertIntEquals(tc, LCURLY, yylex());
-    CuAssertIntEquals(tc, LPAREN, yylex());
-    CuAssertIntEquals(tc, 0, yylex());
-}
+    should_eq_int(RPAREN, yylex())
+    should_eq_int(RCURLY, yylex())
+    should_eq_int(LCURLY, yylex())
+    should_eq_int(RCURLY, yylex())
+    should_eq_int(LCURLY, yylex())
+    should_eq_int(LPAREN, yylex())
+    should_eq_int(LCURLY, yylex())
+    should_eq_int(RCURLY, yylex())
+    should_eq_int(RPAREN, yylex())
+    should_eq_int(LSQUARE, yylex())
+    should_eq_int(RSQUARE, yylex())
+    should_eq_int(LCURLY, yylex())
+    should_eq_int(LPAREN, yylex())
+    should_eq_int(LCURLY, yylex())
+    should_eq_int(RSQUARE, yylex())
+    should_eq_int(LSQUARE, yylex())
+    should_eq_int(RSQUARE, yylex())
+    should_eq_int(LCURLY, yylex())
+    should_eq_int(LPAREN, yylex())
+    should_eq_int(0, yylex())
+end_spec
 
-void should_lex_a_small_program_with_print(CuTest *tc)
-{
+begin_spec(multiple_token_lexer, should_lex_a_small_program_with_print)
     char *test_str =
         "public class Program\n"
         "{\n"
@@ -67,62 +64,55 @@ void should_lex_a_small_program_with_print(CuTest *tc)
             
     yy_scan_string(test_str);
     /* public class Program {*/
-    CuAssertIntEquals(tc, PUBLIC, yylex());
-    CuAssertIntEquals(tc, CLASS, yylex());
-    CuAssertIntEquals(tc, ID, yylex());
-    CuAssertStrEquals(tc, "Program", yylval.id);
-    CuAssertIntEquals(tc, LCURLY, yylex());
+    should_eq_int(PUBLIC, yylex())
+    should_eq_int(CLASS, yylex())
+    should_eq_int(ID, yylex())
+    should_eq_str("Program", yylval.id)
+    should_eq_int(LCURLY, yylex())
     /* public static void main(String[] args) */
-    CuAssertIntEquals(tc, MAIN, yylex());
-    CuAssertIntEquals(tc, LPAREN, yylex());
-    CuAssertIntEquals(tc, STRING, yylex());
-    CuAssertIntEquals(tc, LSQUARE, yylex());
-    CuAssertIntEquals(tc, RSQUARE, yylex());
-    CuAssertIntEquals(tc, ID, yylex());
-    CuAssertStrEquals(tc, "args", yylval.id);
-    CuAssertIntEquals(tc, RPAREN, yylex());
-    CuAssertIntEquals(tc, LCURLY, yylex());
+    should_eq_int(MAIN, yylex())
+    should_eq_int(LPAREN, yylex())
+    should_eq_int(STRING, yylex())
+    should_eq_int(LSQUARE, yylex())
+    should_eq_int(RSQUARE, yylex())
+    should_eq_int(ID, yylex())
+    should_eq_str("args", yylval.id)
+    should_eq_int(RPAREN, yylex())
+    should_eq_int(LCURLY, yylex())
     /* if(false) { */
-    CuAssertIntEquals(tc, IF, yylex());
-    CuAssertIntEquals(tc, LPAREN, yylex());
-    CuAssertIntEquals(tc, FALSE, yylex());
-    CuAssertIntEquals(tc, RPAREN, yylex());
-    CuAssertIntEquals(tc, LCURLY, yylex());
-    /* System.out.println(42); */
-    CuAssertIntEquals(tc, PRINT, yylex());
-    CuAssertIntEquals(tc, LPAREN, yylex());
-    CuAssertIntEquals(tc, NUMBER, yylex());
-    CuAssertIntEquals(tc, 42, yylval.number);
-    CuAssertIntEquals(tc, RPAREN, yylex());
-    CuAssertIntEquals(tc, SEMICOLON, yylex());
+    should_eq_int(IF, yylex())
+    should_eq_int(LPAREN, yylex())
+    should_eq_int(FALSE, yylex())
+    should_eq_int(RPAREN, yylex())
+    should_eq_int(LCURLY, yylex())
+    /* System.out.println(42) */
+    should_eq_int(PRINT, yylex())
+    should_eq_int(LPAREN, yylex())
+    should_eq_int(NUMBER, yylex())
+    should_eq_int(42, yylval.number)
+    should_eq_int(RPAREN, yylex())
+    should_eq_int(SEMICOLON, yylex())
     /* } else { */
-    CuAssertIntEquals(tc, RCURLY, yylex());
-    CuAssertIntEquals(tc, ELSE, yylex());
-    CuAssertIntEquals(tc, LCURLY, yylex());
-    /* System.out.println(1337); */
-    CuAssertIntEquals(tc, PRINT, yylex());
-    CuAssertIntEquals(tc, LPAREN, yylex());
-    CuAssertIntEquals(tc, NUMBER, yylex());
-    CuAssertIntEquals(tc, 1337, yylval.number);
-    CuAssertIntEquals(tc, RPAREN, yylex());
-    CuAssertIntEquals(tc, SEMICOLON, yylex());
+    should_eq_int(RCURLY, yylex())
+    should_eq_int(ELSE, yylex())
+    should_eq_int(LCURLY, yylex())
+    /* System.out.println(1337) */
+    should_eq_int(PRINT, yylex())
+    should_eq_int(LPAREN, yylex())
+    should_eq_int(NUMBER, yylex())
+    should_eq_int(1337, yylval.number)
+    should_eq_int(RPAREN, yylex())
+    should_eq_int(SEMICOLON, yylex())
     /* }}} */
-    CuAssertIntEquals(tc, RCURLY, yylex());
-    CuAssertIntEquals(tc, RCURLY, yylex());
-    CuAssertIntEquals(tc, RCURLY, yylex());
-    CuAssertIntEquals(tc, 0, yylex());
-}
+    should_eq_int(RCURLY, yylex())
+    should_eq_int(RCURLY, yylex())
+    should_eq_int(RCURLY, yylex())
+    should_eq_int(0, yylex())
+end_spec
 
-
-CuSuite* lexer_test_multiple_tokens()
-{
-    CuSuite *the_lexer = CuSuiteNew();
-
-    SUITE_ADD_TEST(the_lexer, should_lex_two_tokens_separated_by_space);
-    SUITE_ADD_TEST(the_lexer, 
-                   should_lex_public_static_void_main_with_different_spaces);
-    SUITE_ADD_TEST(the_lexer, should_lex_multiple_different_parentheses);
-    SUITE_ADD_TEST(the_lexer, should_lex_a_small_program_with_print);
-
-    return the_lexer;
-}
+begin_blueprint(multiple_token_lexer)
+    add_spec(should_lex_two_tokens_separated_by_space)
+    add_spec(should_lex_public_static_void_main_with_different_spaces)
+    add_spec(should_lex_multiple_different_parentheses)
+    add_spec(should_lex_a_small_program_with_print)
+end_blueprint

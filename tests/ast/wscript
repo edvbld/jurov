@@ -1,5 +1,6 @@
 def build(bld):
-    sources = ['test_identifier.c',
+    sources = ['ast_tests.c',
+               'test_identifier.c',
                'test_binary_operation.c',
                'test_integer.c',
                'test_boolean.c',
