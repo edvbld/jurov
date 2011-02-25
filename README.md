@@ -27,7 +27,7 @@ Specs
 jurov have been developed using BDD. It uses 
 [CuTest](http://cutest.sourceforge.net/) as the test framework with additional 
 macros on top. Since CuTest is so small, it is bundled 
-together with jurov. To run all the unit specs, just run
+together with jurov. To run all the specs, just run
     ./waf configure build --spec
 
 Documentation
