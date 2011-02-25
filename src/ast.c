@@ -1,6 +1,7 @@
 #include "ast.h"
 #include "utils.h"
 #include "stdio.h"
+#include "stddef.h"
 #include "errors.h"
 
 int new_identifier(char *name, ast **node)
