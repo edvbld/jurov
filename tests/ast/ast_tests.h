@@ -2,7 +2,6 @@
 #define __AST_TESTS_H__
 
 CuSuite* ast_test_identifier();
-CuSuite* ast_test_ast_walk();
 CuSuite* ast_test_integer();
 CuSuite* ast_test_unary_operation();
 CuSuite* ast_test_boolean();
@@ -16,12 +15,14 @@ CuSuite *ast_tests()
 {
     CuSuite* test_ast_list();
     CuSuite* test_binary_operation();
+    CuSuite* test_ast_walk();
+    
     CuSuite* ast_tests = CuSuiteNew();
 
     CuSuiteAddSuite(ast_tests, test_ast_list());
     CuSuiteAddSuite(ast_tests, test_binary_operation());
+    CuSuiteAddSuite(ast_tests, test_ast_walk());
     CuSuiteAddSuite(ast_tests, ast_test_identifier());
-    CuSuiteAddSuite(ast_tests, ast_test_ast_walk());
     CuSuiteAddSuite(ast_tests, ast_test_integer());
     CuSuiteAddSuite(ast_tests, ast_test_unary_operation());
     CuSuiteAddSuite(ast_tests, ast_test_boolean());
