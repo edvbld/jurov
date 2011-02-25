@@ -1,7 +1,6 @@
 #ifndef __AST_TESTS_H__
 #define __AST_TESTS_H__
 
-CuSuite* ast_test_identifier();
 CuSuite* ast_test_integer();
 CuSuite* ast_test_unary_operation();
 CuSuite* ast_test_new_object();
@@ -16,6 +15,7 @@ CuSuite *ast_tests()
     CuSuite* test_ast_walk();
     CuSuite* test_boolean();
     CuSuite* test_call();
+    CuSuite* test_identifier();
     
     CuSuite* suite = CuSuiteNew();
 
@@ -24,7 +24,7 @@ CuSuite *ast_tests()
     CuSuiteAddSuite(suite, test_ast_walk());
     CuSuiteAddSuite(suite, test_boolean());
     CuSuiteAddSuite(suite, test_call());
-    CuSuiteAddSuite(suite, ast_test_identifier());
+    CuSuiteAddSuite(suite, test_identifier());
     CuSuiteAddSuite(suite, ast_test_integer());
     CuSuiteAddSuite(suite, ast_test_unary_operation());
     CuSuiteAddSuite(suite, ast_test_new_object());

@@ -1,46 +1,33 @@
-#include "stddef.h"
-#include "stdlib.h"
-#include "CuTest.h"
+#include "spectacular.h"
 #include "ast.h"
-#include "errors.h"
 
-static identifier* create(CuTest *tc, char *name)
-{
+begin_spec(identifier, should_fail_if_name_is_empty_or_null)
     ast *id;
-    int res = new_identifier(name, &id);
-    CuAssertIntEquals(tc, JRV_SUCCESS, res);
-    return (identifier *) id;
-}
+    should_eq_error(JRV_INVALID_STRING, new_identifier("", &id))
+    should_eq_error(JRV_INVALID_STRING, new_identifier(NULL, &id))
+end_spec
 
-void should_assert_that_name_is_not_empty(CuTest *tc)
-{
-    ast *id;
-    int ret = new_identifier("", &id);
-    CuAssertIntEquals(tc, JRV_INVALID_STRING, ret);
-}
-
-void should_have_an_id_member(CuTest *tc)
-{
+begin_spec(identifier, should_have_the_given_string_as_member)
     char *name = "name";
-    identifier *node = create(tc, name);
-    CuAssertStrEquals(tc, name, node->name);
+    identifier *node;
+   
+    should_pass(new_identifier(name, (ast **) &node))
+    should_eq_str(name, node->name)
+
     free(node);
-}
+end_spec
 
-void should_have_identifier_as_type(CuTest *tc)
-{
-    identifier *node = create(tc, "name");
-    CuAssertIntEquals(tc, IDENTIFIER, node->type);
+begin_spec(identifier, should_have_identifier_as_type)
+    identifier *node;
+    
+    should_pass(new_identifier("name", (ast **) &node))
+    should_eq_int(IDENTIFIER, node->type)
+
     free(node);
-}
+end_spec
 
-CuSuite* ast_test_identifier()
-{
-    CuSuite *identifier = CuSuiteNew();
-
-    SUITE_ADD_TEST(identifier, should_have_an_id_member);
-    SUITE_ADD_TEST(identifier, should_have_identifier_as_type);
-    SUITE_ADD_TEST(identifier, should_assert_that_name_is_not_empty);
-
-    return identifier;
-}
+begin_suite(identifier)
+    add_spec(should_fail_if_name_is_empty_or_null)
+    add_spec(should_have_the_given_string_as_member)
+    add_spec(should_have_identifier_as_type)
+end_suite
