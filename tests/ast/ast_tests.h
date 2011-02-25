@@ -5,7 +5,6 @@ CuSuite* ast_test_unary_operation();
 CuSuite* ast_test_new_object();
 CuSuite* ast_test_this();
 CuSuite* ast_test_print();
-CuSuite* ast_test_main_class();
 
 CuSuite *ast_tests()
 {
@@ -16,6 +15,7 @@ CuSuite *ast_tests()
     CuSuite* test_call();
     CuSuite* test_identifier();
     CuSuite* test_integer();
+    CuSuite* test_main_class();
     
     CuSuite* suite = CuSuiteNew();
 
@@ -26,11 +26,11 @@ CuSuite *ast_tests()
     CuSuiteAddSuite(suite, test_call());
     CuSuiteAddSuite(suite, test_identifier());
     CuSuiteAddSuite(suite, test_integer());
+    CuSuiteAddSuite(suite, test_main_class());
     CuSuiteAddSuite(suite, ast_test_unary_operation());
     CuSuiteAddSuite(suite, ast_test_new_object());
     CuSuiteAddSuite(suite, ast_test_this());
     CuSuiteAddSuite(suite, ast_test_print());
-    CuSuiteAddSuite(suite, ast_test_main_class());
 
     return suite;
 }
