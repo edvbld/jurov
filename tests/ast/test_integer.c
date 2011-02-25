@@ -1,35 +1,25 @@
-#include "CuTest.h"
+#include "spectacular.h"
 #include "ast.h"
-#include "stddef.h"
-#include "stdlib.h"
 
 static integer* create(int value)
 {
     return (integer *) new_integer(value);
 }
 
-void should_have_integer_as_type(CuTest *tc)
-{
+begin_spec(integer, should_have_integer_as_type)
     integer *node = create(0);
-    CuAssertIntEquals(tc, INTEGER, node->type);
+    should_eq_int(INTEGER, node->type);
     free(node);
-}
+end_spec
 
-void should_have_the_given_value(CuTest *tc)
-{
+begin_spec(integer, should_have_the_given_int_as_member)
     int value = 5;
     integer *node = create(value);
-    CuAssertIntEquals(tc, value, node->value);
+    should_eq_int(value, node->value);
     free(node);
-}
+end_spec
 
-CuSuite* ast_test_integer()
-{
-    CuSuite *integer = CuSuiteNew();
-
-    SUITE_ADD_TEST(integer, should_have_integer_as_type);
-    SUITE_ADD_TEST(integer, should_have_the_given_value);
-
-    return integer;
-}
-
+begin_suite(integer)
+    add_spec(should_have_integer_as_type)
+    add_spec(should_have_the_given_int_as_member)
+end_suite
