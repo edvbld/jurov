@@ -22,12 +22,13 @@ Then, to build jurov, simply run
 To remove all the binaries produced by the build, run
     ./waf distclean
 
-Tests
+Specs
 -----
-jurov uses [CuTest](http://cutest.sourceforge.net/) as its 
-unit tests framework. Since CuTest is so small, it is bundled 
-together with jurov. To run all the unit test, just run
-    ./waf configure build --test
+jurov have been developed using BDD. It uses 
+[CuTest](http://cutest.sourceforge.net/) as the test framework with additional 
+macros on top. Since CuTest is so small, it is bundled 
+together with jurov. To run all the unit specs, just run
+    ./waf configure build --spec
 
 Documentation
 -------------
