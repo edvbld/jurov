@@ -1,37 +1,33 @@
-#include "CuTest.h"
+#include "spectacular.h"
 #include "ast.h"
-#include "stddef.h"
-#include "stdlib.h"
 
 static unary_operation* create(nodetype type, ast *operand)
 {
     return (unary_operation *) new_unary_operation(type, operand);
 }
 
-void should_have_unary_operation_as_type(CuTest *tc)
-{
-    unary_operation *node = create(NOT, NULL);
-    CuAssertIntEquals(tc, NOT, node->type);
+begin_spec(unary_operation, should_have_unary_operation_as_type)
+    unary_operation *node;
+    
+    node = create(NOT, NULL);
+    should_eq_int(NOT, node->type)
+
     free(node);
-}
+end_spec
 
-void should_have_the_given_operand(CuTest *tc)
-{
-    ast *i = new_integer(5); // there is no semantics, just syntax
-    unary_operation *node = create(NOT, i);
-    CuAssertPtrEquals(tc, i, node->operand);
-    free(i);
+begin_spec(unary_operation, should_have_the_given_operand_as_member)
+    ast *b; 
+    unary_operation *node;
+    
+    b = new_boolean(0);
+    node = create(NOT, b);
+    should_eq_ptr(b, node->operand)
+    
+    free(b);
     free(node);
-}
+end_spec
 
-CuSuite* ast_test_unary_operation()
-{
-    CuSuite *unary_operation = CuSuiteNew();
-
-    SUITE_ADD_TEST(unary_operation, should_have_unary_operation_as_type);
-    SUITE_ADD_TEST(unary_operation, should_have_the_given_operand);
-
-    return unary_operation;
-}
-
-
+begin_suite(unary_operation)
+    add_spec(should_have_unary_operation_as_type)
+    add_spec(should_have_the_given_operand_as_member)
+end_suite
