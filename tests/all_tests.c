@@ -11,7 +11,7 @@ int run_all_tests()
     CuString *output = CuStringNew();
     CuSuite *suite = CuSuiteNew();
 
-    CuSuiteAddSuite(suite, ast_tests());
+    CuSuiteAddSuite(suite, test_ast());
     CuSuiteAddSuite(suite, list_tests());
     CuSuiteAddSuite(suite, lexer_tests());
     CuSuiteAddSuite(suite, parser_tests());

@@ -1,39 +1,34 @@
 #ifndef __AST_TESTS_H__
 #define __AST_TESTS_H__
 
+#include "spectacular.h"
 
-CuSuite *ast_tests()
-{
-    CuSuite* test_ast_list();
-    CuSuite* test_binary_operation();
-    CuSuite* test_ast_walk();
-    CuSuite* test_boolean();
-    CuSuite* test_call();
-    CuSuite* test_identifier();
-    CuSuite* test_integer();
-    CuSuite* test_main_class();
-    CuSuite* test_new_object();
-    CuSuite* test_print();
-    CuSuite* test_this();
-    CuSuite* test_unary_operation();
+begin_blueprint(ast)
+    use_blueprint(ast_list)
+    use_blueprint(binary_operation)
+    use_blueprint(ast_walk)
+    use_blueprint(boolean)
+    use_blueprint(call)
+    use_blueprint(identifier)
+    use_blueprint(integer)
+    use_blueprint(main_class)
+    use_blueprint(new_object)
+    use_blueprint(print)
+    use_blueprint(this)
+    use_blueprint(unary_operation)
 
-    
-    CuSuite* suite = CuSuiteNew();
-
-    CuSuiteAddSuite(suite, test_ast_list());
-    CuSuiteAddSuite(suite, test_binary_operation());
-    CuSuiteAddSuite(suite, test_ast_walk());
-    CuSuiteAddSuite(suite, test_boolean());
-    CuSuiteAddSuite(suite, test_call());
-    CuSuiteAddSuite(suite, test_identifier());
-    CuSuiteAddSuite(suite, test_integer());
-    CuSuiteAddSuite(suite, test_main_class());
-    CuSuiteAddSuite(suite, test_new_object());
-    CuSuiteAddSuite(suite, test_print());
-    CuSuiteAddSuite(suite, test_this());
-    CuSuiteAddSuite(suite, test_unary_operation());
-
-    return suite;
-}
+    add_blueprint(ast_list)
+    add_blueprint(binary_operation)
+    add_blueprint(ast_walk)
+    add_blueprint(boolean)
+    add_blueprint(call)
+    add_blueprint(identifier)
+    add_blueprint(integer)
+    add_blueprint(main_class)
+    add_blueprint(new_object)
+    add_blueprint(print)
+    add_blueprint(this)
+    add_blueprint(unary_operation)
+end_blueprint
 
 #endif /* __AST_TESTS_H__ */

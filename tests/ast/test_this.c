@@ -10,6 +10,6 @@ begin_spec(this, should_have_this_object_as_type)
     free(node);
 end_spec
 
-begin_suite(this)
+begin_blueprint(this)
     add_spec(should_have_this_object_as_type)
-end_suite
+end_blueprint

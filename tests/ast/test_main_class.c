@@ -32,7 +32,7 @@ begin_spec(main_class, should_have_the_given_parameters_as_members)
     free(mc);
 end_spec
 
-begin_suite(main_class)
+begin_blueprint(main_class)
     add_spec(should_have_main_class_as_type)
     add_spec(should_have_the_given_parameters_as_members)
-end_suite
+end_blueprint

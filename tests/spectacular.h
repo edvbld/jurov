@@ -16,11 +16,14 @@
 #define should_pass(act) CuAssertIntEquals(tc, JRV_SUCCESS, act);
 #define should_eq_error(exp, act) CuAssertIntEquals(tc, exp, act);
 
-#define begin_suite(name) CuSuite* test_##name() { \
+#define begin_blueprint(name) CuSuite* test_##name() { \
     CuSuite *suite = CuSuiteNew();
 
 #define add_spec(property) SUITE_ADD_TEST(suite, _##property);
 
-#define end_suite }
+#define end_blueprint return suite; }
+
+#define use_blueprint(bp) CuSuite* test_##bp();
+#define add_blueprint(bp) CuSuiteAddSuite(suite, test_##bp());
 
 #endif /* INCLUDE_spectacular_h__ */

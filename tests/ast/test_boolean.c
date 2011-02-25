@@ -19,7 +19,7 @@ begin_spec(boolean, should_have_the_given_parameter_as_value)
     free(node);
 end_spec
 
-begin_suite(boolean)
+begin_blueprint(boolean)
     add_spec(should_have_boolean_as_type)
     add_spec(should_have_the_given_parameter_as_value)
-end_suite
+end_blueprint

@@ -45,7 +45,7 @@ begin_spec(call, should_have_the_parameters_as_members)
     free(c);
 end_spec
 
-begin_suite(call)
+begin_blueprint(call)
     add_spec(should_have_call_as_type)
     add_spec(should_have_the_parameters_as_members)
-end_suite
+end_blueprint

@@ -19,7 +19,7 @@ begin_spec(integer, should_have_the_given_int_as_member)
     free(node);
 end_spec
 
-begin_suite(integer)
+begin_blueprint(integer)
     add_spec(should_have_integer_as_type)
     add_spec(should_have_the_given_int_as_member)
-end_suite
+end_blueprint
