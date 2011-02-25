@@ -21,6 +21,7 @@ def configure(conf):
     conf.env.C_FLAGS = ['-g', '-Wall', '-ansi', '-pedantic', '-std=c89']
     conf.env.FLEXFLAGS = ['--header-file=src/lex.yy.h']
     conf.env.INCLUDE_CUTEST = os.path.abspath('lib/cutest-1.5')
+    conf.env.INCLUDE_SPECTACULAR = os.path.abspath('tests')
     conf.env.INCLUDE_GENERATED_SRC = os.path.abspath('build/src')
     conf.env.INCLUDE_SRC = os.path.abspath('src')
     conf.load('compiler_c')

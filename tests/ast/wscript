@@ -13,5 +13,6 @@ def build(bld):
                'test_ast_walk.c']
     bld(features = 'c',
         source = sources,
-        includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST],
+        includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST, 
+                    bld.env.INCLUDE_SPECTACULAR], 
         name = 'ast_tests')
