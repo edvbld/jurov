@@ -14,6 +14,7 @@
 #define should_eq_str(exp, act) CuAssertStrEquals(tc, exp, act);
 #define should_eq_ptr(exp, act) CuAssertPtrEquals(tc, exp, act);
 #define should_pass(act) CuAssertIntEquals(tc, JRV_SUCCESS, act);
+#define should_fail(act) CuAssertIntNotEquals(tc, JRV_SUCCESS, act);
 #define should_eq_error(exp, act) CuAssertIntEquals(tc, exp, act);
 
 #define begin_blueprint(name) CuSuite* test_##name() { \
