@@ -1,12 +1,6 @@
-#include "CuTest.h"
+#include "spectacular.h"
 #include "lex.yy.h"
 
-/*
- * Helper function for parsing a string.
- *
- * :param program: A string representing the program to parse
- * :returns: An integer, the return code from bison
- */
 int parse_statements(char *statements)
 {
     int res = 0;
@@ -28,68 +22,49 @@ int parse_statements(char *statements)
     return res;
 }
 
-void should_parse_the_empty_statement(CuTest *tc)
-{
+begin_spec(statement_parser, should_parse_the_empty_statement)
     char *statement = "{}";
-    int res = parse_statements(statement);
-    CuAssertIntEquals(tc, 0, res);
-}
+    should_pass(parse_statements(statement))
+end_spec
 
-void should_fail_when_missing_rigth_curly_bracket(CuTest *tc)
-{
+begin_spec(statement_parser, should_fail_when_missing_rigth_curly_bracket)
     char *statement = "{";
-    int res = parse_statements(statement);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_statements(statement))
+end_spec
 
-void should_fail_when_missing_left_curly_bracket(CuTest *tc)
-{
+begin_spec(statement_parser, should_fail_when_missing_left_curly_bracket)
     char *statement = "}";
-    int res = parse_statements(statement);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_statements(statement))
+end_spec
 
-void should_parse_nested_statements(CuTest *tc)
-{
+begin_spec(statement_parser, should_parse_nested_statements)
     char *statement = "{{{}}}";
-    int res = parse_statements(statement);
-    CuAssertIntEquals(tc, 0, res);
-}
+    should_pass(parse_statements(statement))
+end_spec
 
-void should_parse_a_print_statement(CuTest *tc)
-{
+begin_spec(statement_parser, should_parse_a_print_statement)
     char *statement = "System.out.println(true);";
-    int res = parse_statements(statement);
-    CuAssertIntEquals(tc, 0, res);
-}
+    should_pass(parse_statements(statement))
+end_spec
 
-void should_fail_if_trying_to_print_a_statement(CuTest *tc)
-{
+begin_spec(statement_parser, should_fail_if_trying_to_print_a_statement)
     char *statement = "System.out.println({});"; 
-    int res = parse_statements(statement);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_statements(statement))
+end_spec
 
-void should_parse_several_mixed_statements(CuTest *tc)
-{
+begin_spec(statement_parser, should_parse_several_mixed_statements)
     char *statements = 
         "System.out.println(true);\n"
         "{System.out.println(false);}";
-    int res = parse_statements(statements);
-    CuAssertIntEquals(tc, 0, res);
-}
+    should_pass(parse_statements(statements))
+end_spec
 
-CuSuite* parser_test_statements()
-{
-    CuSuite *the_parser = CuSuiteNew();
-
-    SUITE_ADD_TEST(the_parser, should_parse_the_empty_statement);
-    SUITE_ADD_TEST(the_parser, should_fail_when_missing_rigth_curly_bracket);
-    SUITE_ADD_TEST(the_parser, should_fail_when_missing_left_curly_bracket);
-    SUITE_ADD_TEST(the_parser, should_parse_nested_statements);
-    SUITE_ADD_TEST(the_parser, should_parse_a_print_statement);
-    SUITE_ADD_TEST(the_parser, should_fail_if_trying_to_print_a_statement);
-    SUITE_ADD_TEST(the_parser, should_parse_several_mixed_statements);
-
-    return the_parser;
-}
+begin_blueprint(statement_parser)
+    add_spec(should_parse_the_empty_statement)
+    add_spec(should_fail_when_missing_rigth_curly_bracket)
+    add_spec(should_fail_when_missing_left_curly_bracket)
+    add_spec(should_parse_nested_statements)
+    add_spec(should_parse_a_print_statement)
+    add_spec(should_fail_if_trying_to_print_a_statement)
+    add_spec(should_parse_several_mixed_statements)
+end_blueprint

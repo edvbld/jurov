@@ -1,15 +1,16 @@
 #include "stdio.h"
 #include "spectacular.h"
 #include "list/list_tests.h"
-#include "parser/parser_tests.h"
 #include "errors/errors_tests.h"
 
 begin_blueprint(jurov)
     use_blueprint(ast)
     use_blueprint(lexer)
+    use_blueprint(parser)
 
     add_blueprint(ast)
     add_blueprint(lexer)
+    add_blueprint(parser)
 end_blueprint
 
 int run_all_tests()
@@ -19,7 +20,6 @@ int run_all_tests()
 
     CuSuiteAddSuite(suite, test_jurov());
     CuSuiteAddSuite(suite, list_tests());
-    CuSuiteAddSuite(suite, parser_tests());
     CuSuiteAddSuite(suite, errors_tests());
     
     CuSuiteRun(suite);

@@ -1,13 +1,7 @@
-#include "CuTest.h"
+#include "spectacular.h"
 #include "jurov.tab.h"
 #include "lex.yy.h"
 
-/*
- * Helper function for parsing a string.
- *
- * :param program: A string representing the program to parse
- * :returns: An integer, the return code from bison
- */
 int parse_program(char *program)
 {
     int res = 0;
@@ -17,114 +11,89 @@ int parse_program(char *program)
     return res;
 }
 
-void should_parse_a_program_consisting_of_only_main_class(CuTest *tc)
-{
+begin_spec(main_class_parser,
+           should_parse_a_program_consisting_of_only_main_class)
     char *program = 
         "class Main {\n"
         "public static void main(String[] args) {\n"
         "}}";
-    int res = parse_program(program);
-    CuAssertIntEquals(tc, 0, res);
-}
+    should_pass(parse_program(program))
+end_spec
 
-void should_fail_when_missing_main_function(CuTest *tc)
-{
+begin_spec(main_class_parser, should_fail_when_missing_main_function)
     char *program =
         "class Main {\n"
         "public static void start(String[] args) {\n"
         "}}";
-    int res = parse_program(program);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_program(program))
+end_spec
 
-void should_fail_when_missing_static_in_main_function(CuTest *tc)
-{
+begin_spec(main_class_parser, should_fail_when_missing_static_in_main_function)
     char *program =
         "class Main {\n"
         "public void main(String[] args) {\n"
         "}}";
-    int res = parse_program(program);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_program(program))
+end_spec
 
-void should_fail_when_missing_public_in_main_function(CuTest *tc)
-{
+begin_spec(main_class_parser, should_fail_when_missing_public_in_main_function)
     char *program =
         "class Main {\n"
         "static void main(String[] args) {\n"
         "}}";
-    int res = parse_program(program);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_program(program))
+end_spec
 
-void should_fail_when_not_taking_string_array_as_argument(CuTest *tc)
-{
+begin_spec(main_class_parser, 
+           should_fail_when_not_taking_string_array_as_argument)
     char *program =
         "class Main {\n"
         "public static void main(String args) {\n"
         "}}";
-    int res = parse_program(program);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_program(program))
+end_spec
 
-void should_fail_when_missing_right_parenthesis_around_main_function(CuTest *tc)
-{
+begin_spec(main_class_parser, 
+           should_fail_when_missing_right_parenthesis_around_main_function)
     char *program =
         "class Main {\n"
         "public static void main(String args {\n"
         "}}";
-    int res = parse_program(program);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_program(program))
+end_spec
 
-void should_fail_when_missing_left_parenthesis_around_main_function(CuTest *tc)
-{
+begin_spec(main_class_parser, 
+           should_fail_when_missing_left_parenthesis_around_main_function)
     char *program =
         "class Main {\n"
         "public static void main String args) {\n"
         "}}";
-    int res = parse_program(program);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_program(program))
+end_spec
 
-void should_fail_when_missing_main_function_body(CuTest *tc)
-{
+begin_spec(main_class_parser, should_fail_when_missing_main_function_body)
     char *program =
         "class Main {\n"
         "public static void main(String args) \n"
         "}";
-    int res = parse_program(program);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_program(program))
+end_spec
 
-void should_fail_when_missing_class_around_main_function(CuTest *tc)
-{
+begin_spec(main_class_parser, 
+           should_fail_when_missing_class_around_main_function)
     char *program =
         "public static void main(String args) \n";
-    int res = parse_program(program);
-    CuAssertIntEquals(tc, 1, res);
-}
+    should_fail(parse_program(program))
+end_spec
 
-CuSuite* parser_test_main_class()
-{
-    CuSuite *the_parser = CuSuiteNew();
-
-    SUITE_ADD_TEST(the_parser, 
-            should_parse_a_program_consisting_of_only_main_class);
-    SUITE_ADD_TEST(the_parser, should_fail_when_missing_main_function);
-    SUITE_ADD_TEST(the_parser, 
-            should_fail_when_missing_static_in_main_function);
-    SUITE_ADD_TEST(the_parser, 
-            should_fail_when_missing_public_in_main_function);
-    SUITE_ADD_TEST(the_parser,
-            should_fail_when_not_taking_string_array_as_argument);
-    SUITE_ADD_TEST(the_parser,
-            should_fail_when_missing_right_parenthesis_around_main_function);
-    SUITE_ADD_TEST(the_parser,
-            should_fail_when_missing_left_parenthesis_around_main_function);
-    SUITE_ADD_TEST(the_parser, should_fail_when_missing_main_function_body);
-    SUITE_ADD_TEST(the_parser, 
-            should_fail_when_missing_class_around_main_function);
-
-    return the_parser;
-}
+begin_blueprint(main_class_parser)
+    add_spec(should_parse_a_program_consisting_of_only_main_class)
+    add_spec(should_fail_when_missing_main_function)
+    add_spec(should_fail_when_missing_static_in_main_function)
+    add_spec(should_fail_when_missing_public_in_main_function)
+    add_spec(should_fail_when_not_taking_string_array_as_argument)
+    add_spec(should_fail_when_missing_right_parenthesis_around_main_function)
+    add_spec(should_fail_when_missing_left_parenthesis_around_main_function)
+    add_spec(should_fail_when_missing_main_function_body)
+    add_spec(should_fail_when_missing_class_around_main_function)
+end_blueprint
