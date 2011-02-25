@@ -1,38 +1,30 @@
-#include "stddef.h"
-#include "stdlib.h"
-#include "CuTest.h"
+#include "spectacular.h"
 #include "ast.h"
-#include "errors.h"
 
 static print* create(ast *expression)
 {
     return (print *) new_print(expression);
 }
 
-void should_have_print_as_type(CuTest *tc)
-{
+begin_spec(print, should_have_print_as_type)
     print *p = create(NULL);
-    CuAssertIntEquals(tc, SYSTEM_OUT_PRINT, p->type);
+    should_eq_int(SYSTEM_OUT_PRINT, p->type)
     free(p);
-}
+end_spec
 
-void should_have_the_given_expression_as_member(CuTest *tc)
-{
-    ast* id;
-    int res = new_identifier("foo", &id);
-    CuAssertIntEquals(tc, JRV_SUCCESS, res);
-    print *p = create(id);
-    CuAssertPtrEquals(tc, id, p->expression);
+begin_spec(print, should_have_the_given_expression_as_member)
+    ast *id;
+    print *p;
+
+    should_pass(new_identifier("foo", &id))
+    p = create(id);
+    should_eq_ptr(id, p->expression);
+
     free(id);
     free(p);
-}
+end_spec
 
-CuSuite* ast_test_print()
-{
-    CuSuite *print = CuSuiteNew();
-
-    SUITE_ADD_TEST(print, should_have_print_as_type);
-    SUITE_ADD_TEST(print, should_have_the_given_expression_as_member);
-
-    return print;
-}
+begin_suite(print)
+    add_spec(should_have_print_as_type)
+    add_spec(should_have_the_given_expression_as_member)
+end_suite
