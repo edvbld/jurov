@@ -1,3 +1,2 @@
 def build(bld):
-    bld(features = 'c', source = ['CuTest.c', 'spectacular.c'], 
-        name = 'spectacular') 
+    bld(features = 'c', source = bld.path.ant_glob('*.c'), name = 'spectacular')

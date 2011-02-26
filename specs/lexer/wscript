@@ -1,6 +1,5 @@
 def build(bld):
-    sources = ['single_token_spec.c',
-               'multiple_tokens_spec.c']
+    sources = bld.path.ant_glob('*.c')
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_SPECS,

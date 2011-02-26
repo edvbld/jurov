@@ -3,9 +3,6 @@ def build(bld):
         includes = '.', name = 'parser')
     bld(features = 'c flex', source = 'jurov.l', 
         includes = '.', name = 'lexer')
-    sources = ['ast.c',
-               'list.c',
-               'errors.c',
-               'utils.c']
+    sources = bld.path.ant_glob('*.c') 
     bld(features = 'c', source = sources, includes = '.', 
         name = 'objects')

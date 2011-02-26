@@ -1,6 +1,5 @@
 def build(bld):
-    sources = ['main_class_spec.c',
-               'statements_spec.c']
+    sources = bld.path.ant_glob('*.c')
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_SPECTACULAR, 

@@ -1,6 +1,6 @@
 def build(bld):
     bld.recurse(['lexer', 'parser', 'ast'])
-    sources = ['all_specs.c', 'list_spec.c', 'errors_spec.c']
+    sources = bld.path.ant_glob('*.c')
     bld(features = 'c cprogram',
         source = sources,
         target = 'run_all_specs',
