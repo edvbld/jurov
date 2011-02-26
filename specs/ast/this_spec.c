@@ -3,8 +3,8 @@
 
 begin_example(this, should_have_this_object_as_type)
     ast *node;
-    
-    node = new_this();
+   
+    should_pass(new_this(&node))
     should_eq_int(THIS_OBJECT, node->type)
 
     free(node);

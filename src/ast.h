@@ -235,9 +235,11 @@ int new_call(ast *object, ast *method, ast_list *parameters, ast **node);
 /**
  * Creates a new ast struct with type nodetype.THIS
  *
- * @return A pointer to an AST representation of the THIS variable
+ * @param[out] node The addres of the pointer that will point at the result 
+ *                  of the function
+ * @return An integer describing the result of the function
  */
-ast* new_this();
+int new_this(ast **node);
 
 /**
  * This struct represents a print statement
