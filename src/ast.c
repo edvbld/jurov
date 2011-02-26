@@ -10,6 +10,7 @@ int new_identifier(char *name, ast **node)
     identifier *id;
 
     if(name == NULL || strlen(name) == 0) {
+        *node = NULL;
         return JRV_INVALID_STRING;
     }
 

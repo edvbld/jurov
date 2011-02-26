@@ -4,7 +4,9 @@
 begin_example(identifier, should_fail_if_name_is_empty_or_null)
     ast *id;
     should_eq_error(JRV_INVALID_STRING, new_identifier("", &id))
+    should_eq_ptr(NULL, id)
     should_eq_error(JRV_INVALID_STRING, new_identifier(NULL, &id))
+    should_eq_ptr(NULL, id)
 end_example
 
 begin_example(identifier, should_have_the_given_string_as_member)

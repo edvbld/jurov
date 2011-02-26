@@ -1,7 +1,6 @@
 #ifndef INCLUDE_spectacular_h__
 #define INCLUDE_spectacular_h__
 
-#include "stddef.h"
 #include "stdlib.h"
 #include "CuTest.h"
 

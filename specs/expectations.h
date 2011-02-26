@@ -1,6 +1,7 @@
 #ifndef INCLUDE_jrv_expectation_h__
 #define INCLUDE_jrv_expectation_h__
 
+#include "stddef.h"
 #include "spectacular.h"
 #include "errors.h"
 
