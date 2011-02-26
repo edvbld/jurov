@@ -1,6 +1,5 @@
 def build(bld):
-    sources = ['ast_specs.c',
-               'identifier_spec.c',
+    sources = ['identifier_spec.c',
                'binary_operation_spec.c',
                'integer_spec.c',
                'boolean_spec.c',

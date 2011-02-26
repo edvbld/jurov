@@ -1,6 +1,5 @@
 def build(bld):
-    sources = ['lexer_specs.c',
-               'single_token_spec.c',
+    sources = ['single_token_spec.c',
                'multiple_tokens_spec.c']
     bld(features = 'c',
         source = sources,

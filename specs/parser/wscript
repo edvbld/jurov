@@ -1,6 +1,5 @@
 def build(bld):
-    sources = ['parser_specs.c',
-               'main_class_spec.c',
+    sources = ['main_class_spec.c',
                'statements_spec.c']
     bld(features = 'c',
         source = sources,
