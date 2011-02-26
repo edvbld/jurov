@@ -11,16 +11,18 @@ begin_example(binary_operation, should_have_the_given_type)
 end_example
 
 begin_example(binary_operation, should_have_the_given_operands)
-    ast *left = new_integer(5);
-    ast *right = new_integer(7);
+    ast *five; 
+    ast *seven;
     binary_operation *op;
 
-    should_pass(new_binary_operation(ADDITION, left, right, (ast **) &op))
-    should_eq_ptr(left, op->left_operand)
-    should_eq_ptr(right, op->right_operand)
+    should_pass(new_integer(5, &five))
+    should_pass(new_integer(7, &seven))
+    should_pass(new_binary_operation(ADDITION, five, seven, (ast **) &op))
+    should_eq_ptr(five, op->left_operand)
+    should_eq_ptr(seven, op->right_operand)
 
-    free(left);
-    free(right);
+    free(five);
+    free(seven);
     free(op);
 end_example
 

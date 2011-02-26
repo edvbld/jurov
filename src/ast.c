@@ -36,12 +36,13 @@ int new_unary_operation(nodetype type, ast *operand, ast **node)
     return JRV_SUCCESS;
 }
 
-ast* new_integer(int value)
+int new_integer(int value, ast **node)
 {
     integer *i = j_malloc(sizeof(integer));
     i->value = value;
     i->type = INTEGER;
-    return (ast *) i;
+    *node = (ast *) i;
+    return JRV_SUCCESS;
 }
 
 ast* new_boolean(int value)
