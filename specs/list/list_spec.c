@@ -46,27 +46,27 @@ begin_example(list, should_be_able_to_have_several_elements_appended_and_freed)
     *c = 3;
 
     should_pass(new_list(&l))
-    append(l, a);
+    should_pass(append(l, a))
     should_eq_int(1, l->size)
     should_eq_ptr(a, l->first->data)
     should_eq_ptr(a, l->last->data)
     should_eq_ptr(a, l->first->data)
     should_eq_ptr(NULL, l->first->previous)
     
-    append(l, b);
+    should_pass(append(l, b))
     should_eq_int(2, l->size)
     should_eq_ptr(b, l->last->data)
     should_eq_ptr(a, l->last->previous->data)
     should_eq_ptr(NULL, l->first->previous)
    
-    append(l, c);
+    should_pass(append(l, c))
     should_eq_int(3, l->size)
     should_eq_ptr(c, l->last->data)
     should_eq_ptr(b, l->last->previous->data)
     should_eq_ptr(a, l->last->previous->previous->data)
     should_eq_ptr(NULL, l->first->previous)
     
-    free_list(l);
+    should_pass(free_list(l))
 end_example
 
 begin_description(list)

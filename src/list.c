@@ -13,7 +13,7 @@ int new_list(list **l)
     return JRV_SUCCESS;
 }
 
-void append(list* l, void *data)
+int append(list* l, void *data)
 {
     list_element *ele = j_malloc(sizeof(list_element));
     ele->data = data;
@@ -23,9 +23,10 @@ void append(list* l, void *data)
     }
     l->last = ele;
     l->size += 1;
+    return JRV_SUCCESS;
 }
 
-void free_list(list* l)
+int free_list(list* l)
 {
     list_element *current = l->last;
     list_element *tmp;
@@ -40,4 +41,5 @@ void free_list(list* l)
 
     /* free the list itself */
     free(l);
+    return JRV_SUCCESS;
 }

@@ -40,14 +40,16 @@ int new_list(list **l);
  *
  * @param list The list to append the element to
  * @param data The data to append
+ * @return An integer describing the result of the function
  */
-void append(list *l, void *data);
+int append(list *l, void *data);
 
 /**
  * Frees the list and all its elements
  *
  * @param list The list to delete
+ * @return An integer describing the result of the function
  */
-void free_list(list *l);
+int free_list(list *l);
 
 #endif /* INCLUDE_jrv_list_h__ */
