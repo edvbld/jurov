@@ -6,7 +6,7 @@
 #include "CuTest.h"
 #include "errors.h"
 
-#define begin_example(object, property) void _##property(CuTest *tc) {
+#define begin_example(object, property) static void _##property(CuTest *tc) {
 
 #define end_example }
 
