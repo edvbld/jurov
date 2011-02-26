@@ -12,10 +12,11 @@ begin_example(call, should_have_call_as_type)
     ast_list *params = (ast_list *) new_ast_list(list);
     ast *method;
     ast *obj;
+    call *c;
     
     should_pass(new_identifier("bar", &obj))
     should_pass(new_identifier("foo", &method))
-    call *c = create(obj, method, params);
+    c = create(obj, method, params);
     should_eq_int(CALL, c->type)
 
     free(list);
@@ -30,10 +31,11 @@ begin_example(call, should_have_the_parameters_as_members)
     ast_list *params = (ast_list *) new_ast_list(list);
     ast *method;
     ast *obj;
+    call *c;
     
     should_pass(new_identifier("foo", &method))
     should_pass(new_identifier("bar", &obj))
-    call *c = create(obj, method, params);
+    c = create(obj, method, params);
     should_eq_ptr(obj, c->object)
     should_eq_ptr(method, c->method)
     should_eq_ptr(params, c->parameters)

@@ -1,6 +1,7 @@
 %{
 #include "ast.h"
 #include "stddef.h"
+int yylex(void);
 void yyerror(char *s);
 %}
 
@@ -53,5 +54,5 @@ expression: TRUE
 
 void yyerror(char *s)
 {
-    // do nothing for now
+    /* do nothing for now */ 
 }

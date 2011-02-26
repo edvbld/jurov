@@ -1,15 +1,19 @@
-#include "ast.h"
-#include "utils.h"
 #include "stdio.h"
 #include "stddef.h"
+#include "string.h"
 #include "errors.h"
+#include "ast.h"
+#include "utils.h"
 
 int new_identifier(char *name, ast **node)
 {
-    if(name == "" || name == NULL) {
+    identifier *id;
+
+    if(name == NULL || strlen(name) == 0) {
         return JRV_INVALID_STRING;
     }
-    identifier *id = j_malloc(sizeof(identifier));
+
+    id = j_malloc(sizeof(identifier));
     id->name = name; 
     id->type = IDENTIFIER;
     *node = (ast *) id;

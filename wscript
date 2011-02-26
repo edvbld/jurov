@@ -18,7 +18,7 @@ def run_specs(bld):
         bld.fatal("The specifications were not fulfilled!")
 
 def configure(conf):
-    conf.env.C_FLAGS = ['-g', '-Wall', '-ansi', '-pedantic']
+    conf.env.CFLAGS = ['-g', '-Wall', '-ansi', '-pedantic']
     conf.env.FLEXFLAGS = ['--header-file=src/lex.yy.h']
     conf.env.INCLUDE_SPECS = os.path.abspath('specs')
     conf.env.INCLUDE_SPECTACULAR = os.path.abspath('lib/spectacular')
