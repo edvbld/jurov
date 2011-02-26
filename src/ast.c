@@ -95,12 +95,13 @@ int new_this(ast **node)
     return JRV_SUCCESS;
 }
 
-ast* new_print(ast* expression)
+int new_print(ast* expression, ast **node)
 {
     print *p = j_malloc(sizeof(print));
     p->type = SYSTEM_OUT_PRINT;
     p->expression = expression;
-    return (ast *) p;
+    *node = (ast *) p;
+    return JRV_SUCCESS;
 }
 
 ast* new_main_class(ast *class_id, ast *parameter_id,

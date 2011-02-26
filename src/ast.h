@@ -255,10 +255,12 @@ typedef struct {
 /**
  * Creates a new print node with the given expression.
  *
- * @param expression The expression which result will be printed
- * @return An AST representation of a print statement
+ * @param[in] expression The expression which result will be printed
+ * @param[out] node The addres of the pointer that will point at the result 
+ *                  of the function
+ * @return An integer describing the result of the function
  */
-ast* new_print(ast* expression);
+int new_print(ast* expression, ast **node);
 
 /**
  * Represents the main class of a MiniJava program
