@@ -1,8 +1,0 @@
-def build(bld):
-    sources = ['errors_spec.c']
-    bld(features = 'c',
-        source = sources,
-        includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_SPECTACULAR,
-                    bld.env.INCLUDE_SPECS],
-        name = 'errors_specs')
-

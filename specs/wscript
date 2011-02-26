@@ -1,9 +1,9 @@
 def build(bld):
-    bld.recurse(['lexer', 'parser', 'ast', 'list', 'errors'])
-    sources = ['all_specs.c']
+    bld.recurse(['lexer', 'parser', 'ast'])
+    sources = ['all_specs.c', 'list_spec.c', 'errors_spec.c']
     bld(features = 'c cprogram',
         source = sources,
         target = 'run_all_specs',
-        includes = [bld.env.INCLUDE_SPECTACULAR],
-        use = ['lexer_specs', 'parser_specs', 'ast_specs', 'list_specs',
-               'errors_specs', 'parser', 'lexer', 'spectacular', 'objects'])
+        includes = [bld.env.INCLUDE_SPECTACULAR, bld.env.INCLUDE_SRC],
+        use = ['lexer_specs', 'parser_specs', 'ast_specs', 'parser', 'lexer', 
+               'spectacular', 'objects'])
