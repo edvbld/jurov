@@ -1,4 +1,4 @@
-#include "spectacular.h"
+#include "expectations.h"
 #include "ast.h"
 
 begin_example(this, should_have_this_object_as_type)

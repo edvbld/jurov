@@ -1,4 +1,4 @@
-#include "spectacular.h"
+#include "expectations.h"
 #include "stddef.h"
 
 begin_example(errors, should_return_the_correct_description)

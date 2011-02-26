@@ -1,4 +1,3 @@
-#include "stdio.h"
 #include "spectacular.h"
 
 begin_description(ast)
@@ -56,21 +55,7 @@ begin_description(jurov)
     add_description(errors)
 end_description
 
-int run_all_tests()
-{
-    CuString *output = CuStringNew();
-    CuSuite *suite = CuSuiteNew();
-
-    CuSuiteAddSuite(suite, test_jurov());
-    
-    CuSuiteRun(suite);
-    CuSuiteSummary(suite, output);
-    CuSuiteDetails(suite, output);
-    printf("%s\n", output->buffer);
-    return suite->failCount;
-}
-
 int main()
 {
-    return run_all_tests();
+    return run_description(jurov)
 }

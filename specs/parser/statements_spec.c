@@ -1,4 +1,4 @@
-#include "spectacular.h"
+#include "expectations.h"
 #include "lex.yy.h"
 
 int parse_statements(char *statements)

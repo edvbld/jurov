@@ -1,4 +1,4 @@
-#include "spectacular.h"
+#include "expectations.h"
 #include "ast.h"
 
 begin_example(binary_operation, should_have_the_given_type)

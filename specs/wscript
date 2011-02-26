@@ -3,8 +3,7 @@ def build(bld):
     sources = ['all_specs.c']
     bld(features = 'c cprogram',
         source = sources,
-        includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_SRC, 
-                    bld.env.INCLUDE_CUTEST, '.'],
         target = 'run_all_specs',
+        includes = [bld.env.INCLUDE_SPECTACULAR],
         use = ['lexer_specs', 'parser_specs', 'ast_specs', 'list_specs',
-               'errors_specs', 'parser', 'lexer', 'cutest', 'objects'])
+               'errors_specs', 'parser', 'lexer', 'spectacular', 'objects'])

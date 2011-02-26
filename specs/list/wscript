@@ -2,6 +2,6 @@ def build(bld):
     sources = ['list_spec.c']
     bld(features = 'c',
         source = sources,
-        includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_CUTEST,
+        includes = [bld.env.INCLUDE_SRC, bld.env.INCLUDE_SPECS, 
                     bld.env.INCLUDE_SPECTACULAR],
         name = 'list_specs')

@@ -1,4 +1,4 @@
-#include "spectacular.h"
+#include "expectations.h"
 #include "list.h"
 
 begin_example(list, should_have_size_zero_when_created)

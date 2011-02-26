@@ -3,6 +3,6 @@ def build(bld):
                'multiple_tokens_spec.c']
     bld(features = 'c',
         source = sources,
-        includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_CUTEST, 
-                    bld.env.INCLUDE_SRC, bld.env.INCLUDE_SPECTACULAR],
+        includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_SPECS,
+                    bld.env.INCLUDE_SPECTACULAR, bld.env.INCLUDE_SRC],
         name = 'lexer_specs')

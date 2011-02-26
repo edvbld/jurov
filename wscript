@@ -20,15 +20,15 @@ def run_specs(bld):
 def configure(conf):
     conf.env.C_FLAGS = ['-g', '-Wall', '-ansi', '-pedantic', '-std=c89']
     conf.env.FLEXFLAGS = ['--header-file=src/lex.yy.h']
-    conf.env.INCLUDE_CUTEST = os.path.abspath('lib/cutest-1.5')
-    conf.env.INCLUDE_SPECTACULAR = os.path.abspath('specs')
-    conf.env.INCLUDE_GENERATED_SRC = os.path.abspath('build/src')
+    conf.env.INCLUDE_SPECS = os.path.abspath('specs')
+    conf.env.INCLUDE_SPECTACULAR = os.path.abspath('lib/spectacular')
+    conf.env.INCLUDE_GENERATED_SRC = os.path.abspath('{0}/src'.format(out))
     conf.env.INCLUDE_SRC = os.path.abspath('src')
     conf.load('compiler_c')
     conf.load('flex')
     conf.load('bison')
 
 def build(bld):
-    bld.recurse(['src', 'specs', 'lib'])
+    bld.recurse(['lib', 'src', 'specs'])
     if Options.options.spec:
         bld.add_post_fun(run_specs)

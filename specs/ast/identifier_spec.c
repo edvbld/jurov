@@ -1,4 +1,4 @@
-#include "spectacular.h"
+#include "expectations.h"
 #include "ast.h"
 
 begin_example(identifier, should_fail_if_name_is_empty_or_null)
