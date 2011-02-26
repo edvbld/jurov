@@ -47,7 +47,7 @@ typedef enum {
 /**
  * Represents an abstract syntax tree (AST). 
  */
-typedef struct ast {
+typedef struct ast_ {
     /**  The type of the node */
     nodetype type; 
 } ast;

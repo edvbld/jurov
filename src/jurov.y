@@ -1,14 +1,15 @@
 %{
-#include "ast.h"
-#include "stddef.h"
-int yylex(void);
-void yyerror(char *s);
+    #include "ast.h"
+    void yyerror(ast **result, char *s);
+    int yylex(void);
 %}
+
+%parse-param {ast **result}
 
 %union {
     char* id;
     int number;
-    struct ast *tree;
+    struct ast_ *tree;
 }
 
 %token MAIN PUBLIC CLASS
@@ -26,9 +27,9 @@ void yyerror(char *s);
 
 %%
 /* This rule is just for retuning the created AST */
-start: program {ast_parser_result = $1;}
+start: program {*result = $1;}
 
-program: main_class {$$ = NULL}
+program: main_class {$$ = 0}
 
 main_class: class_declaration 
             MAIN LPAREN STRING LSQUARE RSQUARE ID RPAREN 
@@ -52,7 +53,7 @@ expression: TRUE
 
 %%
 
-void yyerror(char *s)
+void yyerror(ast **result, char *s)
 {
     /* do nothing for now */ 
 }
