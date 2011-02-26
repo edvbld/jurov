@@ -154,10 +154,12 @@ typedef struct {
 /**
  * Creates a new boolean with the given value.
  *
- * @param value The value of the boolean expression
- * @return A pointer to an AST representation of the integer
+ * @param[in] value The value of the boolean expression
+ * @param[out] node The addres of the pointer that will point at the result 
+ *                  of the function
+ * @return An integer describing the result of the function
  */
-ast* new_boolean(int value);
+int new_boolean(int value, ast **node);
  
 /**
  * Represents a new object operation in the AST

@@ -11,10 +11,10 @@ begin_example(unary_operation, should_have_unary_operation_as_type)
 end_example
 
 begin_example(unary_operation, should_have_the_given_operand_as_member)
-    ast *operand; 
+    ast *operand;
     unary_operation *node;
     
-    operand = new_boolean(0);
+    should_pass(new_boolean(0, &operand))
     should_pass(new_unary_operation(NOT, operand, (ast **) &node))
     should_eq_ptr(operand, node->operand)
     

@@ -45,12 +45,13 @@ int new_integer(int value, ast **node)
     return JRV_SUCCESS;
 }
 
-ast* new_boolean(int value)
+int new_boolean(int value, ast **node)
 {
     boolean *b = j_malloc(sizeof(boolean));
     b->type = BOOL;
     b->value = value;
-    return (ast *) b;
+    *node = (ast *) b;
+    return JRV_SUCCESS;
 }
 
 ast* new_new_object(ast *class_id)
