@@ -104,15 +104,15 @@ int new_print(ast* expression, ast **node)
     return JRV_SUCCESS;
 }
 
-ast* new_main_class(ast *class_id, ast *parameter_id,
-                    ast* statement)
+int new_main_class(ast *class_id, ast *parameter_id, ast* statement, ast **node)
 {
     main_class *mc = j_malloc(sizeof(main_class));
     mc->type = MAIN_CLASS;
     mc->class_id = (identifier *) class_id;
     mc->parameter_id = (identifier *) parameter_id;
     mc->statement = statement;
-    return (ast *) mc;
+    *node = (ast *) mc;
+    return JRV_SUCCESS;
 }
 
 ast_callbacks _callbacks;

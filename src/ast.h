@@ -282,14 +282,16 @@ typedef struct {
 /**
  * Creates a new main_class node with the given parameters
  *
- * @param class_id The identifier of the main class
- * @param parameter_id The identifier of the String[] parameter to the main 
+ * @param[in] class_id The identifier of the main class
+ * @param[in] parameter_id The identifier of the String[] parameter to the main 
  *                     method
- * @param statement The statement inside the main methods body
- * @return An AST representation of the main class
+ * @param[in] statement The statement inside the main methods body
+ * @param[out] node The addres of the pointer that will point at the result 
+ *                  of the function
+ * @return An integer describing the result of the function
  */
-ast* new_main_class(ast *class_id, ast *parameter_id,
-                    ast* statement);
+int new_main_class(ast *class_id, ast *parameter_id, ast* statement, 
+                   ast **node);
 
 /**
  * The result from the parser. After calling yyparse(), this variable will hold 
