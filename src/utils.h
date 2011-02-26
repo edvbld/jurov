@@ -1,5 +1,5 @@
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#ifndef INCLUDE_jrv_utils_h__
+#define INCLUDE_jrv_utils_h__
 
 #include "stdlib.h"
 #include "stdio.h"
@@ -39,4 +39,4 @@ void die(char *msg);
  */
 void* j_malloc(size_t n);
 
-#endif /* __UTILS_H__ */
+#endif /* INCLUDE_jrv_utils_h__ */

@@ -1,5 +1,5 @@
-#ifndef __AST_H__
-#define __AST_H__
+#ifndef INCLUDE_jrv_ast_h__
+#define INCLUDE_jrv_ast_h__
 #include "list.h"
 
 /**
@@ -369,4 +369,4 @@ void ast_walk(ast* tree, ast_callbacks callbacks, void *result);
  */
 void ast_visit(ast* node, void *result);
 
-#endif /* __AST_H__ */
+#endif /* INCLUDE_jrv_ast_h__ */
