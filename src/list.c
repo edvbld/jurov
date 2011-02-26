@@ -1,14 +1,16 @@
-#include "list.h"
 #include "stddef.h"
 #include "utils.h"
+#include "errors.h"
+#include "list.h"
 
-list* new_list()
+int new_list(list **l)
 {
-    list *l = j_malloc(sizeof(list));
-    l->size = 0;
-    l->first = NULL;
-    l->last = NULL;
-    return l;
+    list *tmp = j_malloc(sizeof(list));
+    tmp->size = 0;
+    tmp->first = NULL;
+    tmp->last = NULL;
+    *l = tmp;
+    return JRV_SUCCESS;
 }
 
 void append(list* l, void *data)

@@ -3,9 +3,10 @@
 #include "list.h"
 
 begin_example(ast_list, should_have_ast_list_as_type)
-    list *list = new_list();
+    list *list;
     ast_list *al;
 
+    should_pass(new_list(&list))
     should_pass(new_ast_list(list, (ast **) &al))
     should_eq_int(AST_LIST, al->type);
 
@@ -14,9 +15,10 @@ begin_example(ast_list, should_have_ast_list_as_type)
 end_example
 
 begin_example(ast_list, should_have_the_given_list_as_member)
-    list *list = new_list();
+    list *list;
     ast_list *al;
 
+    should_pass(new_list(&list))
     should_pass(new_ast_list(list, (ast **) &al))
     should_eq_ptr(list, al->list);
 

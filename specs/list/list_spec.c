@@ -2,16 +2,18 @@
 #include "list.h"
 
 begin_example(list, should_have_size_zero_when_created)
-    list* l = new_list();
-
+    list* l;
+    
+    should_pass(new_list(&l))
     should_eq_int(0, l->size)
 
     free(l);
 end_example
 
 begin_example(list, should_have_null_as_beginning_and_end_when_created)
-    list* l = new_list();
+    list* l;
 
+    should_pass(new_list(&l))
     should_eq_ptr(NULL, l->first)
     should_eq_ptr(NULL, l->last)
 
@@ -19,9 +21,10 @@ begin_example(list, should_have_null_as_beginning_and_end_when_created)
 end_example
 
 begin_example(list, should_be_able_to_have_data_appended_to_it)
-    list* l = new_list();
+    list* l;
     int x = 5;
-    
+   
+    should_pass(new_list(&l))
     append(l, &x);
     should_eq_ptr(&x, l->first->data)
     should_eq_ptr(&x, l->last->data)
@@ -34,7 +37,7 @@ begin_example(list, should_be_able_to_have_data_appended_to_it)
 end_example
 
 begin_example(list, should_be_able_to_have_several_elements_appended_and_freed)
-    list* l = new_list();
+    list* l;
     int *a = malloc(sizeof(int));
     int *b = malloc(sizeof(int));
     int *c = malloc(sizeof(int));
@@ -42,6 +45,7 @@ begin_example(list, should_be_able_to_have_several_elements_appended_and_freed)
     *b = 2;
     *c = 3;
 
+    should_pass(new_list(&l))
     append(l, a);
     should_eq_int(1, l->size)
     should_eq_ptr(a, l->first->data)

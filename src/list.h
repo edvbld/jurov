@@ -1,5 +1,5 @@
-#ifndef __LIST_H__
-#define __LIST_H__
+#ifndef INCLUDE_jrv_list_h__
+#define INCLUDE_jrv_list_h__
 
 /**
  * This struct represents an element in a list
@@ -29,9 +29,11 @@ typedef struct {
 /** 
  * Creates a new list.
  * 
- * @return A pointer to the newly created list
+ * @param[out] l The addres of the pointer that will point at the result 
+ *               of the function
+ * @return An integer describing the result of the function
  */
-list* new_list();
+int new_list(list **l);
 
 /** 
  * Appends an element to the list 
@@ -48,4 +50,4 @@ void append(list *l, void *data);
  */
 void free_list(list *l);
 
-#endif /* __LIST_H__ */
+#endif /* INCLUDE_jrv_list_h__ */

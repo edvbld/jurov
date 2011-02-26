@@ -3,12 +3,13 @@
 #include "list.h"
 
 begin_example(call, should_have_call_as_type)
-    list *list = new_list();
+    list *list;
     ast_list *params;
     ast *method;
     ast *obj;
     call *c;
-   
+  
+    should_pass(new_list(&list))
     should_pass(new_ast_list(list, (ast **) &params))
     should_pass(new_identifier("bar", &obj))
     should_pass(new_identifier("foo", &method))
@@ -23,12 +24,13 @@ begin_example(call, should_have_call_as_type)
 end_example
 
 begin_example(call, should_have_the_parameters_as_members)
-    list *list = new_list();
+    list *list;
     ast_list *params;
     ast *method;
     ast *obj;
     call *c;
-   
+  
+    should_pass(new_list(&list))
     should_pass(new_ast_list(list, (ast **) &params))
     should_pass(new_identifier("foo", &method))
     should_pass(new_identifier("bar", &obj))
