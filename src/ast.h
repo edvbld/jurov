@@ -175,7 +175,7 @@ typedef struct {
 /**
  * Creates a new new_object with the given id.
  *
- * @param id The identifier of the class of the object
+ * @param[in] id The identifier of the class of the object
  * @param[out] node The addres of the pointer that will point at the result 
  *                  of the function
  * @return An integer describing the result of the function
@@ -196,9 +196,12 @@ typedef struct {
 /**
  * Creates a new ast list with the given list.
  *
- * @param list The list of of AST nodes
+ * @param[in] list The list of of AST nodes
+ * @param[out] node The addres of the pointer that will point at the result 
+ *                  of the function
+ * @return An integer describing the result of the function
  */
-ast* new_ast_list(list* list);
+int new_ast_list(list* list, ast **node);
 
 /**
  * Represents a method call in the AST

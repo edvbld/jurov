@@ -9,11 +9,12 @@ static call* create(ast *object, ast *method, ast_list *parameters)
 
 begin_example(call, should_have_call_as_type)
     list *list = new_list();
-    ast_list *params = (ast_list *) new_ast_list(list);
+    ast_list *params;
     ast *method;
     ast *obj;
     call *c;
-    
+   
+    should_pass(new_ast_list(list, (ast **) &params))
     should_pass(new_identifier("bar", &obj))
     should_pass(new_identifier("foo", &method))
     c = create(obj, method, params);
@@ -28,11 +29,12 @@ end_example
 
 begin_example(call, should_have_the_parameters_as_members)
     list *list = new_list();
-    ast_list *params = (ast_list *) new_ast_list(list);
+    ast_list *params;
     ast *method;
     ast *obj;
     call *c;
-    
+   
+    should_pass(new_ast_list(list, (ast **) &params))
     should_pass(new_identifier("foo", &method))
     should_pass(new_identifier("bar", &obj))
     c = create(obj, method, params);
