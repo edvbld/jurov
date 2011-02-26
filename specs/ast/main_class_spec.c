@@ -17,11 +17,12 @@ begin_example(main_class, should_have_the_given_parameters_as_members)
     ast* class_id;
     ast* param_id;
     ast* statement;
+    main_class *mc;
 
     should_pass(new_identifier("args", &param_id))
     should_pass(new_identifier("Main", &class_id))
     statement = new_print(NULL);
-    main_class *mc = create(class_id, param_id, statement);
+    mc = create(class_id, param_id, statement);
     should_eq_ptr(class_id, mc->class_id)
     should_eq_ptr(param_id, mc->parameter_id)
     should_eq_ptr(statement, mc->statement) 

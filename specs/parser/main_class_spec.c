@@ -2,6 +2,7 @@
 #include "jurov.tab.h"
 #include "lex.yy.h"
 
+int yyparse();
 int parse_program(char *program)
 {
     int res = 0;

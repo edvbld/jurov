@@ -214,6 +214,7 @@ end_example
 
 begin_description(single_token_lexer)
     add_example(should_lex_public_static_void_main_to_MAIN)
+    add_example(should_lex_class_to_CLASS)
     add_example(should_lex_public_to_PUBLIC)
     add_example(should_lex_system_out_println_to_PRINT)
     add_example(should_lex_left_curly_bracket_to_LCURLY)

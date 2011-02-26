@@ -1,6 +1,7 @@
 #include "expectations.h"
 #include "lex.yy.h"
 
+int yyparse();
 int parse_statements(char *statements)
 {
     int res = 0;

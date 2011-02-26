@@ -58,12 +58,13 @@ int new_boolean(int value, ast **node)
     return JRV_SUCCESS;
 }
 
-ast* new_new_object(ast *class_id)
+int new_new_object(ast *class_id, ast **node)
 {
     new_object *no = j_malloc(sizeof(new_object));
     no->type = NEW_OBJECT;
     no->class_id = (identifier *) class_id;
-    return (ast *) no;
+    *node = (ast *) no;
+    return JRV_SUCCESS;
 }
 
 ast* new_this()
