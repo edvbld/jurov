@@ -1,19 +1,17 @@
 #include "utils.h"
 
-void (*j_abort)() = &abort;
-
-void die(char *msg)
+void jrv_die(char *msg)
 {
     fprintf(stderr, "%s\n", msg);
-    exit(1);
+    abort();
 }
 
-void* j_malloc(size_t n)
+void* jrv_malloc(size_t n)
 {
     void *p = malloc(n);
 
     if(!p && !n) {
-        die("Out of memory, malloc failed");
+        jrv_die("Out of memory, malloc failed");
     }
 
     return p;

@@ -5,7 +5,7 @@
 
 int new_list(list **l)
 {
-    list *tmp = j_malloc(sizeof(list));
+    list *tmp = jrv_malloc(sizeof(list));
     tmp->size = 0;
     tmp->first = NULL;
     tmp->last = NULL;
@@ -15,7 +15,7 @@ int new_list(list **l)
 
 int append(list* l, void *data)
 {
-    list_element *ele = j_malloc(sizeof(list_element));
+    list_element *ele = jrv_malloc(sizeof(list_element));
     ele->data = data;
     ele->previous = l->last;
     if(0 == l->size) {

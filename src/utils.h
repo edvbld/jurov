@@ -29,7 +29,7 @@
  *
  * @param msg The message to print to stderr
  */
-void die(char *msg);
+void jrv_die(char *msg);
 
 /**
  * Allocates memory and performs additional checks if the computer has run out 
@@ -37,6 +37,6 @@ void die(char *msg);
  *
  * @param n The amount of memory to allocate
  */
-void* j_malloc(size_t n);
+void* jrv_malloc(size_t n);
 
 #endif /* INCLUDE_jrv_utils_h__ */

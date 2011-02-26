@@ -13,7 +13,7 @@ int new_identifier(char *name, ast **node)
         return JRV_INVALID_STRING;
     }
 
-    id = j_malloc(sizeof(identifier));
+    id = jrv_malloc(sizeof(identifier));
     id->name = name; 
     id->type = IDENTIFIER;
     *node = (ast *) id;
@@ -23,7 +23,7 @@ int new_identifier(char *name, ast **node)
 int new_binary_operation(nodetype type, ast *left_operand, ast *right_operand,
                          ast **node)
 {
-    binary_operation *op = j_malloc(sizeof(binary_operation));
+    binary_operation *op = jrv_malloc(sizeof(binary_operation));
     op->type = type;
     op->left_operand = left_operand;
     op->right_operand = right_operand;
@@ -33,7 +33,7 @@ int new_binary_operation(nodetype type, ast *left_operand, ast *right_operand,
 
 int new_unary_operation(nodetype type, ast *operand, ast **node)
 {
-    unary_operation *op = j_malloc(sizeof(unary_operation));
+    unary_operation *op = jrv_malloc(sizeof(unary_operation));
     op->type = type;
     op->operand = operand;
     *node = (ast *) op;
@@ -42,7 +42,7 @@ int new_unary_operation(nodetype type, ast *operand, ast **node)
 
 int new_integer(int value, ast **node)
 {
-    integer *i = j_malloc(sizeof(integer));
+    integer *i = jrv_malloc(sizeof(integer));
     i->value = value;
     i->type = INTEGER;
     *node = (ast *) i;
@@ -51,7 +51,7 @@ int new_integer(int value, ast **node)
 
 int new_boolean(int value, ast **node)
 {
-    boolean *b = j_malloc(sizeof(boolean));
+    boolean *b = jrv_malloc(sizeof(boolean));
     b->type = BOOL;
     b->value = value;
     *node = (ast *) b;
@@ -60,7 +60,7 @@ int new_boolean(int value, ast **node)
 
 int new_new_object(ast *class_id, ast **node)
 {
-    new_object *no = j_malloc(sizeof(new_object));
+    new_object *no = jrv_malloc(sizeof(new_object));
     no->type = NEW_OBJECT;
     no->class_id = (identifier *) class_id;
     *node = (ast *) no;
@@ -69,7 +69,7 @@ int new_new_object(ast *class_id, ast **node)
 
 int new_ast_list(list *list, ast **node)
 {
-    ast_list *al = j_malloc(sizeof(ast_list));
+    ast_list *al = jrv_malloc(sizeof(ast_list));
     al->type = AST_LIST;
     al->list = list;
     *node = (ast *) al;
@@ -78,7 +78,7 @@ int new_ast_list(list *list, ast **node)
 
 int new_call(ast *object, ast *method, ast_list *parameters, ast **node)
 {
-    call *c = j_malloc(sizeof(call));
+    call *c = jrv_malloc(sizeof(call));
     c->type = CALL;
     c->object = object;
     c->method = (identifier *) method;
@@ -89,7 +89,7 @@ int new_call(ast *object, ast *method, ast_list *parameters, ast **node)
 
 int new_this(ast **node)
 {
-    ast* this = j_malloc(sizeof(ast));
+    ast* this = jrv_malloc(sizeof(ast));
     this->type = THIS_OBJECT;
     *node = this;
     return JRV_SUCCESS;
@@ -97,7 +97,7 @@ int new_this(ast **node)
 
 int new_print(ast* expression, ast **node)
 {
-    print *p = j_malloc(sizeof(print));
+    print *p = jrv_malloc(sizeof(print));
     p->type = SYSTEM_OUT_PRINT;
     p->expression = expression;
     *node = (ast *) p;
@@ -106,7 +106,7 @@ int new_print(ast* expression, ast **node)
 
 int new_main_class(ast *class_id, ast *parameter_id, ast* statement, ast **node)
 {
-    main_class *mc = j_malloc(sizeof(main_class));
+    main_class *mc = jrv_malloc(sizeof(main_class));
     mc->type = MAIN_CLASS;
     mc->class_id = (identifier *) class_id;
     mc->parameter_id = (identifier *) parameter_id;
@@ -185,6 +185,6 @@ void ast_visit(ast *node, void *result)
             }
             break;
         default:
-            die("Unknown AST node found");
+            jrv_die("Unknown AST node found");
     }
 }
