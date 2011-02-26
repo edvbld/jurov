@@ -223,12 +223,14 @@ typedef struct {
 /**
  * Creates a new call node for the AST with the given parameters.
  *
- * @param object The object to call the method on
- * @param method_id The id of the method to call
- * @param parameters The parameters for the method call
- * @return An AST representation of the method call
+ * @param[in] object The object to call the method on
+ * @param[in] method_id The id of the method to call
+ * @param[in] parameters The parameters for the method call
+ * @param[out] node The addres of the pointer that will point at the result 
+ *                  of the function
+ * @return An integer describing the result of the function
  */
-ast* new_call(ast *object, ast *method, ast_list *parameters);
+int new_call(ast *object, ast *method, ast_list *parameters, ast **node);
 
 /**
  * Creates a new ast struct with type nodetype.THIS

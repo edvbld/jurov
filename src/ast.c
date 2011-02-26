@@ -76,22 +76,22 @@ int new_ast_list(list *list, ast **node)
     return JRV_SUCCESS;
 }
 
-ast* new_this()
-{
-    ast* this = j_malloc(sizeof(ast));
-    this->type = THIS_OBJECT;
-    return this;
-}
-
-
-ast* new_call(ast *object, ast *method, ast_list *parameters)
+int new_call(ast *object, ast *method, ast_list *parameters, ast **node)
 {
     call *c = j_malloc(sizeof(call));
     c->type = CALL;
     c->object = object;
     c->method = (identifier *) method;
     c->parameters = parameters;
-    return (ast *) c;
+    *node = (ast *) c;
+    return JRV_SUCCESS;
+}
+
+ast* new_this()
+{
+    ast* this = j_malloc(sizeof(ast));
+    this->type = THIS_OBJECT;
+    return this;
 }
 
 ast* new_print(ast* expression)
