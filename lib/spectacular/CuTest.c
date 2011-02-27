@@ -239,6 +239,14 @@ void CuAssertPtrEquals_LineMsg(CuTest* tc, const char* file, int line, const cha
 	CuFail_Line(tc, file, line, message, buf);
 }
 
+void CuAssertPtrNotEquals_LineMsg(CuTest* tc, const char* file, int line, const char* message, 
+	void* expected, void* actual)
+{
+	char buf[STRING_MAX];
+	if (expected != actual) return;
+	sprintf(buf, "expected pointer <0x%p> to differ from <0x%p>", expected, actual);
+	CuFail_Line(tc, file, line, message, buf);
+}
 
 /*-------------------------------------------------------------------------*
  * CuSuite

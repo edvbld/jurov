@@ -12,6 +12,7 @@
 #define should_neq_int(exp, act) CuAssertIntNotEquals(tc, exp, act);
 #define should_eq_str(exp, act) CuAssertStrEquals(tc, exp, act);
 #define should_eq_ptr(exp, act) CuAssertPtrEquals(tc, exp, act);
+#define should_neq_ptr(exp, act) CuAssertPtrNotEquals(tc, exp, act);
 
 #define begin_description(name) CuSuite* test_##name() { \
     CuSuite *suite = CuSuiteNew();
