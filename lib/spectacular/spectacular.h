@@ -22,7 +22,9 @@
 #define end_description return suite; }
 
 #define use_description(d) CuSuite* test_##d();
-#define add_description(d) CuSuiteAddSuite(suite, test_##d());
+
+void add_suite(CuSuite *suite, CuSuite *suite2);
+#define add_description(d) add_suite(suite, test_##d()); 
 
 int run_desc(CuSuite *desc);
 #define run_description(d) run_desc(test_##d());
