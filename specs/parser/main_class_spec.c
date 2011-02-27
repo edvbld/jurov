@@ -1,13 +1,15 @@
 #include "expectations.h"
 #include "jurov.tab.h"
 #include "lex.yy.h"
+#include "ast.h"
 
 int yyparse();
 static int parse_program(char *program)
 {
     int res = 0;
+    ast *tree;
     yy_scan_string(program);
-    res = yyparse();
+    res = yyparse(&tree);
     yylex_destroy();
     return res;
 }
