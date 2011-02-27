@@ -1,6 +1,7 @@
 %option noyywrap nodefault yylineno nounput
 
 %{
+#include "string.h"
 #include "jurov.tab.h"
 %}
 
@@ -39,7 +40,11 @@ WS      ([\t\n ])
 "."                                                 { return DOT; }
 ","                                                 { return COMMA; }
 ";"                                                 { return SEMICOLON; }
-[a-zA-Z][a-zA-Z0-9]*                                { yylval.id = yytext;
+[a-zA-Z][a-zA-Z0-9]*                                { char *id = 
+                                                        malloc(yyleng + 1);
+                                                      strncpy(id, yytext, 
+                                                              yyleng);
+                                                      yylval.id = id;
                                                       return ID; }
 [0-9]+                                              { yylval.number = 
                                                           atoi(yytext);
