@@ -23,6 +23,30 @@ begin_example(multiple_token_lexer,
     should_eq_int(0, yylex())
 end_example
 
+begin_example(multiple_token_lexer, 
+              should_lex_the_empty_program)
+    char *program = 
+        "class Main {\n"
+        "public static void main(String[] args)\n"
+        "{}}";
+    yy_scan_string(program);
+    should_eq_int(CLASS, yylex())
+    should_eq_int(ID, yylex())
+    should_eq_str("Main", yylval.id)
+    should_eq_int(LCURLY, yylex())
+    should_eq_int(MAIN, yylex())
+    should_eq_int(LPAREN, yylex())
+    should_eq_int(STRING, yylex())
+    should_eq_int(LSQUARE, yylex())
+    should_eq_int(RSQUARE, yylex())
+    should_eq_int(ID, yylex())
+    should_eq_str("args", yylval.id)
+    should_eq_int(RPAREN, yylex())
+    should_eq_int(LCURLY, yylex())
+    should_eq_int(RCURLY, yylex())
+    should_eq_int(RCURLY, yylex())
+end_example
+
 begin_example(multiple_token_lexer, should_lex_multiple_different_parentheses)
     char *test_str = " )} {}\n{({}\t)[] {({][]{(";
     yy_scan_string(test_str);
@@ -113,6 +137,7 @@ end_example
 begin_description(multiple_token_lexer)
     add_example(should_lex_two_tokens_separated_by_space)
     add_example(should_lex_public_static_void_main_with_different_spaces)
+    add_example(should_lex_the_empty_program)
     add_example(should_lex_multiple_different_parentheses)
     add_example(should_lex_a_small_program_with_print)
 end_description
