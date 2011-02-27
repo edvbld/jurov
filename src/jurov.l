@@ -45,6 +45,7 @@ WS      ([\t\n ])
                                                       strncpy(id, yytext, 
                                                               yyleng);
                                                       yylval.id = id;
+                                                      id[yyleng] = '\0';
                                                       return ID; }
 [0-9]+                                              { yylval.number = 
                                                           atoi(yytext);
