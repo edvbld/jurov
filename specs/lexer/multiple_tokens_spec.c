@@ -7,6 +7,7 @@ begin_example(multiple_token_lexer, should_lex_two_tokens_separated_by_space)
     should_eq_int(PUBLIC, yylex())
     should_eq_int(CLASS, yylex())
     should_eq_int(0, yylex())
+    yylex_destroy();
 end_example
 
 begin_example(multiple_token_lexer, 
@@ -21,6 +22,7 @@ begin_example(multiple_token_lexer,
     should_eq_int(PUBLIC, yylex())
     should_eq_int(CLASS, yylex())
     should_eq_int(0, yylex())
+    yylex_destroy();
 end_example
 
 begin_example(multiple_token_lexer, 
@@ -33,6 +35,7 @@ begin_example(multiple_token_lexer,
     should_eq_int(CLASS, yylex())
     should_eq_int(ID, yylex())
     should_eq_str("Main", yylval.id)
+    free(yylval.id);
     should_eq_int(LCURLY, yylex())
     should_eq_int(MAIN, yylex())
     should_eq_int(LPAREN, yylex())
@@ -41,10 +44,12 @@ begin_example(multiple_token_lexer,
     should_eq_int(RSQUARE, yylex())
     should_eq_int(ID, yylex())
     should_eq_str("args", yylval.id)
+    free(yylval.id);
     should_eq_int(RPAREN, yylex())
     should_eq_int(LCURLY, yylex())
     should_eq_int(RCURLY, yylex())
     should_eq_int(RCURLY, yylex())
+    yylex_destroy();
 end_example
 
 begin_example(multiple_token_lexer, should_lex_multiple_different_parentheses)
@@ -70,6 +75,7 @@ begin_example(multiple_token_lexer, should_lex_multiple_different_parentheses)
     should_eq_int(LCURLY, yylex())
     should_eq_int(LPAREN, yylex())
     should_eq_int(0, yylex())
+    yylex_destroy();
 end_example
 
 begin_example(multiple_token_lexer, should_lex_a_small_program_with_print)
@@ -92,6 +98,7 @@ begin_example(multiple_token_lexer, should_lex_a_small_program_with_print)
     should_eq_int(CLASS, yylex())
     should_eq_int(ID, yylex())
     should_eq_str("Program", yylval.id)
+    free(yylval.id);
     should_eq_int(LCURLY, yylex())
     /* public static void main(String[] args) */
     should_eq_int(MAIN, yylex())
@@ -101,6 +108,7 @@ begin_example(multiple_token_lexer, should_lex_a_small_program_with_print)
     should_eq_int(RSQUARE, yylex())
     should_eq_int(ID, yylex())
     should_eq_str("args", yylval.id)
+    free(yylval.id);
     should_eq_int(RPAREN, yylex())
     should_eq_int(LCURLY, yylex())
     /* if(false) { */
@@ -132,6 +140,7 @@ begin_example(multiple_token_lexer, should_lex_a_small_program_with_print)
     should_eq_int(RCURLY, yylex())
     should_eq_int(RCURLY, yylex())
     should_eq_int(0, yylex())
+    yylex_destroy();
 end_example
 
 begin_description(multiple_token_lexer)
