@@ -39,9 +39,11 @@ end_description
 begin_description(parser)
     use_description(main_class_parser)
     use_description(statement_parser)
+    use_description(ast_parser)
 
     add_description(main_class_parser)
     add_description(statement_parser)
+    add_description(ast_parser)
 end_description
 
 begin_description(jurov)

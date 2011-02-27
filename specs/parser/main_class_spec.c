@@ -3,7 +3,7 @@
 #include "lex.yy.h"
 
 int yyparse();
-int parse_program(char *program)
+static int parse_program(char *program)
 {
     int res = 0;
     yy_scan_string(program);

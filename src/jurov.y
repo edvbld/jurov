@@ -1,5 +1,6 @@
 %{
     #include "ast.h"
+    #include "stddef.h"
     void yyerror(ast **result, char *s);
     int yylex(void);
 %}
@@ -23,22 +24,27 @@
 %token <id> ID
 %token <number> NUMBER
 
-%type <tree> start program 
+%type <tree> program main_class class_declaration main_method 
+             function_body
 
 %%
-/* This rule is just for retuning the created AST */
-start: program {*result = $1;}
+program: main_class { *result = $1; }
 
-program: main_class {$$ = 0}
+main_class: class_declaration main_method function_body RCURLY 
+            { main_class *mc; 
+              new_main_class($1, $2, $3, (ast **) &mc);
+              $$ = (ast *) mc; }
 
-main_class: class_declaration 
-            MAIN LPAREN STRING LSQUARE RSQUARE ID RPAREN 
-            function_body
-            RCURLY
+main_method: MAIN LPAREN STRING LSQUARE RSQUARE ID RPAREN 
+             { ast *a;
+               new_identifier($6, &a);
+               $$ = a; }
 
-class_declaration: CLASS ID LCURLY
+class_declaration: CLASS ID LCURLY { ast *id;
+                                     new_identifier($2, &id);
+                                     $$ = id; }
 
-function_body: LCURLY statements RCURLY
+function_body: LCURLY statements RCURLY { $$ = NULL; }
 
 statements: /* nothing */
           | statement statements
