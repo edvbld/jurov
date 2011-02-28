@@ -31,17 +31,17 @@
 program: main_class { *result = $1; }
 
 main_class: class_declaration main_method function_body RCURLY 
-            { main_class *mc; 
-              new_main_class($1, $2, $3, (ast **) &mc);
-              $$ = (ast *) mc; }
+            { ast *mc; 
+              new_mj_main_class($1, $2, $3, &mc);
+              $$ = mc; }
 
 main_method: MAIN LPAREN STRING LSQUARE RSQUARE ID RPAREN 
              { ast *a;
-               new_identifier($6, &a);
+               new_mj_identifier($6, &a);
                $$ = a; }
 
 class_declaration: CLASS ID LCURLY { ast *id;
-                                     new_identifier($2, &id);
+                                     new_mj_identifier($2, &id);
                                      $$ = id; }
 
 function_body: LCURLY statements RCURLY { $$ = NULL; }

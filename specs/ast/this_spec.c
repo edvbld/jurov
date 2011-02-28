@@ -1,15 +1,15 @@
 #include "expectations.h"
 #include "ast.h"
 
-begin_example(this, should_have_this_object_as_type)
+begin_example(mj_this, should_have_mj_this_as_type)
     ast *node;
    
-    should_pass(new_this(&node))
-    should_eq_int(THIS_OBJECT, node->type)
+    should_pass(new_mj_this(&node))
+    should_eq_int(MJ_THIS, node->type)
 
     free(node);
 end_example
 
-begin_description(this)
-    add_example(should_have_this_object_as_type)
+begin_description(mj_this)
+    add_example(should_have_mj_this_as_type)
 end_description

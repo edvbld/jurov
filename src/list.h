@@ -45,11 +45,24 @@ int new_list(list **l);
 int append(list *l, void *data);
 
 /**
- * Frees the list and all its elements
+ * Frees the list and all the list_element. For the data pointer in each 
+ * list_element, the supplied callback will be called to handle the freeing of 
+ * the data.
+ *
+ * @param list The list to delete
+ * @param callback The function to call to free the data pointer in each element
+ * @return An integer describing the result of the function
+ */
+int delete_list_cb(list *l, void (*callback)(void *data));
+
+/**
+ * Frees the list and all its elements. Frees the element by just freeing 
+ * the void pointer. If you need more control of how the elements are freed, 
+ * see delete_list_cb.
  *
  * @param list The list to delete
  * @return An integer describing the result of the function
  */
-int free_list(list *l);
+int delete_list(list *l);
 
 #endif /* INCLUDE_jrv_list_h__ */

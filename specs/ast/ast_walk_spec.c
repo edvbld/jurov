@@ -1,7 +1,7 @@
 #include "expectations.h"
 #include "ast.h"
 
-void on_add(binary_operation *op, void *result)
+static void on_add(mj_binary_operation *op, void *result)
 {
     int left, right = 0;
     ast_visit(op->left_operand, &left);
@@ -9,7 +9,7 @@ void on_add(binary_operation *op, void *result)
     *((int *) result) = left + right;
 }
 
-void on_sub(binary_operation *op, void *result)
+static void on_sub(mj_binary_operation *op, void *result)
 {
     int left, right = 0;
     ast_visit(op->left_operand, &left);
@@ -17,7 +17,7 @@ void on_sub(binary_operation *op, void *result)
     *((int *) result) = left - right;
 }
 
-void on_mul(binary_operation *op, void *result)
+static void on_mul(mj_binary_operation *op, void *result)
 {
     int left, right = 0;
     ast_visit(op->left_operand, &left);
@@ -25,7 +25,7 @@ void on_mul(binary_operation *op, void *result)
     *((int *) result) = left * right;
 }
 
-void on_div(binary_operation *op, void *result)
+static void on_div(mj_binary_operation *op, void *result)
 {
     int left, right = 0;
     ast_visit(op->left_operand, &left);
@@ -33,7 +33,7 @@ void on_div(binary_operation *op, void *result)
     *((int *) result) = left / right;
 }
 
-void on_int(integer *i, void *result)
+static void on_int(mj_integer *i, void *result)
 {
     *((int *) result) = i->value;
 }
@@ -45,12 +45,12 @@ begin_example(ast_walk, should_handle_addition_and_integer_nodes)
     ast *three;
     
     ast_callbacks callbacks;
-    callbacks.on_addition = &on_add;
-    callbacks.on_integer = &on_int;
+    callbacks.on_mj_addition = &on_add;
+    callbacks.on_mj_integer = &on_int;
     
-    should_pass(new_integer(2, &two))
-    should_pass(new_integer(3, &three))
-    should_pass(new_binary_operation(ADDITION, two, three, &tree))
+    should_pass(new_mj_integer(2, &two))
+    should_pass(new_mj_integer(3, &three))
+    should_pass(new_mj_binary_operation(MJ_ADDITION, two, three, &tree))
     ast_walk(tree, callbacks, &result);
     should_eq_int(5, result)
 
@@ -73,22 +73,22 @@ begin_example(ast_walk, should_handle_all_arithmetic_nodes)
     ast *ten;
     
     ast_callbacks callbacks;
-    callbacks.on_addition = &on_add;
-    callbacks.on_subtraction = &on_sub;
-    callbacks.on_multiplication = &on_mul;
-    callbacks.on_division = &on_div;
-    callbacks.on_integer = &on_int;
+    callbacks.on_mj_addition = &on_add;
+    callbacks.on_mj_subtraction = &on_sub;
+    callbacks.on_mj_multiplication = &on_mul;
+    callbacks.on_mj_division = &on_div;
+    callbacks.on_mj_integer = &on_int;
 
     /* (+ (* (- 5 2) (+ 1 1)) (/ 10 2)) */
-    should_pass(new_integer(1, &one))
-    should_pass(new_integer(5, &five))
-    should_pass(new_integer(2, &two))
-    should_pass(new_integer(10, &ten))
-    should_pass(new_binary_operation(ADDITION, one, one, &op4))
-    should_pass(new_binary_operation(SUBTRACTION, five, two, &op3)) 
-    should_pass(new_binary_operation(DIVISION, ten, two, &op2))
-    should_pass(new_binary_operation(MULTIPLICATION, op3, op4, &op1))
-    should_pass(new_binary_operation(ADDITION, op1, op2, &op0))
+    should_pass(new_mj_integer(1, &one))
+    should_pass(new_mj_integer(5, &five))
+    should_pass(new_mj_integer(2, &two))
+    should_pass(new_mj_integer(10, &ten))
+    should_pass(new_mj_binary_operation(MJ_ADDITION, one, one, &op4))
+    should_pass(new_mj_binary_operation(MJ_SUBTRACTION, five, two, &op3)) 
+    should_pass(new_mj_binary_operation(MJ_DIVISION, ten, two, &op2))
+    should_pass(new_mj_binary_operation(MJ_MULTIPLICATION, op3, op4, &op1))
+    should_pass(new_mj_binary_operation(MJ_ADDITION, op1, op2, &op0))
     ast_walk(op0, callbacks, &result);
     should_eq_int(11, result)
 

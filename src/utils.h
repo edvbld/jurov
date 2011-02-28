@@ -25,6 +25,13 @@
 
 
 /**
+ * Frees the given pointer if it's not null and then sets the pointer to NULL
+ *
+ * @param pp A pointer to the pointer to free
+ */
+#define jrv_free(pp) (pp == NULL? (void) 0 : free(*pp), *pp = NULL)
+
+/**
  * Print a message to stderr and the exits with exit code 1.
  *
  * @param msg The message to print to stderr

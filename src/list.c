@@ -1,6 +1,7 @@
 #include "stddef.h"
 #include "utils.h"
 #include "errors.h"
+#include "types.h"
 #include "list.h"
 
 int new_list(list **l)
@@ -26,7 +27,7 @@ int append(list* l, void *data)
     return JRV_SUCCESS;
 }
 
-int free_list(list* l)
+int delete_list_cb(list *l, void (*callback)(void *p))
 {
     list_element *current = l->last;
     list_element *tmp;
@@ -34,12 +35,23 @@ int free_list(list* l)
     /* free all the elements */
     while(NULL != current) {
         tmp = current->previous;
-        free(current->data);
-        free(current);
+        callback(current->data); 
+        jrv_free(&current);
         current = tmp;
     }
 
     /* free the list itself */
-    free(l);
+    jrv_free(&l);
     return JRV_SUCCESS;
 }
+
+void free_element(void *p)
+{
+    jrv_free(&p);
+}
+
+int delete_list(list* l)
+{
+    return delete_list_cb(l, &free_element);
+}
+

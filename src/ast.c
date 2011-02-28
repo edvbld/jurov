@@ -5,26 +5,26 @@
 #include "ast.h"
 #include "utils.h"
 
-int new_identifier(char *name, ast **node)
+int new_mj_identifier(char *name, ast **node)
 {
-    identifier *id;
+    mj_identifier *id;
 
     if(name == NULL || strlen(name) == 0) {
         *node = NULL;
         return JRV_INVALID_STRING;
     }
 
-    id = jrv_malloc(sizeof(identifier));
+    id = jrv_malloc(sizeof(mj_identifier));
     id->name = name; 
-    id->type = IDENTIFIER;
+    id->type = MJ_IDENTIFIER;
     *node = (ast *) id;
     return JRV_SUCCESS;
 }
 
-int new_binary_operation(nodetype type, ast *left_operand, ast *right_operand,
-                         ast **node)
+int new_mj_binary_operation(nodetype type, ast *left_operand, 
+                            ast *right_operand, ast **node)
 {
-    binary_operation *op = jrv_malloc(sizeof(binary_operation));
+    mj_binary_operation *op = jrv_malloc(sizeof(mj_binary_operation));
     op->type = type;
     op->left_operand = left_operand;
     op->right_operand = right_operand;
@@ -32,92 +32,118 @@ int new_binary_operation(nodetype type, ast *left_operand, ast *right_operand,
     return JRV_SUCCESS;
 }
 
-int new_unary_operation(nodetype type, ast *operand, ast **node)
+int new_mj_unary_operation(nodetype type, ast *operand, ast **node)
 {
-    unary_operation *op = jrv_malloc(sizeof(unary_operation));
+    mj_unary_operation *op = jrv_malloc(sizeof(mj_unary_operation));
     op->type = type;
     op->operand = operand;
     *node = (ast *) op;
     return JRV_SUCCESS;
 }
 
-int new_integer(int value, ast **node)
+int new_mj_integer(int value, ast **node)
 {
-    integer *i = jrv_malloc(sizeof(integer));
+    mj_integer *i = jrv_malloc(sizeof(mj_integer));
     i->value = value;
-    i->type = INTEGER;
+    i->type = MJ_INTEGER;
     *node = (ast *) i;
     return JRV_SUCCESS;
 }
 
-int new_boolean(int value, ast **node)
+int new_mj_boolean(int value, ast **node)
 {
-    boolean *b = jrv_malloc(sizeof(boolean));
-    b->type = BOOL;
+    mj_boolean *b = jrv_malloc(sizeof(mj_boolean));
+    b->type = MJ_BOOLEAN;
     b->value = value;
     *node = (ast *) b;
     return JRV_SUCCESS;
 }
 
-int new_new_object(ast *class_id, ast **node)
+int new_mj_new_object(ast *class_id, ast **node)
 {
-    new_object *no = jrv_malloc(sizeof(new_object));
-    no->type = NEW_OBJECT;
-    no->class_id = (identifier *) class_id;
+    mj_new_object *no;
+    
+    if(class_id != NULL && class_id->type != MJ_IDENTIFIER) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+
+    no = jrv_malloc(sizeof(mj_new_object));
+    no->type = MJ_NEW_OBJECT;
+    no->class_id = (mj_identifier *) class_id;
     *node = (ast *) no;
     return JRV_SUCCESS;
 }
 
-int new_ast_list(list *list, ast **node)
+int new_mj_ast_list(list *list, ast **node)
 {
-    ast_list *al = jrv_malloc(sizeof(ast_list));
-    al->type = AST_LIST;
+    mj_ast_list *al = jrv_malloc(sizeof(mj_ast_list));
+    al->type = MJ_AST_LIST;
     al->list = list;
     *node = (ast *) al;
     return JRV_SUCCESS;
 }
 
-int new_call(ast *object, ast *method, ast_list *parameters, ast **node)
+int new_mj_call(ast *object, ast *method, mj_ast_list *parameters, ast **node)
 {
-    call *c = jrv_malloc(sizeof(call));
-    c->type = CALL;
+    mj_call *c;
+    
+    if(method != NULL && method->type != MJ_IDENTIFIER) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+
+    c = jrv_malloc(sizeof(mj_call));
+    c->type = MJ_CALL;
     c->object = object;
-    c->method = (identifier *) method;
+    c->method = (mj_identifier *) method;
     c->parameters = parameters;
     *node = (ast *) c;
     return JRV_SUCCESS;
 }
 
-int new_this(ast **node)
+int new_mj_this(ast **node)
 {
     ast* this = jrv_malloc(sizeof(ast));
-    this->type = THIS_OBJECT;
+    this->type = MJ_THIS;
     *node = this;
     return JRV_SUCCESS;
 }
 
-int new_print(ast* expression, ast **node)
+int new_mj_print(ast* expression, ast **node)
 {
-    print *p = jrv_malloc(sizeof(print));
-    p->type = SYSTEM_OUT_PRINT;
+    mj_print *p = jrv_malloc(sizeof(mj_print));
+    p->type = MJ_PRINT;
     p->expression = expression;
     *node = (ast *) p;
     return JRV_SUCCESS;
 }
 
-int new_main_class(ast *class_id, ast *parameter_id, ast* statement, ast **node)
+int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statement, 
+                      ast **node)
 {
-    main_class *mc = jrv_malloc(sizeof(main_class));
-    mc->type = MAIN_CLASS;
-    mc->class_id = (identifier *) class_id;
-    mc->parameter_id = (identifier *) parameter_id;
+    mj_main_class *mc;
+    
+    if(class_id != NULL && class_id->type != MJ_IDENTIFIER) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+    
+    if(parameter_id != NULL && parameter_id->type != MJ_IDENTIFIER) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+    
+    mc = jrv_malloc(sizeof(mj_main_class));
+    mc->type = MJ_MAIN_CLASS;
+    mc->class_id = (mj_identifier *) class_id;
+    mc->parameter_id = (mj_identifier *) parameter_id;
     mc->statement = statement;
     *node = (ast *) mc;
     return JRV_SUCCESS;
 }
 
 ast_callbacks _callbacks;
-
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
 {
     _callbacks = callbacks;
@@ -130,62 +156,183 @@ void ast_visit(ast *node, void *result)
         return;
     }
     switch(node->type) {
-        case IDENTIFIER: 
-            if(_callbacks.on_identifier != NULL) {
-                _callbacks.on_identifier((identifier *) node, result);
+        case MJ_IDENTIFIER: 
+            if(_callbacks.on_mj_identifier != NULL) {
+                _callbacks.on_mj_identifier((mj_identifier *) node, result);
             }
             break;
-        case ADDITION:
-            if(_callbacks.on_addition != NULL) {
-                _callbacks.on_addition((binary_operation *) node, result);
+        case MJ_ADDITION:
+            if(_callbacks.on_mj_addition != NULL) {
+                _callbacks.on_mj_addition((mj_binary_operation *) node, result);
             }
             break;
-        case SUBTRACTION:
-            if(_callbacks.on_subtraction != NULL) {
-                _callbacks.on_subtraction((binary_operation *) node, result);
+        case MJ_SUBTRACTION:
+            if(_callbacks.on_mj_subtraction != NULL) {
+                _callbacks.on_mj_subtraction((mj_binary_operation *) node, 
+                                             result);
             }
             break;
-        case DIVISION:
-            if(_callbacks.on_division != NULL) {
-                _callbacks.on_division((binary_operation *) node, result);
+        case MJ_DIVISION:
+            if(_callbacks.on_mj_division != NULL) {
+                _callbacks.on_mj_division((mj_binary_operation *) node, 
+                                          result);
             }
             break;
-        case MULTIPLICATION:
-            if(_callbacks.on_multiplication != NULL) {
-                _callbacks.on_multiplication((binary_operation *) node, result);
+        case MJ_MULTIPLICATION:
+            if(_callbacks.on_mj_multiplication != NULL) {
+                _callbacks.on_mj_multiplication((mj_binary_operation *) node, 
+                                                result);
             }
             break;
-        case LESS_THAN:
-            if(_callbacks.on_less_than != NULL) {
-                _callbacks.on_less_than((binary_operation *) node, result);
+        case MJ_LESS_THAN:
+            if(_callbacks.on_mj_less_than != NULL) {
+                _callbacks.on_mj_less_than((mj_binary_operation *) node, 
+                                           result);
             }
             break;
-        case ARRAY_LOOKUP:
-            if(_callbacks.on_array_lookup != NULL) {
-                _callbacks.on_array_lookup((unary_operation *) node, result);
+        case MJ_ARRAY_LOOKUP:
+            if(_callbacks.on_mj_array_lookup != NULL) {
+                _callbacks.on_mj_array_lookup((mj_unary_operation *) node, 
+                                              result);
             }
             break;
-        case ARRAY_LENGTH:
-            if(_callbacks.on_array_length != NULL) {
-                _callbacks.on_array_length((unary_operation *) node, result);
+        case MJ_ARRAY_LENGTH:
+            if(_callbacks.on_mj_array_length != NULL) {
+                _callbacks.on_mj_array_length((mj_unary_operation *) node, 
+                                              result);
             }
             break;
-        case NOT:
-            if(_callbacks.on_not != NULL) {
-                _callbacks.on_not((unary_operation *) node, result);
+        case MJ_NOT:
+            if(_callbacks.on_mj_not != NULL) {
+                _callbacks.on_mj_not((mj_unary_operation *) node, result);
             }
             break;
-        case NEW_ARRAY:
-            if(_callbacks.on_new_array != NULL) {
-                _callbacks.on_new_array((unary_operation *) node, result);
+        case MJ_NEW_ARRAY:
+            if(_callbacks.on_mj_new_array != NULL) {
+                _callbacks.on_mj_new_array((mj_unary_operation *) node, result);
             }
             break;
-        case INTEGER:
-            if(_callbacks.on_integer != NULL) {
-                _callbacks.on_integer((integer *) node, result);
+        case MJ_INTEGER:
+            if(_callbacks.on_mj_integer != NULL) {
+                _callbacks.on_mj_integer((mj_integer *) node, result);
+            }
+            break;
+        case MJ_THIS:
+            if(_callbacks.on_mj_this != NULL) {
+                _callbacks.on_mj_this((ast *) node, result);
+            }
+            break;
+        case MJ_BOOLEAN:
+            if(_callbacks.on_mj_boolean != NULL) {
+                _callbacks.on_mj_boolean((mj_boolean *) node, result);
+            }
+            break;
+        case MJ_AST_LIST:
+            if(_callbacks.on_mj_ast_list != NULL) {
+                _callbacks.on_mj_ast_list((mj_ast_list *) node, result);
+            }
+            break;
+        case MJ_NEW_OBJECT:
+            if(_callbacks.on_mj_new_object != NULL) {
+                _callbacks.on_mj_new_object((mj_new_object *) node, result);
+            }
+            break;
+        case MJ_CALL:
+            if(_callbacks.on_mj_call != NULL) {
+                _callbacks.on_mj_call((mj_call *) node, result);
+            }
+            break;
+        case MJ_PRINT:
+            if(_callbacks.on_mj_print != NULL) {
+                _callbacks.on_mj_print((mj_print *) node, result);
+            }
+            break;
+        case MJ_MAIN_CLASS:
+            if(_callbacks.on_mj_main_class != NULL) {
+                _callbacks.on_mj_main_class((mj_main_class *) node, result);
             }
             break;
         default:
             jrv_die("Unknown AST node found");
     }
+}
+
+int delete_ast(ast *tree)
+{
+    return JRV_SUCCESS;
+}
+
+void delete_mj_this(ast *node, void *p)
+{
+    jrv_free(&node);
+}
+
+void delete_mj_boolean(mj_boolean *node, void *p)
+{
+    jrv_free(&node);
+}
+
+void delete_mj_integer(mj_integer *node, void *p)
+{
+    jrv_free(&node);
+}
+
+void delete_mj_identifier(mj_identifier *node, void *p)
+{
+    jrv_free(&node->name);
+    jrv_free(&node);
+}
+
+void delete_mj_unary_operation(mj_unary_operation *node, void *p)
+{
+    ast_visit(node->operand, p);
+    jrv_free(&node);
+}
+
+void delete_mj_binary_operation(mj_binary_operation *node, void *p)
+{
+    ast_visit(node->left_operand, p);
+    ast_visit(node->right_operand, p);
+    jrv_free(&node);
+}
+
+void delete_mj_new_object(mj_new_object *node, void *p)
+{
+    delete_mj_identifier(node->class_id, NULL);
+    jrv_free(&node);
+}
+
+void delete_mj_ast_list_element(void *data)
+{
+    ast_visit((ast *) data, NULL);
+}
+
+void delete_mj_ast_list(mj_ast_list *node, void *p)
+{
+    if(node != NULL) {
+        delete_list_cb(node->list, &delete_mj_ast_list_element);
+        jrv_free(&node);
+    }
+}
+
+void delete_mj_call(mj_call *node, void *p)
+{
+    ast_visit(node->object, p);
+    delete_mj_identifier(node->method, p);
+    delete_mj_ast_list(node->parameters, p);
+    jrv_free(&node);
+}
+
+void delete_mj_print(mj_print *node, void *p)
+{
+    ast_visit(node->expression, p);
+    jrv_free(&node);
+}
+
+void delete_mj_main_class(mj_main_class *node, void *p)
+{
+    delete_mj_identifier(node->class_id, p);
+    delete_mj_identifier(node->parameter_id, p);
+    ast_visit(node->statement, p);
+    jrv_free(&node);
 }

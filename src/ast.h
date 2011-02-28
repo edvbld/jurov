@@ -7,41 +7,41 @@
  */
 typedef enum {
     /** An identifier struct */
-    IDENTIFIER,
+    MJ_IDENTIFIER,
     /** Addition, a binary_operation struct */
-    ADDITION,
+    MJ_ADDITION,
     /** Subtraction, a binary_operation struct */
-    SUBTRACTION,
+    MJ_SUBTRACTION,
     /** Division, a binary_operation struct */
-    DIVISION,
+    MJ_DIVISION,
     /** Multiplication, a binary_operation struct */
-    MULTIPLICATION,
+    MJ_MULTIPLICATION,
     /** Less than, a binary_operation struct */
-    LESS_THAN,
+    MJ_LESS_THAN,
     /** Array lookup, a binary_operation struct */
-    ARRAY_LOOKUP,
+    MJ_ARRAY_LOOKUP,
     /** Array length, an unary_operation struct */
-    ARRAY_LENGTH,
+    MJ_ARRAY_LENGTH,
     /** Logical not, an unary_operation struct */
-    NOT,
+    MJ_NOT,
     /** New array, an unary_operation struct */
-    NEW_ARRAY,
+    MJ_NEW_ARRAY,
     /** An integer struct */
-    INTEGER,
+    MJ_INTEGER,
     /** A boolean struct */
-    BOOL,
+    MJ_BOOLEAN,
     /** A new_object struct */
-    NEW_OBJECT,
+    MJ_NEW_OBJECT,
     /** Represents the this type */
-    THIS_OBJECT,
+    MJ_THIS,
     /** Represents an ast_list struct */
-    AST_LIST,
+    MJ_AST_LIST,
     /** Represents a call struct */
-    CALL,
+    MJ_CALL,
     /** Represensts a print struct */
-    SYSTEM_OUT_PRINT,
+    MJ_PRINT,
     /** Represents a main_class struct */
-    MAIN_CLASS
+    MJ_MAIN_CLASS
 } nodetype;
 
 /**
@@ -60,7 +60,7 @@ typedef struct {
     nodetype type;
     /** The name of the identifier */
     char *name;
-} identifier;
+} mj_identifier;
 
 /**
  * Creates a new identifier with the given name.
@@ -70,7 +70,7 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_identifier(char *name, ast **node);
+int new_mj_identifier(char *name, ast **node);
 
 /**
  * Represents a binary operation (such as +,-,*,< etc.) node in the AST
@@ -83,7 +83,7 @@ typedef struct {
     /** The right operand to the operation */
     ast *right_operand;
 
-} binary_operation;
+} mj_binary_operation;
 
 /**
  * Creates a new binary operation with the given type and 
@@ -96,8 +96,8 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_binary_operation(nodetype type, ast* left_operand, ast* right_operand, 
-                         ast **node);
+int new_mj_binary_operation(nodetype type, ast* left_operand, 
+                            ast* right_operand, ast **node);
 
 /**
  * Represents an unary operation (such as .length, new, not) node in the AST
@@ -107,7 +107,7 @@ typedef struct {
     nodetype type;
     /** The argument to the operation */
     ast *operand;
-} unary_operation;
+} mj_unary_operation;
 
 /**
  * Creates a new unary operation with the given type and 
@@ -119,7 +119,7 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_unary_operation(nodetype type, ast* operand, ast **node);
+int new_mj_unary_operation(nodetype type, ast* operand, ast **node);
 
 /**
  * Represents an integer node in the AST
@@ -129,7 +129,7 @@ typedef struct {
     nodetype type;
     /** the value of the integer */
     int value;
-} integer;
+} mj_integer;
 
 /**
  * Creates a new integer with the given value.
@@ -139,7 +139,7 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_integer(int value, ast **node);
+int new_mj_integer(int value, ast **node);
 
 /**
  * Represents a boolean in the AST
@@ -149,7 +149,7 @@ typedef struct {
     nodetype type;
     /** The value of the boolean */
     int value;
-} boolean;
+} mj_boolean;
 
 /**
  * Creates a new boolean with the given value.
@@ -159,7 +159,7 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_boolean(int value, ast **node);
+int new_mj_boolean(int value, ast **node);
  
 /**
  * Represents a new object operation in the AST
@@ -169,8 +169,8 @@ typedef struct {
     nodetype type;
 
     /** The id of the class of the object */
-    identifier *class_id;
-} new_object;
+    mj_identifier *class_id;
+} mj_new_object;
 
 /**
  * Creates a new new_object with the given id.
@@ -180,7 +180,7 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_new_object(ast *class_id, ast **node);
+int new_mj_new_object(ast *class_id, ast **node);
 
 /**
  * This struct represents a list of ast elements
@@ -191,7 +191,7 @@ typedef struct {
 
     /** The actual list of ast nodes */
     list* list;
-} ast_list;
+} mj_ast_list;
 
 /**
  * Creates a new ast list with the given list.
@@ -201,7 +201,7 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_ast_list(list* list, ast **node);
+int new_mj_ast_list(list* list, ast **node);
 
 /**
  * Represents a method call in the AST
@@ -214,11 +214,11 @@ typedef struct {
     ast* object;
 
     /* The id of the method to invoke */
-    identifier *method;
+    mj_identifier *method;
 
     /* The parameters to the method */
-    ast_list *parameters;
-} call;
+    mj_ast_list *parameters;
+} mj_call;
 
 /**
  * Creates a new call node for the AST with the given parameters.
@@ -230,7 +230,7 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_call(ast *object, ast *method, ast_list *parameters, ast **node);
+int new_mj_call(ast *object, ast *method, mj_ast_list *parameters, ast **node);
 
 /**
  * Creates a new ast struct with type nodetype.THIS
@@ -239,7 +239,7 @@ int new_call(ast *object, ast *method, ast_list *parameters, ast **node);
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_this(ast **node);
+int new_mj_this(ast **node);
 
 /**
  * This struct represents a print statement
@@ -250,7 +250,7 @@ typedef struct {
 
     /** The expression that will evaluate to the print argument */
     ast *expression;
-} print;
+} mj_print;
 
 /**
  * Creates a new print node with the given expression.
@@ -260,7 +260,7 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_print(ast* expression, ast **node);
+int new_mj_print(ast* expression, ast **node);
 
 /**
  * Represents the main class of a MiniJava program
@@ -270,14 +270,14 @@ typedef struct {
     nodetype type;
 
     /** The id of the main class */
-    identifier *class_id;
+    mj_identifier *class_id;
 
     /** The id of the String[] parameter to the main method */
-    identifier *parameter_id;
+    mj_identifier *parameter_id;
 
     /** The statement inside the main methods body */
     ast *statement;
-} main_class;
+} mj_main_class;
 
 /**
  * Creates a new main_class node with the given parameters
@@ -290,14 +290,8 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_main_class(ast *class_id, ast *parameter_id, ast* statement, 
-                   ast **node);
-
-/**
- * The result from the parser. After calling yyparse(), this variable will hold 
- * the generated AST.
- */
-ast* ast_parser_result;
+int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statement, 
+                      ast **node);
 
 /**
  * This struct stores the callbacks for the ast_walk function. Each time the 
@@ -310,40 +304,61 @@ ast* ast_parser_result;
  */
 typedef struct {
     /** The callback for an identifier node */
-    void (*on_identifier)(identifier *node, void *result);
+    void (*on_mj_identifier)(mj_identifier *node, void *result);
     
     /** The callback for the addition binary operation */
-    void (*on_addition)(binary_operation *node, void *result);
+    void (*on_mj_addition)(mj_binary_operation *node, void *result);
     
     /** The callback for the subtraction binary operation */
-    void (*on_subtraction)(binary_operation *node, void *result);
+    void (*on_mj_subtraction)(mj_binary_operation *node, void *result);
     
     /** The callback for the division binary operation */
-    void (*on_division)(binary_operation *node, void *result);
+    void (*on_mj_division)(mj_binary_operation *node, void *result);
 
     /** The callback for the multiplication binary operation */
-    void (*on_multiplication)(binary_operation *node, void *result);
+    void (*on_mj_multiplication)(mj_binary_operation *node, void *result);
 
     /** The callback for the logical and binary operation */
-    void (*on_and)(binary_operation *node, void *result);
+    void (*on_mj_and)(mj_binary_operation *node, void *result);
 
     /** The callback for the less than binary operation */
-    void (*on_less_than)(binary_operation *node, void *result);
+    void (*on_mj_less_than)(mj_binary_operation *node, void *result);
     
     /** The callback for the array lookup unary operation */
-    void (*on_array_lookup)(unary_operation *node, void *result);
+    void (*on_mj_array_lookup)(mj_unary_operation *node, void *result);
 
     /** The callback for the array length unary operation */
-    void (*on_array_length)(unary_operation *node, void *result);
+    void (*on_mj_array_length)(mj_unary_operation *node, void *result);
     
     /** The callback for the logical not unary operation */
-    void (*on_not)(unary_operation *node, void *result);
+    void (*on_mj_not)(mj_unary_operation *node, void *result);
    
     /** The callback for the new array unary operation */
-    void (*on_new_array)(unary_operation *node, void *result);
+    void (*on_mj_new_array)(mj_unary_operation *node, void *result);
 
     /** The callback for an integer */
-    void (*on_integer)(integer *node, void *result);
+    void (*on_mj_integer)(mj_integer *node, void *result);
+
+    /** The callback for a this object */
+    void (*on_mj_this)(ast *node, void *result);
+
+    /** The callback for a boolean */
+    void (*on_mj_boolean)(mj_boolean *node, void *result);
+
+    /** The callback for an ast_list */
+    void (*on_mj_ast_list)(mj_ast_list *node, void *result);
+
+    /** The callback for a new_object operation */
+    void (*on_mj_new_object)(mj_new_object *node, void *result);
+
+    /** The callback for a call operation */
+    void (*on_mj_call)(mj_call *node, void *result);
+
+    /** The callback for a print statement */
+    void (*on_mj_print)(mj_print *node, void *result);
+
+    /** The callback for a main_class */
+    void (*on_mj_main_class)(mj_main_class *node, void *result);
 } ast_callbacks;
 
 /**
@@ -359,9 +374,9 @@ typedef struct {
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result);
 
 /**
- * This function visits the given node, that is, it calls the 
+ * This function visits the given node, that is, it calls the
  * callback that is registered for the nodes type.
- * This function should typically be called from the callback functions 
+ * This function should typically be called from the callback functions
  * in order to evaluate child nodes.
  *
  * @param[in] node The node to visit

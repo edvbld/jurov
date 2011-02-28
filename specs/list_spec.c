@@ -66,7 +66,28 @@ begin_example(list, should_be_able_to_have_several_elements_appended_and_freed)
     should_eq_ptr(a, l->last->previous->previous->data)
     should_eq_ptr(NULL, l->first->previous)
     
-    should_pass(free_list(l))
+    should_pass(delete_list(l))
+end_example
+
+static int num_callbacks = 0; 
+
+void inc_callbacks(void *p)
+{
+    num_callbacks++;
+}
+
+begin_example(list, should_call_callback_in_delete_with_cb_for_every_element)
+    list *l;
+    int a, b, c;
+
+    should_pass(new_list(&l))
+    should_pass(append(l, &a))
+    should_pass(append(l, &b))
+    should_pass(append(l, &c))
+    should_pass(delete_list_cb(l, &inc_callbacks))
+    should_eq_int(3, num_callbacks)
+
+    num_callbacks = 0;
 end_example
 
 begin_description(list)
@@ -74,4 +95,5 @@ begin_description(list)
     add_example(should_have_null_as_beginning_and_end_when_created)
     add_example(should_be_able_to_have_data_appended_to_it)
     add_example(should_be_able_to_have_several_elements_appended_and_freed)
+    add_example(should_call_callback_in_delete_with_cb_for_every_element)
 end_description
