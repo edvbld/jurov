@@ -21,7 +21,7 @@ def run_specs(bld):
             cmd = 'valgrind --dsymutil=yes '
         else:
             cmd = 'valgrind '
-        cmd += ('--leak-check=full ' + run_all_specs)
+        cmd += ('-q --leak-check=full --error-exitcode=1 ' + run_all_specs)
     else:
         cmd = run_all_specs
     res = bld.exec_command(cmd)
@@ -38,6 +38,7 @@ def configure(conf):
     try:
         conf.find_program('valgrind')
     except conf.errors.ConfigurationError:
+        self.to_log("Could not find valgrind, memory leaks won't be checked!")
         conf.env.VALGRIND = False
     conf.load('compiler_c')
     conf.load('flex')
