@@ -14,17 +14,23 @@ def options(opt):
     opt.add_option('--valgrind', action = 'store_true', default = True,
                    help = 'Runs all the specifications in valgrind')
 
-def run_specs(bld):
+def run_valgrind(bld):
+    print "Starting to run valgrind"
     run_all_specs = '{0}/specs/run_all_specs'.format(os.path.abspath(out))
-    if bld.env.VALGRIND:
-        if platform.system() == 'Darwin':
-            cmd = 'valgrind --dsymutil=yes '
-        else:
-            cmd = 'valgrind '
-        cmd += ('-q --leak-check=full --error-exitcode=1 ' + run_all_specs)
+    if platform.system() == 'Darwin':
+        cmd = 'valgrind --dsymutil=yes '
     else:
-        cmd = run_all_specs
+        cmd = 'valgrind '
+    cmd += ('-q --leak-check=full --error-exitcode=1 ' + run_all_specs)
     res = bld.exec_command(cmd)
+    if res != 0:
+        bld.fatal("Memory leaks detected!")
+
+
+def run_specs(bld):
+    print "Starting to run specs"
+    run_all_specs = '{0}/specs/run_all_specs'.format(os.path.abspath(out))
+    res = bld.exec_command(run_all_specs)
     if res != 0:
         bld.fatal("The specifications were not fulfilled!")
 
@@ -48,3 +54,5 @@ def build(bld):
     bld.recurse(['lib', 'src', 'specs'])
     if Options.options.spec:
         bld.add_post_fun(run_specs)
+    if Options.options.valgrind and bld.env.VALGRIND:
+        bld.add_post_fun(run_valgrind)
