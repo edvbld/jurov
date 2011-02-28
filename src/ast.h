@@ -325,7 +325,7 @@ typedef struct {
     void (*on_mj_less_than)(mj_binary_operation *node, void *result);
     
     /** The callback for the array lookup unary operation */
-    void (*on_mj_array_lookup)(mj_unary_operation *node, void *result);
+    void (*on_mj_array_lookup)(mj_binary_operation *node, void *result);
 
     /** The callback for the array length unary operation */
     void (*on_mj_array_length)(mj_unary_operation *node, void *result);
@@ -383,5 +383,14 @@ void ast_walk(ast* tree, ast_callbacks callbacks, void *result);
  * @param[out] result The result from the visit
  */
 void ast_visit(ast* node, void *result);
+
+/**
+ * Deletes an AST and all the nodes in the AST. 
+ * NOTE: it also frees the char* in an mj_identifier, so make sure that you 
+ * have copied this pointer if you use it elsewhere.
+ *
+ * @parameter tree The tree to delete
+ */
+void delete_ast(ast* tree);
 
 #endif /* INCLUDE_jrv_ast_h__ */

@@ -9,7 +9,6 @@ static int parse_program(char *program, ast **tree)
     int res = 0;
     yy_scan_string(program);
     res = yyparse(tree);
-    yylex_destroy();
     return res;
 }
 
@@ -28,8 +27,9 @@ begin_example(ast_parser, should_return_an_ast_pointer)
     should_neq_ptr(NULL, mc->parameter_id)
     should_eq_int(MJ_IDENTIFIER, mc->parameter_id->type)
     should_eq_str("args", mc->parameter_id->name)
+    yylex_destroy();
 
-    /* TODO: Free stuff here */
+    delete_ast(tree);
 end_example
 
 begin_description(ast_parser)

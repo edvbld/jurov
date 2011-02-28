@@ -192,7 +192,7 @@ void ast_visit(ast *node, void *result)
             break;
         case MJ_ARRAY_LOOKUP:
             if(_callbacks.on_mj_array_lookup != NULL) {
-                _callbacks.on_mj_array_lookup((mj_unary_operation *) node, 
+                _callbacks.on_mj_array_lookup((mj_binary_operation *) node, 
                                               result);
             }
             break;
@@ -255,11 +255,6 @@ void ast_visit(ast *node, void *result)
         default:
             jrv_die("Unknown AST node found");
     }
-}
-
-int delete_ast(ast *tree)
-{
-    return JRV_SUCCESS;
 }
 
 void delete_mj_this(ast *node, void *p)
@@ -335,4 +330,28 @@ void delete_mj_main_class(mj_main_class *node, void *p)
     delete_mj_identifier(node->parameter_id, p);
     ast_visit(node->statement, p);
     jrv_free(&node);
+}
+
+void delete_ast(ast *tree)
+{
+    ast_callbacks callbacks;
+    callbacks.on_mj_identifier = &delete_mj_identifier;
+    callbacks.on_mj_addition = &delete_mj_binary_operation;
+    callbacks.on_mj_subtraction = &delete_mj_binary_operation;
+    callbacks.on_mj_division = &delete_mj_binary_operation;
+    callbacks.on_mj_multiplication = &delete_mj_binary_operation;
+    callbacks.on_mj_less_than = &delete_mj_binary_operation;
+    callbacks.on_mj_array_lookup = &delete_mj_binary_operation;
+    callbacks.on_mj_array_length = &delete_mj_unary_operation;
+    callbacks.on_mj_not = &delete_mj_unary_operation;
+    callbacks.on_mj_new_array = &delete_mj_unary_operation;
+    callbacks.on_mj_integer = &delete_mj_integer;
+    callbacks.on_mj_this = &delete_mj_this;
+    callbacks.on_mj_boolean = &delete_mj_boolean;
+    callbacks.on_mj_ast_list = &delete_mj_ast_list;
+    callbacks.on_mj_new_object = &delete_mj_new_object;
+    callbacks.on_mj_call = &delete_mj_call;
+    callbacks.on_mj_print = &delete_mj_print;
+    callbacks.on_mj_main_class = &delete_mj_main_class;
+    ast_walk(tree, callbacks, NULL);
 }

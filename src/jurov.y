@@ -1,6 +1,7 @@
 %{
-    #include "ast.h"
     #include "stddef.h"
+    #include "ast.h"
+    #include "utils.h"
     void yyerror(ast **result, char *s);
     int yylex(void);
 %}
@@ -24,9 +25,11 @@
 %token <id> ID
 %token <number> NUMBER
 
-%type <tree> program main_class class_declaration main_method 
+%type <tree> program main_class main_method class_declaration 
              function_body
-
+%destructor { delete_ast($$); } main_class main_method class_declaration 
+                                function_body
+%destructor { jrv_free(&$$); } ID
 %%
 program: main_class { *result = $1; }
 
