@@ -1,16 +1,5 @@
 #include "expectations.h"
-#include "jurov.tab.h"
-#include "lex.yy.h"
-#include "ast.h"
-
-int yyparse();
-static int parse_program(char *program, ast **tree)
-{
-    int res = 0;
-    yy_scan_string(program);
-    res = yyparse(tree);
-    return res;
-}
+#include "parser.h"
 
 begin_example(main_class_parser,
            should_parse_a_program_consisting_of_only_main_class)
@@ -19,9 +8,8 @@ begin_example(main_class_parser,
         "public static void main(String[] args) {\n"
         "}}";
     ast *tree;
-    should_pass(parse_program(program, &tree))
-    yylex_destroy();
-    delete_ast(tree);
+    should_pass(parse_string(program, &tree))
+    delete_parser(tree);
 end_example
 
 begin_example(main_class_parser, should_fail_when_missing_main_function)
@@ -30,8 +18,8 @@ begin_example(main_class_parser, should_fail_when_missing_main_function)
         "public static void start(String[] args) {\n"
         "}}";
     ast *tree;
-    should_fail(parse_program(program, &tree))
-    yylex_destroy();
+    should_fail(parse_string(program, &tree))
+    delete_parser(tree);
 end_example
 
 begin_example(main_class_parser,
@@ -41,8 +29,8 @@ begin_example(main_class_parser,
         "public void main(String[] args) {\n"
         "}}";
     ast *tree;
-    should_fail(parse_program(program, &tree))
-    yylex_destroy();
+    should_fail(parse_string(program, &tree))
+    delete_parser(tree);
 end_example
 
 begin_example(main_class_parser,
@@ -52,8 +40,8 @@ begin_example(main_class_parser,
         "static void main(String[] args) {\n"
         "}}";
     ast *tree;
-    should_fail(parse_program(program, &tree))
-    yylex_destroy();
+    should_fail(parse_string(program, &tree))
+    delete_parser(tree);
 end_example
 
 begin_example(main_class_parser,
@@ -63,8 +51,8 @@ begin_example(main_class_parser,
         "public static void main(String args) {\n"
         "}}";
     ast *tree;
-    should_fail(parse_program(program, &tree))
-    yylex_destroy();
+    should_fail(parse_string(program, &tree))
+    delete_parser(tree);
 end_example
 
 begin_example(main_class_parser,
@@ -74,8 +62,8 @@ begin_example(main_class_parser,
         "public static void main(String args {\n"
         "}}";
     ast *tree;
-    should_fail(parse_program(program, &tree))
-    yylex_destroy();
+    should_fail(parse_string(program, &tree))
+    delete_parser(tree);
 end_example
 
 begin_example(main_class_parser,
@@ -85,8 +73,8 @@ begin_example(main_class_parser,
         "public static void main String args) {\n"
         "}}";
     ast *tree;
-    should_fail(parse_program(program, &tree))
-    yylex_destroy();
+    should_fail(parse_string(program, &tree))
+    delete_parser(tree);
 end_example
 
 begin_example(main_class_parser, should_fail_when_missing_main_function_body)
@@ -95,8 +83,8 @@ begin_example(main_class_parser, should_fail_when_missing_main_function_body)
         "public static void main(String args) \n"
         "}";
     ast *tree;
-    should_fail(parse_program(program, &tree))
-    yylex_destroy();
+    should_fail(parse_string(program, &tree))
+    delete_parser(tree);
 end_example
 
 begin_example(main_class_parser,
@@ -104,8 +92,8 @@ begin_example(main_class_parser,
     char *program =
         "public static void main(String args) \n";
     ast *tree;
-    should_fail(parse_program(program, &tree))
-    yylex_destroy();
+    should_fail(parse_string(program, &tree))
+    delete_parser(tree);
 end_example
 
 begin_description(main_class_parser)

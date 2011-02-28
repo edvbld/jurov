@@ -1,10 +1,7 @@
-#include "stdio.h"
 #include "string.h"
 #include "expectations.h"
-#include "lex.yy.h"
-#include "ast.h"
+#include "parser.h"
 
-int yyparse();
 int parse_statements(char *statements, ast **tree)
 {
     int res = 0;
@@ -20,8 +17,7 @@ int parse_statements(char *statements, ast **tree)
     snprintf(program, length, "%s%s%s", main_function_opening,
                                         statements,
                                         main_function_closening);
-    yy_scan_string(program);
-    res = yyparse(tree);
+    res = parse_string(program, tree);
     free(program);
     return res;
 }
@@ -30,45 +26,42 @@ begin_example(statement_parser, should_parse_the_empty_statement)
     char *statement = "{}";
     ast *tree;
     should_pass(parse_statements(statement, &tree))
-    yylex_destroy();
+    delete_parser(tree);
 end_example
 
 begin_example(statement_parser, should_fail_when_missing_rigth_curly_bracket)
     char *statement = "{";
     ast *tree;
     should_fail(parse_statements(statement, &tree))
-    yylex_destroy();
+    delete_parser(tree);
 end_example
 
 begin_example(statement_parser, should_fail_when_missing_left_curly_bracket)
     char *statement = "}";
     ast *tree;
     should_fail(parse_statements(statement, &tree))
-    delete_ast(tree);
-    yylex_destroy();
+    delete_parser(tree);
 end_example
 
 begin_example(statement_parser, should_parse_nested_statements)
     char *statement = "{{{}}}";
     ast *tree;
     should_pass(parse_statements(statement, &tree))
-    yylex_destroy();
-    delete_ast(tree);
+    delete_parser(tree);
 end_example
 
 begin_example(statement_parser, should_parse_a_print_statement)
     char *statement = "System.out.println(true);";
     ast *tree;
     should_pass(parse_statements(statement, &tree))
-    yylex_destroy();
-    delete_ast(tree);
+    delete_parser(tree);
 end_example
 
 begin_example(statement_parser, should_fail_if_trying_to_print_a_statement)
     char *statement = "System.out.println({});";
     ast *tree;
     should_fail(parse_statements(statement, &tree))
-    yylex_destroy();
+    delete_parser(tree);
 end_example
 
 begin_example(statement_parser, should_parse_several_mixed_statements)
@@ -77,8 +70,7 @@ begin_example(statement_parser, should_parse_several_mixed_statements)
         "{System.out.println(false);}";
     ast *tree;
     should_pass(parse_statements(statements, &tree))
-    yylex_destroy();
-    delete_ast(tree);
+    delete_parser(tree);
 end_example
 
 begin_description(statement_parser)

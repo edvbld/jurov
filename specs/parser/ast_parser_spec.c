@@ -1,23 +1,14 @@
 #include "expectations.h"
-#include "ast.h"
-#include "jurov.tab.h"
-#include "lex.yy.h"
-
-int yyparse();
-static int parse_program(char *program, ast **tree)
-{
-    int res = 0;
-    yy_scan_string(program);
-    res = yyparse(tree);
-    return res;
-}
+#include "parser.h"
 
 begin_example(ast_parser, should_return_an_ast_pointer)
     char *program = 
         "class Main { public static void main ( String[] args ) { } }";
-    ast *tree = NULL;
+    ast *tree;
     mj_main_class *mc;
-    should_pass(parse_program(program, &tree))
+
+    should_pass(parse_string(program, &tree))
+
     should_neq_ptr(NULL, tree)
     should_eq_int(MJ_MAIN_CLASS, tree->type)
     mc = (mj_main_class *) tree;
@@ -27,9 +18,8 @@ begin_example(ast_parser, should_return_an_ast_pointer)
     should_neq_ptr(NULL, mc->parameter_id)
     should_eq_int(MJ_IDENTIFIER, mc->parameter_id->type)
     should_eq_str("args", mc->parameter_id->name)
-    yylex_destroy();
 
-    delete_ast(tree);
+    delete_parser(tree);
 end_example
 
 begin_description(ast_parser)
