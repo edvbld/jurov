@@ -177,6 +177,63 @@ begin_example(list, should_be_able_to_prepend_a_list)
     delete_list(l1);
 end_example
 
+begin_example(list, should_return_error_for_functions_on_a_null_list)
+    list *l = NULL;
+    list *l2;
+    int *a = malloc(sizeof(int));
+
+    should_fail(list_append_ele(l, a))
+    should_fail(list_prepend_ele(l, a))
+
+    should_pass(new_list(&l2))
+    should_pass(list_append_ele(l2, a))
+    should_fail(list_append_list(l, l2))
+    should_fail(list_prepend_list(l, l2))
+
+    delete_list(l); /* should not cause memory issues */
+    delete_list(l2);
+end_example
+
+begin_example(list, should_be_able_to_append_to_empty_list)
+    list *l1;
+    list *l2;
+    int *a = malloc(sizeof(int));
+
+    should_pass(new_list(&l1))
+    should_pass(new_list(&l2))
+
+    should_pass(list_append_list(l1, NULL))
+    should_pass(list_append_list(l1, l2))
+    should_pass(new_list(&l2))
+    should_pass(list_append_ele(l2, a))
+    should_pass(list_append_list(l1, l2))
+    should_eq_int(1, l1->size)
+    should_eq_ptr(a, l1->first->data)
+    should_eq_ptr(a, l1->last->data)
+
+    delete_list(l1);
+end_example
+
+begin_example(list, should_be_able_to_prepend_to_empty_list)
+    list *l1;
+    list *l2;
+    int *a = malloc(sizeof(int));
+
+    should_pass(new_list(&l1))
+    should_pass(new_list(&l2))
+
+    should_pass(list_prepend_list(l1, NULL))
+    should_pass(list_prepend_list(l1, l2))
+    should_pass(new_list(&l2))
+    should_pass(list_prepend_ele(l2, a))
+    should_pass(list_prepend_list(l1, l2))
+    should_eq_int(1, l1->size)
+    should_eq_ptr(a, l1->first->data)
+    should_eq_ptr(a, l1->last->data)
+
+    delete_list(l1);
+end_example
+
 begin_description(list)
     add_example(should_have_size_zero_when_created)
     add_example(should_have_null_as_beginning_and_end_when_created)
@@ -186,4 +243,7 @@ begin_description(list)
     add_example(should_be_able_to_have_data_prepended_to_it)
     add_example(should_be_able_to_append_a_list)
     add_example(should_be_able_to_prepend_a_list)
+    add_example(should_return_error_for_functions_on_a_null_list)
+    add_example(should_be_able_to_append_to_empty_list)
+    add_example(should_be_able_to_prepend_to_empty_list)
 end_description

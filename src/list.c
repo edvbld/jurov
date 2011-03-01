@@ -111,8 +111,14 @@ int list_prepend_list(list *list1, list *list2)
 
 int delete_list_cb(list *l, void (*callback)(void *p))
 {
-    list_element *current = l->last;
+    list_element *current;
     list_element *tmp;
+
+    if(NULL == l) {
+        return JRV_SUCCESS;
+    }
+    
+    current = l->last;
 
     /* free all the elements */
     while(NULL != current) {
