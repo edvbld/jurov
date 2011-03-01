@@ -9,9 +9,9 @@ top = '.'
 
 def options(opt):
     opt.load('compiler_c')
-    opt.add_option('--spec', action = 'store_true', default = True, 
+    opt.add_option('--spec', action = 'store_true', default = False, 
                    help = 'Runs all the speficications')
-    opt.add_option('--valgrind', action = 'store_true', default = True,
+    opt.add_option('--valgrind', action = 'store_true', default = False,
                    help = 'Runs all the specifications in valgrind')
 
 def run_valgrind(bld):
