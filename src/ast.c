@@ -143,7 +143,7 @@ int new_mj_print(ast* expression, ast **node)
     return JRV_SUCCESS;
 }
 
-int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statement, 
+int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statements, 
                       ast **node)
 {
     mj_main_class *mc;
@@ -162,7 +162,7 @@ int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statement,
     mc->type = MJ_MAIN_CLASS;
     mc->class_id = (mj_identifier *) class_id;
     mc->parameter_id = (mj_identifier *) parameter_id;
-    mc->statement = statement;
+    mc->statements = statements;
     *node = (ast *) mc;
     return JRV_SUCCESS;
 }
@@ -352,7 +352,7 @@ void delete_mj_main_class(mj_main_class *node, void *p)
 {
     delete_mj_identifier(node->class_id, p);
     delete_mj_identifier(node->parameter_id, p);
-    ast_visit(node->statement, p);
+    ast_visit(node->statements, p);
     jrv_free(&node);
 }
 

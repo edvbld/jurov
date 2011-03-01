@@ -285,7 +285,7 @@ typedef struct {
     mj_identifier *parameter_id;
 
     /** The statement inside the main methods body */
-    ast *statement;
+    ast *statements;
 } mj_main_class;
 
 /**
@@ -294,12 +294,12 @@ typedef struct {
  * @param[in] class_id The identifier of the main class
  * @param[in] parameter_id The identifier of the String[] parameter to the main 
  *                     method
- * @param[in] statement The statement inside the main methods body
+ * @param[in] statements The statements inside the main methods body
  * @param[out] node The addres of the pointer that will point at the result 
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statement, 
+int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statements, 
                       ast **node);
 
 /**
