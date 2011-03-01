@@ -38,11 +38,40 @@ int new_list(list **l);
 /** 
  * Appends an element to the list 
  *
- * @param list The list to append the element to
+ * @param l The list to append the element to
  * @param data The data to append
  * @return An integer describing the result of the function
  */
-int append(list *l, void *data);
+int list_append_ele(list *l, void *data);
+
+/**
+ * Prepends an element to the list
+ *
+ * @param l The list to prepend the element to
+ * @param data The data to prepend to the list
+ * @return An integer describing the result of the function
+ */
+int list_prepend_ele(list *l, void *data);
+
+/**
+ * Appends all the elements of the second list to the first list.
+ * NOTE: list2 is freed in this operation, do not use this pointer afterwards!
+ *
+ * @param list1 The list to append list2 to
+ * @param list2 The list to append to list1
+ * @return An integer describing the result of the function
+ */
+int list_append_list(list *list1, list *list2);
+
+/**
+ * Prepends all the elements of the second list to the first list.
+ * NOTE: list2 is freed in this operation, do not use this pointer afterwards!
+ *
+ * @param list1 The list to prepend list2 to
+ * @param list2 The list to prepend to list1
+ * @return An integer describing the result of the function
+ */
+int list_prepend_list(list *list1, list *list2);
 
 /**
  * Frees the list and all the list_element. For the data pointer in each 

@@ -1,4 +1,3 @@
-#include "stdio.h"
 #include "stddef.h"
 #include "string.h"
 #include "errors.h"
@@ -81,6 +80,31 @@ int new_mj_ast_list(list *list, ast **node)
     al->type = MJ_AST_LIST;
     al->list = list;
     *node = (ast *) al;
+    return JRV_SUCCESS;
+}
+
+int mj_ast_list_prepend(ast *list, ast *node)
+{
+    mj_ast_list *l;
+    
+    if(NULL == list) {
+        return JRV_NULL_PTR_ERROR;
+    }
+    if(NULL == node) {
+        return JRV_SUCCESS;
+    }
+    if(MJ_AST_LIST != list->type) {
+        return JRV_INVALID_TYPE;
+    }
+
+    l = (mj_ast_list *) list;
+    if(node->type == MJ_AST_LIST) {
+        list_prepend_list(l->list, ((mj_ast_list *) node)->list);
+        jrv_free(&node);
+    } else {
+        list_prepend_ele(l->list, node);
+    }
+
     return JRV_SUCCESS;
 }
 

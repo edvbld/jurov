@@ -14,9 +14,15 @@ int new_list(list **l)
     return JRV_SUCCESS;
 }
 
-int append(list* l, void *data)
+int list_append_ele(list* l, void *data)
 {
-    list_element *ele = jrv_malloc(sizeof(list_element));
+    list_element *ele;
+    
+    if(NULL == l) {
+        return JRV_NULL_PTR_ERROR;
+    }
+
+    ele = jrv_malloc(sizeof(list_element));
     ele->data = data;
     ele->previous = l->last;
     if(0 == l->size) {
@@ -24,6 +30,82 @@ int append(list* l, void *data)
     }
     l->last = ele;
     l->size += 1;
+    return JRV_SUCCESS;
+}
+
+int list_prepend_ele(list *l, void *data)
+{
+    list_element *ele;
+    
+    if(NULL == l) {
+        return JRV_NULL_PTR_ERROR;
+    }
+
+    ele = jrv_malloc(sizeof(list_element));
+    ele->data = data;
+    ele->previous = NULL;
+    if(0 == l->size) {
+        l->last = ele;
+    } else {
+        l->first->previous = ele;
+    }
+    l->first = ele;
+    l->size += 1;
+    return JRV_SUCCESS;
+}
+
+int copy_list(list *list1, list *list2)
+{
+    list1->first = list2->first;
+    list1->last = list2->last;
+    list1->size = list2->size;
+    jrv_free(&list2);
+    return JRV_SUCCESS;
+}
+
+int list_append_list(list *list1, list *list2)
+{
+    if(NULL == list1) {
+        return JRV_NULL_PTR_ERROR;
+    }
+    if(NULL == list2) {
+        return JRV_SUCCESS;
+    }
+    if(0 == list2->size) {
+        jrv_free(&list2);
+        return JRV_SUCCESS;
+    }
+    if(0 == list1->size) {
+        return copy_list(list1, list2);
+    }
+    list2->first->previous = list1->last;
+    list1->last = list2->last;
+    list1->size += list2->size;
+    
+    jrv_free(&list2);
+    return JRV_SUCCESS;
+}
+
+int list_prepend_list(list *list1, list *list2)
+{
+    if(NULL == list1) {
+        return JRV_NULL_PTR_ERROR;
+    }
+    if(NULL == list2) {
+        return JRV_SUCCESS;
+    }
+    if(0 == list2->size) {
+        jrv_free(&list2);
+        return JRV_SUCCESS;
+    }
+    if(0 == list1->size) {
+        return copy_list(list1, list2);
+    }
+    list1->first->previous = list2->last;
+    list1->first = list2->first;
+    list1->size += list2->size;
+
+    jrv_free(&list2);
     return JRV_SUCCESS;
 }
 

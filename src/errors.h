@@ -24,6 +24,11 @@
 #define JRV_INVALID_STRING (JRV_ERROR - 2)
 
 /**
+ * This is returned when a pointer parameter is NULL when it shouldn't be
+ */
+#define JRV_NULL_PTR_ERROR (JRV_ERROR - 3)
+
+/**
  * Returns a description of the given error.
  *
  * @param error The error to get the description for

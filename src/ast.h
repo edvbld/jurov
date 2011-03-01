@@ -204,6 +204,15 @@ typedef struct {
 int new_mj_ast_list(list* list, ast **node);
 
 /**
+ * Prepends an AST node to a ast_list
+ *
+ * @param[in] list The list of AST nodes
+ * @param[in] node The AST node to prepend
+ * @return An integer describing the result of the function
+ */
+int mj_ast_list_prepend(ast *list, ast *node);
+
+/**
  * Represents a method call in the AST
  */
 typedef struct {

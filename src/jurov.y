@@ -1,5 +1,6 @@
 %{
     #include "stddef.h"
+    #include "list.h"
     #include "ast.h"
     #include "utils.h"
     void yyerror(ast **result, char *s);
@@ -26,9 +27,10 @@
 %token <number> NUMBER
 
 %type <tree> program main_class main_method class_declaration 
-             function_body
+             function_body statements statement print_statement expression
 %destructor { delete_ast($$); } main_class main_method class_declaration 
-                                function_body
+                                function_body statements statement 
+                                print_statement expression
 %destructor { jrv_free(&$$); } ID
 %%
 program: main_class { *result = $1; }
@@ -47,18 +49,27 @@ class_declaration: CLASS ID LCURLY { ast *id;
                                      new_mj_identifier($2, &id);
                                      $$ = id; }
 
-function_body: LCURLY statements RCURLY { $$ = NULL; }
+function_body: LCURLY statements RCURLY { $$ = $2; }
 
-statements: /* nothing */
-          | statement statements
+statements: /* nothing, return an empty mj_ast_list */ 
+          { ast *node;
+            list *l;
+            new_list(&l);
+            new_mj_ast_list(l, &node);
+            $$ = node; }
+          | statement statements { mj_ast_list_prepend($2, $1); $$ = $2; }
 
-statement: LCURLY statements RCURLY
-         | print_statement
+statement: LCURLY statements RCURLY { $$ = $2; }
+         | print_statement { $$ = $1; }
 
-print_statement: PRINT LPAREN expression RPAREN SEMICOLON
+print_statement: PRINT LPAREN expression RPAREN SEMICOLON 
+                 { ast *node;
+                   new_mj_print($3, &node);
+                   $$ = node; }
+                
 
-expression: TRUE
-          | FALSE
+expression: TRUE { ast *node; new_mj_boolean(1, &node); $$ = node; }
+          | FALSE { ast *node; new_mj_boolean(0, &node); $$ = node; }
 
 %%
 
