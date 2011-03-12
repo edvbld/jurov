@@ -44,8 +44,10 @@ typedef enum {
     MJ_MAIN_CLASS,
     /** Represents a class in MJ */
     MJ_CLASS,
-    /** Reprents an type in MJ */
-    MJ_TYPE
+    /** Represents a type in MJ */
+    MJ_TYPE,
+    /** Represents a variable declaration in MJ */
+    MJ_VAR_DECL
 } nodetype;
 
 typedef enum {
@@ -381,6 +383,31 @@ typedef struct {
  * @return The result of the function
  */
 int new_mj_type(minijava_type type, ast *identifier, ast **node);
+
+/**
+ * Represents a variable declaration in the MiniJava language
+ */
+typedef struct {
+    /** The type of the node (MJ_VAR_DECL) */
+    nodetype type;
+
+    /** The MiniJava type of the variable */
+    mj_type *mj_type;
+
+    /** The identifier of the variable */
+    mj_identifier *id;
+} mj_var_decl;
+
+/**
+ * Creates a new variable declaration in the MiniJava language
+ *
+ * @param[in] type The type of the variable
+ * @param[in] id The identifier of the variable
+ * @param[out] node The address of the pointer that the created node 
+ *                  will be assigned to
+ * @return The result of the function
+ */
+int new_mj_var_decl(ast *type, ast *id, ast **node);
 
 /**
  * This struct stores the callbacks for the a
