@@ -38,7 +38,7 @@ typedef enum {
     MJ_AST_LIST,
     /** Represents a call struct */
     MJ_CALL,
-    /** Represensts a print struct */
+    /** Represents a print struct */
     MJ_PRINT,
     /** Represents a main_class struct */
     MJ_MAIN_CLASS,
