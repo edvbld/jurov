@@ -317,6 +317,11 @@ void ast_visit(ast *node, void *result)
                 _callbacks.on_mj_main_class((mj_main_class *) node, result);
             }
             break;
+        case MJ_CLASS:
+            if(_callbacks.on_mj_class != NULL) {
+                _callbacks.on_mj_class((mj_class *) node, result);
+            }
+            break;
         default:
             jrv_die("Unknown AST node found");
     }
@@ -397,6 +402,14 @@ void delete_mj_main_class(mj_main_class *node, void *p)
     jrv_free(&node);
 }
 
+void delete_mj_class(mj_class *node, void *p)
+{
+    delete_mj_identifier(node->id, p);
+    ast_visit(node->var_declarations, p);
+    ast_visit(node->method_declarations, p);
+    jrv_free(&node);
+}
+
 void delete_ast(ast *tree)
 {
     ast_callbacks callbacks;
@@ -418,5 +431,6 @@ void delete_ast(ast *tree)
     callbacks.on_mj_call = &delete_mj_call;
     callbacks.on_mj_print = &delete_mj_print;
     callbacks.on_mj_main_class = &delete_mj_main_class;
+    callbacks.on_mj_class = &delete_mj_class;
     ast_walk(tree, callbacks, NULL);
 }

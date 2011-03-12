@@ -28,10 +28,13 @@
 
 %type <tree> program main_class main_method begin_class 
              function_body statements statement print_statement expression
-             class_declarations
+             class_declarations class_declaration variable_declarations 
+             method_declarations
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
+                                class_declaration variable_declarations 
+                                method_declarations
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -43,15 +46,31 @@ main_class: begin_class main_method function_body RCURLY
               new_mj_main_class($1, $2, $3, &mc);
               $$ = mc; }
 
-class_declarations:  /* nothing, return an empty mj_ast_list */
-                  { ast *node;
-                    empty_mj_ast_list(&node);
-                    $$ = node; }
-
 main_method: MAIN LPAREN STRING LSQUARE RSQUARE ID RPAREN 
              { ast *a;
                new_mj_identifier($6, &a);
                $$ = a; }
+
+class_declarations:  /* nothing, return an empty mj_ast_list */
+                    { ast *node;
+                      empty_mj_ast_list(&node);
+                      $$ = node; }
+                  | class_declaration class_declarations
+                    { mj_ast_list_prepend($2, $1);
+                      $$ = $2; }
+
+class_declaration: begin_class variable_declarations method_declarations RCURLY
+                   { ast *class;
+                     new_mj_class($1, $2, $3, &class);
+                     $$ = class; }
+
+variable_declarations: { ast *list;
+                         empty_mj_ast_list(&list);
+                         $$ = list; }
+
+method_declarations: { ast *list;
+                       empty_mj_ast_list(&list);
+                       $$ = list; }
 
 begin_class: CLASS ID LCURLY { ast *id;
                                new_mj_identifier($2, &id);
@@ -60,9 +79,9 @@ begin_class: CLASS ID LCURLY { ast *id;
 function_body: LCURLY statements RCURLY { $$ = $2; }
 
 statements: /* nothing, return an empty mj_ast_list */ 
-          { ast *node;
-            empty_mj_ast_list(&node);
-            $$ = node; }
+            { ast *node;
+              empty_mj_ast_list(&node);
+              $$ = node; }
           | statement statements { mj_ast_list_prepend($2, $1); $$ = $2; }
 
 statement: LCURLY statements RCURLY { $$ = $2; }

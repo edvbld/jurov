@@ -85,7 +85,42 @@ begin_example(ast_parser, should_create_an_ast_for_the_boolean_printer_program)
     delete_parser(tree);
 end_example
 
+begin_example(ast_parser, should_handle_several_classes)
+    ast *tree;
+    mj_ast_list *classes, *vars, *methods;
+    mj_main_class *mc;
+    mj_class *foo;
+    char *program = 
+        "class Main {\n"
+        "   public static void main(String[] args) {\n"
+        "   }}\n"
+        "class Foo {\n"
+        "}";
+
+    should_pass(parse_string(program, &tree))
+    should_eq_int(MJ_AST_LIST, tree->type)
+    classes = (mj_ast_list *) tree;
+    should_eq_int(2, classes->list->size)
+    should_neq_ptr(NULL, classes->list->first)
+    mc = classes->list->first->data;
+    should_eq_int(MJ_MAIN_CLASS, mc->type)
+
+    should_neq_ptr(NULL, classes->list->last)
+    foo = classes->list->last->data;
+    should_eq_int(MJ_CLASS, foo->type)
+    should_eq_str("Foo", foo->id->name)
+    should_eq_int(MJ_AST_LIST, foo->var_declarations->type)
+    vars = (mj_ast_list *) foo->var_declarations;
+    should_eq_int(0, vars->list->size)
+    should_eq_int(MJ_AST_LIST, foo->method_declarations->type)
+    methods = (mj_ast_list *) foo->method_declarations;
+    should_eq_int(0, methods->list->size)
+
+    delete_parser(tree);
+end_example
+
 begin_description(ast_parser)
     add_example(should_create_an_ast_from_the_empty_program)
     add_example(should_create_an_ast_for_the_boolean_printer_program)
+    add_example(should_handle_several_classes)
 end_description

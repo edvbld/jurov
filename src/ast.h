@@ -408,6 +408,9 @@ typedef struct {
 
     /** The callback for a main_class */
     void (*on_mj_main_class)(mj_main_class *node, void *result);
+
+    /** The callback for a class */
+    void (*on_mj_class)(mj_class *node, void *result);
 } ast_callbacks;
 
 /**
