@@ -44,7 +44,7 @@ def configure(conf):
     try:
         conf.find_program('valgrind')
     except conf.errors.ConfigurationError:
-        self.to_log("Could not find valgrind, memory leaks won't be checked!")
+        conf.to_log("Could not find valgrind, memory leaks won't be checked!")
         conf.env.VALGRIND = False
     conf.load('compiler_c')
     conf.load('flex')
