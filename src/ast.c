@@ -208,6 +208,27 @@ int new_mj_class(ast *id, ast *var_declarations,
     return JRV_SUCCESS;
 }
 
+int new_mj_type(minijava_type type, ast *id, ast **node)
+{
+    mj_type *t;
+
+    if(id != NULL && id->type != MJ_IDENTIFIER) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+
+    t = jrv_malloc(sizeof(mj_type));
+    t->type = MJ_TYPE;
+    t->mj_type = type;
+    if(type == MJ_TYPE_USER_DEFINED) {
+        t->id = (mj_identifier *) id;
+    } else {
+        t->id = NULL;
+    }
+    *node = (ast *) t;
+    return JRV_SUCCESS;
+}
+
 ast_callbacks _callbacks;
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
 {

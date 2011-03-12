@@ -43,8 +43,21 @@ typedef enum {
     /** Represents a main_class struct */
     MJ_MAIN_CLASS,
     /** Represents a class in MJ */
-    MJ_CLASS
+    MJ_CLASS,
+    /** Reprents an type in MJ */
+    MJ_TYPE
 } nodetype;
+
+typedef enum {
+    /** Represents the integer type in MJ */
+    MJ_TYPE_INTEGER,
+    /** Represents the boolean type in MJ */
+    MJ_TYPE_BOOLEAN,
+    /** Represents the integer array type in MJ */
+    MJ_TYPE_INT_ARRAY,
+    /** Represents a user define type in MJ */
+    MJ_TYPE_USER_DEFINED
+} minijava_type;
 
 /**
  * Represents an abstract syntax tree (AST). 
@@ -342,8 +355,36 @@ typedef struct {
  */
 int new_mj_class(ast *id, ast *var_declarations, 
                  ast *method_declarations, ast **node);
+
 /**
- * This struct stores the callbacks for the ast_walk function. Each time the 
+ * Represents a type in the MiniJava language, such as int or boolean
+ */
+typedef struct {
+    /** The type of the node (MJ_TYPE) */
+    nodetype type;
+
+    /** The MiniJava type */
+    minijava_type mj_type;
+
+    /** The identifier if it's a user defined type */
+    mj_identifier *id;
+} mj_type;
+
+
+/**
+ * Creates a new type in the MiniJava language
+ *
+ * @parameter[in] type The type to construct
+ * @parameter[in] id The id if it's a user defined type
+ * @parameter[out] node The address of the pointer that the created node 
+ *                      pointer will be assigned to
+ * @return The result of the function
+ */
+int new_mj_type(minijava_type type, ast *identifier, ast **node);
+
+/**
+ * This struct stores the callbacks for the a
+ * st_walk function. Each time the 
  * ast_walk function encounters a node of a given type, the corresponding 
  * callback will be called.
  *
