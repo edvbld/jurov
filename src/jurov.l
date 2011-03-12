@@ -1,4 +1,4 @@
-%option noyywrap nodefault yylineno nounput
+%option noyywrap nodefault yylineno nounput noinput
 
 %{
 #include "string.h"
