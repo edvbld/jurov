@@ -479,6 +479,12 @@ typedef struct {
 
     /** The callback for a class */
     void (*on_mj_class)(mj_class *node, void *result);
+
+    /** The callback for a type */
+    void (*on_mj_type)(mj_type *node, void *result);
+    
+    /** The callback for a variable declaration */
+    void (*on_mj_var_decl)(mj_var_decl *node, void *result);
 } ast_callbacks;
 
 /**

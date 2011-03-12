@@ -365,6 +365,16 @@ void ast_visit(ast *node, void *result)
                 _callbacks.on_mj_class((mj_class *) node, result);
             }
             break;
+        case MJ_TYPE:
+            if(_callbacks.on_mj_type != NULL) {
+                _callbacks.on_mj_type((mj_type *) node, result);
+            }
+            break;
+        case MJ_VAR_DECL:
+            if(_callbacks.on_mj_var_decl != NULL) {
+                _callbacks.on_mj_var_decl((mj_var_decl *) node, result);
+            }
+            break;
         default:
             jrv_die("Unknown AST node found");
     }
@@ -417,10 +427,8 @@ void delete_mj_ast_list_element(void *data)
 
 void delete_mj_ast_list(mj_ast_list *node, void *p)
 {
-    if(node != NULL) {
-        delete_list_cb(node->list, &delete_mj_ast_list_element);
-        jrv_free(&node);
-    }
+    delete_list_cb(node->list, &delete_mj_ast_list_element);
+    jrv_free(&node);
 }
 
 void delete_mj_call(mj_call *node, void *p)
@@ -453,6 +461,21 @@ void delete_mj_class(mj_class *node, void *p)
     jrv_free(&node);
 }
 
+void delete_mj_type(mj_type *node, void *p)
+{
+    if(node->mj_type == MJ_TYPE_USER_DEFINED) {
+        delete_mj_identifier(node->id, p);
+    }
+    jrv_free(&node);
+}
+
+void delete_mj_var_decl(mj_var_decl *node, void *p)
+{
+    delete_mj_type(node->mj_type, p);
+    delete_mj_identifier(node->id, p);
+    jrv_free(&node);
+}
+
 void delete_ast(ast *tree)
 {
     ast_callbacks callbacks;
@@ -475,5 +498,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_print = &delete_mj_print;
     callbacks.on_mj_main_class = &delete_mj_main_class;
     callbacks.on_mj_class = &delete_mj_class;
+    callbacks.on_mj_type = &delete_mj_type;
+    callbacks.on_mj_var_decl = &delete_mj_var_decl;
     ast_walk(tree, callbacks, NULL);
 }

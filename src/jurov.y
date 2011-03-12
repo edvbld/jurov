@@ -29,12 +29,14 @@
 %type <tree> program main_class main_method begin_class 
              function_body statements statement print_statement expression
              class_declarations class_declaration variable_declarations 
-             method_declarations
+             variable_declaration method_declarations type
+             identifier
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
                                 class_declaration variable_declarations 
-                                method_declarations
+                                variable_declaration method_declarations type
+                                identifier
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -64,17 +66,46 @@ class_declaration: begin_class variable_declarations method_declarations RCURLY
                      new_mj_class($1, $2, $3, &class);
                      $$ = class; }
 
-variable_declarations: { ast *list;
-                         empty_mj_ast_list(&list);
-                         $$ = list; }
+variable_declarations: /* nothing, return the empty list */
+                       { ast *node;
+                         empty_mj_ast_list(&node);
+                         $$ = node; }
+                     | variable_declaration variable_declarations
+                       { mj_ast_list_prepend($2, $1);
+                         $$ = $2; }
+
+variable_declaration: type identifier SEMICOLON
+                      { ast *var_decl;
+                        new_mj_var_decl($1, $2, &var_decl);
+                        $$ = var_decl; }
 
 method_declarations: { ast *list;
                        empty_mj_ast_list(&list);
                        $$ = list; }
 
-begin_class: CLASS ID LCURLY { ast *id;
-                               new_mj_identifier($2, &id);
-                               $$ = id; }
+type: BOOLEAN 
+      { ast *type;
+        new_mj_type(MJ_TYPE_BOOLEAN, NULL, &type);
+        $$ = type; }
+    | INT
+      { ast *type;
+        new_mj_type(MJ_TYPE_INTEGER, NULL, &type);
+        $$ = type; }
+    | INT LSQUARE RSQUARE
+      { ast *type;
+        new_mj_type(MJ_TYPE_INT_ARRAY, NULL, &type);
+        $$ = type; }
+    | identifier
+      { ast *type;
+        new_mj_type(MJ_TYPE_USER_DEFINED, $1, &type);
+        $$ = type; }
+
+identifier: ID
+            { ast *id;
+              new_mj_identifier($1, &id);
+              $$ = id; }
+
+begin_class: CLASS identifier LCURLY { $$ = $2; }
 
 function_body: LCURLY statements RCURLY { $$ = $2; }
 

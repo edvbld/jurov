@@ -119,8 +119,55 @@ begin_example(ast_parser, should_handle_several_classes)
     delete_parser(tree);
 end_example
 
+begin_example(ast_parser, should_handle_variable_declarations)
+    ast *tree;
+    mj_ast_list *classes, *vars;
+    mj_class *foo;
+    mj_var_decl *var;
+    char *program = 
+        "class Main {\n"
+        "   public static void main(String[] args) {\n"
+        "   }}\n"
+        "class Foo {\n"
+        "   Foo f;\n"
+        "   int x;\n"
+        "   int[] xs;\n"
+        "   boolean b;\n"
+        "}";
+
+    should_pass(parse_string(program, &tree))
+    
+    should_eq_int(MJ_AST_LIST, tree->type)
+    classes = (mj_ast_list *) tree;
+    should_eq_int(2, classes->list->size)
+    should_neq_ptr(NULL, classes->list->last)
+    foo = classes->list->last->data;
+    should_eq_int(MJ_CLASS, foo->type)
+    should_eq_str("Foo", foo->id->name)
+    should_eq_int(MJ_AST_LIST, foo->var_declarations->type)
+    vars = (mj_ast_list *) foo->var_declarations;
+    should_eq_int(4, vars->list->size)
+    var = vars->list->last->data;
+    should_eq_int(MJ_TYPE_BOOLEAN, var->mj_type->mj_type)
+    should_eq_str("b", var->id->name)
+    var = vars->list->last->previous->data;
+    should_eq_int(MJ_TYPE_INT_ARRAY, var->mj_type->mj_type)
+    should_eq_str("xs", var->id->name)
+    var = vars->list->last->previous->previous->data;
+    should_eq_int(MJ_TYPE_INTEGER, var->mj_type->mj_type)
+    should_eq_str("x", var->id->name)
+    var = vars->list->first->data;
+    should_eq_int(MJ_TYPE_USER_DEFINED, var->mj_type->mj_type)
+    should_neq_ptr(NULL, var->mj_type->id)
+    should_eq_str("Foo", var->mj_type->id->name)
+    should_eq_str("f", var->id->name)
+     
+    delete_parser(tree);
+end_example
+
 begin_description(ast_parser)
     add_example(should_create_an_ast_from_the_empty_program)
     add_example(should_create_an_ast_for_the_boolean_printer_program)
     add_example(should_handle_several_classes)
+    add_example(should_handle_variable_declarations)
 end_description
