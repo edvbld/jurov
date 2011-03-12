@@ -41,7 +41,9 @@ typedef enum {
     /** Represensts a print struct */
     MJ_PRINT,
     /** Represents a main_class struct */
-    MJ_MAIN_CLASS
+    MJ_MAIN_CLASS,
+    /** Represents a class in MJ */
+    MJ_CLASS
 } nodetype;
 
 /**
@@ -283,7 +285,7 @@ int new_mj_print(ast* expression, ast **node);
  * Represents the main class of a MiniJava program
  */
 typedef struct {
-    /** The type of the node (nodetype.PRINT) */
+    /** The type of the node (nodetype.MJ_MAIN_CLASS) */
     nodetype type;
 
     /** The id of the main class */
@@ -310,6 +312,36 @@ typedef struct {
 int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statements, 
                       ast **node);
 
+
+/**
+ * Reprents a class in the MiniJava language
+ */
+typedef struct {
+    /** The type of the node (MJ_CLASS) */
+    nodetype type;
+
+    /** The identifier (name) of the class */
+    mj_identifier *id;
+
+    /** A list of the variable declarations */
+    ast *var_declarations;
+
+    /** A list of the methods declarations */
+    ast *method_declarations;
+} mj_class;
+
+/**
+ * Creates new class node with the given parameters
+ *
+ * @param[in] id The id (name) of the class
+ * @param[in] var_declarations A list of the variable declarations of the class
+ * @param[in] method_declarations A list of the method declarations of the class
+ * @param[out] node The address of the pointer that mj_class node will be 
+ *                  assigned to
+ * @return An integer describing the result
+ */
+int new_mj_class(ast *id, ast *var_declarations, 
+                 ast *method_declarations, ast **node);
 /**
  * This struct stores the callbacks for the ast_walk function. Each time the 
  * ast_walk function encounters a node of a given type, the corresponding 

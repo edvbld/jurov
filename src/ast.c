@@ -178,6 +178,36 @@ int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statements,
     return JRV_SUCCESS;
 }
 
+int new_mj_class(ast *id, ast *var_declarations,
+                 ast *method_declarations, ast **node)
+{
+    mj_class *mc;
+
+    if(id != NULL && id->type != MJ_IDENTIFIER) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+
+    if(var_declarations != NULL && var_declarations->type != MJ_AST_LIST) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+
+    if(method_declarations != NULL && 
+       method_declarations->type != MJ_AST_LIST) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+    
+    mc = jrv_malloc(sizeof(mj_class));
+    mc->type = MJ_CLASS;
+    mc->id = (mj_identifier *) id;
+    mc->var_declarations = var_declarations;
+    mc->method_declarations = method_declarations;
+    *node = (ast *) mc;
+    return JRV_SUCCESS;
+}
+
 ast_callbacks _callbacks;
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
 {
