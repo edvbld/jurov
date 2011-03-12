@@ -204,6 +204,14 @@ typedef struct {
 int new_mj_ast_list(list* list, ast **node);
 
 /**
+ * Creates an empty ast list and assigns it to node
+ *
+ * @param[out] The address of the pointer that will point to the empty list
+ * @return An integer describing the result
+ */
+int empty_mj_ast_list(ast **node);
+
+/**
  * Prepends an AST node to a ast_list
  *
  * @param[in] list The list of AST nodes

@@ -45,9 +45,7 @@ main_class: begin_class main_method function_body RCURLY
 
 class_declarations:  /* nothing, return an empty mj_ast_list */
                   { ast *node;
-                    list *l;
-                    new_list(&l);
-                    new_mj_ast_list(l, &node);
+                    empty_mj_ast_list(&node);
                     $$ = node; }
 
 main_method: MAIN LPAREN STRING LSQUARE RSQUARE ID RPAREN 
@@ -63,9 +61,7 @@ function_body: LCURLY statements RCURLY { $$ = $2; }
 
 statements: /* nothing, return an empty mj_ast_list */ 
           { ast *node;
-            list *l;
-            new_list(&l);
-            new_mj_ast_list(l, &node);
+            empty_mj_ast_list(&node);
             $$ = node; }
           | statement statements { mj_ast_list_prepend($2, $1); $$ = $2; }
 

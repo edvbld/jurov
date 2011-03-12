@@ -83,6 +83,17 @@ int new_mj_ast_list(list *list, ast **node)
     return JRV_SUCCESS;
 }
 
+int empty_mj_ast_list(ast **node)
+{
+    list *l;
+    mj_ast_list *al = jrv_malloc(sizeof(mj_ast_list));
+    new_list(&l);
+    al->type = MJ_AST_LIST;
+    al->list = l;
+    *node = (ast *) al;
+    return JRV_SUCCESS;
+}
+
 int mj_ast_list_prepend(ast *list, ast *node)
 {
     mj_ast_list *l;
