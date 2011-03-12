@@ -14,9 +14,9 @@ int parse_statements(char *statements, ast **tree)
                  strlen(statements) +
                  strlen(main_function_closening) + 1;
     char *program = malloc(length);
-    snprintf(program, length, "%s%s%s", main_function_opening,
-                                        statements,
-                                        main_function_closening);
+    sprintf(program, "%s%s%s", main_function_opening,
+                               statements,
+                               main_function_closening);
     res = parse_string(program, tree);
     free(program);
     return res;
