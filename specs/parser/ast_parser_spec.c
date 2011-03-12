@@ -6,13 +6,17 @@ begin_example(ast_parser, should_create_an_ast_from_the_empty_program)
         "class Main { public static void main ( String[] args ) { } }";
     ast *tree;
     mj_main_class *mc;
-    mj_ast_list *stmts;
+    mj_ast_list *classes, *stmts;
 
     should_pass(parse_string(program, &tree))
 
     should_neq_ptr(NULL, tree)
-    should_eq_int(MJ_MAIN_CLASS, tree->type)
-    mc = (mj_main_class *) tree;
+    should_eq_int(MJ_AST_LIST, tree->type);
+    classes = (mj_ast_list *) tree;
+    should_eq_int(1, classes->list->size);
+    should_neq_ptr(NULL, classes->list->first);
+    mc = (mj_main_class *) classes->list->first->data;
+    should_eq_int(MJ_MAIN_CLASS, mc->type);
     should_neq_ptr(NULL, mc->class_id)
     should_eq_int(MJ_IDENTIFIER, mc->class_id->type)
     should_eq_str("Main", mc->class_id->name)
@@ -37,15 +41,19 @@ begin_example(ast_parser, should_create_an_ast_for_the_boolean_printer_program)
         "}";
     ast *tree;
     mj_main_class *mc;
-    mj_ast_list *stmts;
+    mj_ast_list *classes, *stmts;
     mj_print *print;
     mj_boolean *bo;
 
     should_pass(parse_string(program, &tree))
 
     should_neq_ptr(NULL, tree)
-    should_eq_int(MJ_MAIN_CLASS, tree->type)
-    mc = (mj_main_class *) tree;
+    should_eq_int(MJ_AST_LIST, tree->type);
+    classes = (mj_ast_list *) tree;
+    should_eq_int(1, classes->list->size);
+    should_neq_ptr(NULL, classes->list->first);
+    mc = (mj_main_class *) classes->list->first->data;
+    should_eq_int(MJ_MAIN_CLASS, mc->type);
     should_neq_ptr(NULL, mc->class_id)
     should_eq_int(MJ_IDENTIFIER, mc->class_id->type)
     should_eq_str("BooleanPrinter", mc->class_id->name)
