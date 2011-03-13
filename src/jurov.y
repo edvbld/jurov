@@ -29,14 +29,15 @@
 %type <tree> program main_class main_method begin_class 
              function_body statements statement print_statement expression
              class_declarations class_declaration variable_declarations 
-             variable_declaration method_declarations type
-             identifier
+             variable_declaration method_declarations method_declaration
+             arguments more_arguments argument type identifier 
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
                                 class_declaration variable_declarations 
-                                variable_declaration method_declarations type
-                                identifier
+                                variable_declaration method_declarations 
+                                method_declaration arguments more_arguments 
+                                argument type identifier
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -79,9 +80,41 @@ variable_declaration: type identifier SEMICOLON
                         new_mj_var_decl($1, $2, &var_decl);
                         $$ = var_decl; }
 
-method_declarations: { ast *list;
+method_declarations: /* nothing, return the empty list */
+                     { ast *list;
                        empty_mj_ast_list(&list);
                        $$ = list; }
+                   | method_declaration method_declarations
+                     { mj_ast_list_prepend($2, $1);
+                       $$ = $2; }
+
+method_declaration: PUBLIC type identifier LPAREN arguments RPAREN LCURLY 
+                    variable_declarations statements RETURN expression 
+                    SEMICOLON RCURLY
+                    { ast *method;
+                      new_mj_method_decl($2, $3, $5, $8, $9, $11, &method);
+                      $$ = method; }
+
+arguments: /* nothing, return the empty list */
+           { ast *node;
+             empty_mj_ast_list(&node);
+             $$ = node; }
+         | argument more_arguments
+           { mj_ast_list_prepend($2, $1);
+             $$ = $2; }
+
+more_arguments: /* nothing, return the empty list */
+                { ast *node;
+                  empty_mj_ast_list(&node);
+                  $$ = node; }
+              | COMMA argument more_arguments 
+                { mj_ast_list_prepend($3, $2);
+                  $$ = $3; }
+
+argument: type identifier
+          { ast *var_decl;
+            new_mj_method_arg($1, $2, &var_decl);
+            $$ = var_decl; }
 
 type: BOOLEAN 
       { ast *type;
@@ -131,5 +164,5 @@ expression: TRUE { ast *node; new_mj_boolean(1, &node); $$ = node; }
 
 void yyerror(ast **result, char *s)
 {
-    /* do nothing for now */ 
+    /* do nothing for now */
 }

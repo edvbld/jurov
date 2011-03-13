@@ -165,9 +165,82 @@ begin_example(ast_parser, should_handle_variable_declarations)
     delete_parser(tree);
 end_example
 
+begin_example(ast_parser, should_handle_method_declarations)
+    ast *tree;
+    mj_ast_list *classes, *vars, *methods, *args, *method_vars;
+    mj_var_decl *a, *y;
+    mj_class *d;
+    mj_method_decl *m;
+    mj_method_arg *arg;
+    mj_boolean *ret;
+    char *program = 
+        "class Main {\n"
+        "   public static void main(String[] args) {\n"
+        "   }\n"
+        "}\n"
+        "class Double {\n"
+        "   int[] a;\n"
+        "   public int double(int x) {\n"
+        "       int y;\n"
+        "       return true;\n"
+        "   }\n"
+        "}";
+    
+    should_pass(parse_string(program, &tree))
+    
+    should_eq_int(MJ_AST_LIST, tree->type)
+    classes = (mj_ast_list *) tree;
+    should_eq_int(2, classes->list->size)
+    should_neq_ptr(NULL, classes->list->last)
+    
+    d = classes->list->last->data;
+    should_eq_int(MJ_CLASS, d->type)
+    should_eq_str("Double", d->id->name)
+
+    should_eq_int(MJ_AST_LIST, d->var_declarations->type)
+    vars = (mj_ast_list *) d->var_declarations;
+    should_eq_int(1, vars->list->size)
+
+    a = vars->list->first->data;
+    should_eq_int(MJ_VAR_DECL, a->type);
+    should_eq_int(MJ_TYPE_INT_ARRAY, a->mj_type->mj_type)
+    should_eq_str("a", a->id->name)
+    
+    methods = (mj_ast_list *) d->method_declarations;
+    should_eq_int(1, methods->list->size)
+    should_neq_ptr(NULL, methods->list->first)
+    m = methods->list->first->data;
+    should_eq_int(MJ_TYPE_INTEGER, m->return_type->mj_type)
+    should_eq_str("double", m->id->name)
+    args = m->arguments;
+    should_eq_int(1, args->list->size)
+
+    arg = args->list->first->data;
+    should_eq_int(MJ_METHOD_ARG, arg->type)
+    should_eq_int(MJ_TYPE_INTEGER, arg->mj_type->mj_type)
+    should_eq_str("x", arg->id->name)
+
+    method_vars = m->var_declarations;
+    should_eq_int(1, method_vars->list->size)
+    y =  method_vars->list->first->data;
+
+    should_eq_int(MJ_VAR_DECL, y->type)
+    should_eq_int(MJ_TYPE_INTEGER, y->mj_type->mj_type)
+    should_eq_str("y", y->id->name)
+
+    should_eq_int(0, m->statements->list->size)
+
+    should_eq_int(MJ_BOOLEAN, m->return_expression->type)
+    ret = (mj_boolean *) m->return_expression;
+    should_eq_int(1, ret->value)
+   
+    delete_parser(tree);
+end_example
+
 begin_description(ast_parser)
     add_example(should_create_an_ast_from_the_empty_program)
     add_example(should_create_an_ast_for_the_boolean_printer_program)
     add_example(should_handle_several_classes)
     add_example(should_handle_variable_declarations)
+    add_example(should_handle_method_declarations)
 end_description

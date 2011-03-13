@@ -575,6 +575,7 @@ void delete_mj_method_decl(mj_method_decl *node, void *p)
     ast_visit((ast *) node->var_declarations, p);
     ast_visit((ast *) node->statements, p);
     ast_visit(node->return_expression, p);
+    jrv_free(&node);
 }
 
 void delete_ast(ast *tree)
