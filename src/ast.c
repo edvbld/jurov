@@ -251,6 +251,28 @@ int new_mj_var_decl(ast *type, ast *id, ast **node)
     return JRV_SUCCESS;
 }
 
+int new_mj_method_arg(ast *type, ast *id, ast **node)
+{
+    mj_method_arg *a;
+
+    if(type != NULL && type->type !=  MJ_TYPE) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+
+    if(id != NULL && id->type != MJ_IDENTIFIER) {
+        *node = NULL;
+        return JRV_INVALID_TYPE;
+    }
+
+    a = jrv_malloc(sizeof(mj_method_arg));
+    a->type = MJ_METHOD_ARG;
+    a->mj_type = (mj_type *) type;
+    a->id = (mj_identifier *) id;
+    *node = (ast *) a;
+    return JRV_SUCCESS;
+}
+
 ast_callbacks _callbacks;
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
 {

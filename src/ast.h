@@ -47,7 +47,11 @@ typedef enum {
     /** Represents a type in MJ */
     MJ_TYPE,
     /** Represents a variable declaration in MJ */
-    MJ_VAR_DECL
+    MJ_VAR_DECL,
+    /** Represents a method argument in MJ */
+    MJ_METHOD_ARG,
+    /** Represents a method declaration in MJ */
+    MJ_METHOD_DECL
 } nodetype;
 
 typedef enum {
@@ -410,8 +414,58 @@ typedef struct {
 int new_mj_var_decl(ast *type, ast *id, ast **node);
 
 /**
- * This struct stores the callbacks for the a
- * st_walk function. Each time the 
+ * Represents an argument to a method in MiniJava
+ */
+typedef struct {
+    /** The type of the node (MJ_METHOD_ARG) */
+    nodetype type;
+
+    /** The type of the argument */
+    mj_type *mj_type;
+
+    /** The identifier (name) of the argument */
+    mj_identifier *id;
+} mj_method_arg;
+
+/**
+ * Creates a new method argument in the MiniJava language
+ *
+ * @param[in] mj_type The MiniJava type of the argument
+ * @param[in] id The identifier of the argument
+ * @param[out] node The address of the pointer that the newly created 
+ *                  mj_method_arg will be assigned to
+ * @return The result of the function
+ */
+int new_mj_method_arg(ast *type, ast *id, ast **node);
+
+/**
+ * Represents a method declaration and definition in the MJ language
+ */
+typedef struct {
+    /** The type of the node (MJ_METHOD_DECL) */
+    nodetype type;
+
+    /** The return type of the method */
+    mj_type return_type;
+
+    /** The identifier (name) of the method */
+    mj_identifier id;
+    
+    /** The argument list */
+    mj_ast_list *arguments;
+
+    /** The variable declarations in the method body */
+    mj_ast_list *var_declarations;
+
+    /** The statements in the method */
+    mj_ast_list *statements;
+
+    /** The expression yielding the return value */
+    ast *return_expression;
+} mj_method_decl;
+
+/**
+ * This struct stores the callbacks for the ast_walk function. Each time the 
  * ast_walk function encounters a node of a given type, the corresponding 
  * callback will be called.
  *
