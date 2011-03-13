@@ -4,6 +4,20 @@
 #include "ast.h"
 #include "utils.h"
 
+static int invalid_type(ast **node)
+{
+    *node = NULL;
+    return JRV_INVALID_TYPE;
+}
+
+static int is_of_type(nodetype type, ast *node)
+{
+    if(node == NULL) {
+        return 2;
+    }
+    return node->type == type;
+}
+
 int new_mj_identifier(char *name, ast **node)
 {
     mj_identifier *id;
@@ -270,6 +284,44 @@ int new_mj_method_arg(ast *type, ast *id, ast **node)
     a->mj_type = (mj_type *) type;
     a->id = (mj_identifier *) id;
     *node = (ast *) a;
+    return JRV_SUCCESS;
+}
+
+int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
+                       ast *var_declarations, ast *statements, 
+                       ast *return_expression, ast **node)
+{
+    mj_method_decl *m;
+
+    if(!is_of_type(MJ_TYPE, return_type)) {
+        return invalid_type(node);
+    }
+    
+    if(!is_of_type(MJ_IDENTIFIER, id)) {
+        return invalid_type(node);
+    }
+    
+    if(!is_of_type(MJ_AST_LIST, arguments)) {
+        return invalid_type(node);
+    }
+    
+    if(!is_of_type(MJ_AST_LIST, var_declarations)) {
+        return invalid_type(node);
+    }
+
+    if(!is_of_type(MJ_AST_LIST, statements)) {
+        return invalid_type(node);
+    }
+
+    m = jrv_malloc(sizeof(mj_method_decl));
+    m->type = MJ_METHOD_DECL;
+    m->return_type = (mj_type *) return_type;
+    m->id = (mj_identifier *) id;
+    m->arguments = (mj_ast_list *) arguments;
+    m->var_declarations = (mj_ast_list *) var_declarations;
+    m->statements = (mj_ast_list *) statements;
+    m->return_expression = return_expression;
+    *node = (ast *) m;
     return JRV_SUCCESS;
 }
 

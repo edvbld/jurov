@@ -17,6 +17,7 @@ begin_description(ast)
     use_description(mj_type)
     use_description(mj_var_decl)
     use_description(mj_method_arg)
+    use_description(mj_method_decl)
 
     add_description(mj_ast_list)
     add_description(mj_binary_operation)
@@ -34,6 +35,7 @@ begin_description(ast)
     add_description(mj_type)
     add_description(mj_var_decl)
     add_description(mj_method_arg)
+    add_description(mj_method_decl)
 end_description
 
 begin_description(lexer)

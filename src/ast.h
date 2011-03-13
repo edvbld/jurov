@@ -446,10 +446,10 @@ typedef struct {
     nodetype type;
 
     /** The return type of the method */
-    mj_type return_type;
+    mj_type *return_type;
 
     /** The identifier (name) of the method */
-    mj_identifier id;
+    mj_identifier *id;
     
     /** The argument list */
     mj_ast_list *arguments;
@@ -464,6 +464,23 @@ typedef struct {
     ast *return_expression;
 } mj_method_decl;
 
+/**
+ * Creates a new method declaration in MJ
+ *
+ * @param[in] return_type The MJ type the method returns
+ * @param[in] id The identifier (name) of the method
+ * @param[in] arguments A list of the arguments to the method
+ * @param[in] var_declarations A list of the variable declaration in the 
+ *                             method body
+ * @param[in] statements A list of the statements in the method body
+ * @param[in] return_expression The expression yielding the return value
+ * @param[out] node The address of the pointer the created node will be 
+ *                  assigned to
+ * @return The result of the function
+ */
+int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
+                       ast *var_declarations, ast *statements, 
+                       ast *return_expression, ast **node);
 /**
  * This struct stores the callbacks for the ast_walk function. Each time the 
  * ast_walk function encounters a node of a given type, the corresponding 
