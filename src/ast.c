@@ -339,6 +339,18 @@ int new_mj_if(ast *condition, ast *true_statement, ast *false_statement,
     return JRV_SUCCESS;
 }
 
+int new_mj_while(ast *condition, ast *statement, ast **node)
+{
+    mj_while *w;
+
+    w = jrv_malloc(sizeof(mj_while));
+    w->type = MJ_WHILE;
+    w->condition = condition;
+    w->statement = statement;
+    *node = (ast *) w;
+    return JRV_SUCCESS;
+}
+
 ast_callbacks _callbacks;
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
 {

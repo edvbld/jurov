@@ -53,7 +53,9 @@ typedef enum {
     /** Represents a method declaration in MJ */
     MJ_METHOD_DECL,
     /** Represents an if expression in MJ */
-    MJ_IF
+    MJ_IF,
+    /** Represents a while loop in MJ */
+    MJ_WHILE
 } nodetype;
 
 typedef enum {
@@ -515,6 +517,31 @@ typedef struct {
 int new_mj_if(ast *condition, ast *true_statement, ast *false_statement, 
               ast **node);
     
+/**
+ * Reprents a while loop in the MiniJava programming language
+ */
+typedef struct {
+    /** The type of the node (MJ_WHILE) */
+    nodetype type;
+
+    /** The condition of the while loop */
+    ast *condition;
+
+    /** The statement of the while loop */
+    ast *statement;
+} mj_while;
+
+/**
+ * Creates a new while loop in the MiniJava language
+ *
+ * @param[in] condition The condition for the while loop
+ * @param[in] statement The statement in the body of the while loop
+ * @param[out] node The address of the pointer that the result will be 
+ *                  assigned to
+ * @return The result of the function
+ */
+int new_mj_while(ast *condition, ast *statement, ast **node);
+
 /**
  * This struct stores the callbacks for the ast_walk function. Each time the 
  * ast_walk function encounters a node of a given type, the corresponding 
