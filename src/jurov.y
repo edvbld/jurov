@@ -31,7 +31,7 @@
              class_declarations class_declaration variable_declarations 
              variable_declaration method_declarations method_declaration
              arguments more_arguments argument type identifier 
-             if_statement
+             if_statement while_statement
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
@@ -39,6 +39,7 @@
                                 variable_declaration method_declarations 
                                 method_declaration arguments more_arguments 
                                 argument type identifier if_statement
+                                while_statement
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -152,6 +153,12 @@ statements: /* nothing, return an empty mj_ast_list */
 statement: LCURLY statements RCURLY { $$ = $2; }
          | if_statement { $$ = $1; }
          | print_statement { $$ = $1; }
+         | while_statement { $$ = $1; }
+
+while_statement: WHILE LPAREN expression RPAREN statement
+                 { ast *w;
+                   new_mj_while($3, $5, &w);
+                   $$ = w; }
 
 if_statement: IF LPAREN expression RPAREN statement ELSE statement
               { ast *i;

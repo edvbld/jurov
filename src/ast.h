@@ -626,6 +626,9 @@ typedef struct {
 
     /** The callback for an if-else statement */
     void (*on_mj_if)(mj_if *node, void *result);
+
+    /** The callback for a while statement */
+    void (*on_mj_while)(mj_while *node, void *result);
 } ast_callbacks;
 
 /**

@@ -299,6 +299,53 @@ begin_example(ast_parser, should_handle_an_if_else_statement)
     delete_parser(tree);
 end_example
 
+begin_example(ast_parser, should_handle_while_statement)
+    ast *tree;
+    mj_ast_list *classes, *methods;
+    mj_class *foo;
+    mj_method_decl *fun;
+    mj_while *w;
+    mj_boolean *cond, *print_arg;
+    mj_print *print;
+    char *program = 
+        "class Main {\n"
+        "   public static void main(String[] args) {\n"
+        "   }\n"
+        "}\n"
+        "class Foo {\n"
+        "   public int fun() {\n"
+        "       while(true)\n"
+        "           System.out.println(true);\n"
+        "       return false;\n"
+        "   }\n"
+        "}";
+        
+    should_pass(parse_string(program, &tree))
+    should_eq_int(MJ_AST_LIST, tree->type)
+    classes = (mj_ast_list *) tree;
+    should_eq_int(2, classes->list->size)
+    foo = classes->list->last->data;
+    should_eq_int(MJ_AST_LIST, foo->method_declarations->type)
+    methods = (mj_ast_list *) foo->method_declarations;
+    should_eq_int(1, methods->list->size)
+    fun = methods->list->first->data;
+    should_eq_int(MJ_METHOD_DECL, fun->type)
+    should_eq_int(1, fun->statements->list->size)
+    w = fun->statements->list->first->data;
+    should_eq_int(MJ_WHILE, w->type)
+    should_eq_int(MJ_BOOLEAN, w->condition->type)
+    cond = (mj_boolean *) w->condition;
+    should_eq_int(1, cond->value)
+
+    should_eq_int(MJ_PRINT, w->statement->type)
+    print = (mj_print *) w->statement;
+    should_eq_int(MJ_BOOLEAN, print->expression->type)
+    print_arg = (mj_boolean *) print->expression;
+    should_eq_int(1, print_arg->value)
+
+    delete_parser(tree);
+end_example
+
 begin_description(ast_parser)
     add_example(should_create_an_ast_from_the_empty_program)
     add_example(should_create_an_ast_for_the_boolean_printer_program)
@@ -306,4 +353,5 @@ begin_description(ast_parser)
     add_example(should_handle_variable_declarations)
     add_example(should_handle_method_declarations)
     add_example(should_handle_an_if_else_statement)
+    add_example(should_handle_while_statement)
 end_description
