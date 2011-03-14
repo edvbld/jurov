@@ -51,7 +51,9 @@ typedef enum {
     /** Represents a method argument in MJ */
     MJ_METHOD_ARG,
     /** Represents a method declaration in MJ */
-    MJ_METHOD_DECL
+    MJ_METHOD_DECL,
+    /** Represents an if expression in MJ */
+    MJ_IF
 } nodetype;
 
 typedef enum {
@@ -481,6 +483,38 @@ typedef struct {
 int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
                        ast *var_declarations, ast *statements, 
                        ast *return_expression, ast **node);
+
+/**
+ * Represents an if-else expression in MiniJava
+ */
+typedef struct {
+    /** The type of the node (MJ_IF) */
+    nodetype type;
+
+    /** The expression to evaulate to a boolean value */
+    ast *condition;
+
+    /** The statement(s) to execute if the condition is true */
+    ast *true_statement;
+
+    /** The statement(s) to execute if the condition is false */
+    ast *false_statement;
+} mj_if;
+
+/**
+ * Creates a new if-else statement in the MiniJava language
+ *
+ * @param[in] condition The expression to evaluate as the condition for the 
+ *                      if statement
+ * @param[in] true_statement The statement(s) to run if the condition is true
+ * @param[in] false_statement The statement(s) to run if the condition is false
+ * @param[out] node The address of the pointer that the pointer to the created 
+ *                  node will be assigned to
+ * @return The result of the function
+ */
+int new_mj_if(ast *condition, ast *true_statement, ast *false_statement, 
+              ast **node);
+    
 /**
  * This struct stores the callbacks for the ast_walk function. Each time the 
  * ast_walk function encounters a node of a given type, the corresponding 

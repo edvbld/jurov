@@ -325,6 +325,20 @@ int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
     return JRV_SUCCESS;
 }
 
+int new_mj_if(ast *condition, ast *true_statement, ast *false_statement, 
+              ast **node)
+{
+    mj_if *mi;
+
+    mi = jrv_malloc(sizeof(mj_if));
+    mi->type = MJ_IF;
+    mi->condition = condition;
+    mi->true_statement = true_statement;
+    mi->false_statement = false_statement;
+    *node = (ast *) mi;
+    return JRV_SUCCESS;
+}
+
 ast_callbacks _callbacks;
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
 {
