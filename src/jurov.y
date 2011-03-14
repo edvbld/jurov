@@ -31,13 +31,14 @@
              class_declarations class_declaration variable_declarations 
              variable_declaration method_declarations method_declaration
              arguments more_arguments argument type identifier 
+             if_statement
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
                                 class_declaration variable_declarations 
                                 variable_declaration method_declarations 
                                 method_declaration arguments more_arguments 
-                                argument type identifier
+                                argument type identifier if_statement
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -149,7 +150,13 @@ statements: /* nothing, return an empty mj_ast_list */
           | statement statements { mj_ast_list_prepend($2, $1); $$ = $2; }
 
 statement: LCURLY statements RCURLY { $$ = $2; }
+         | if_statement { $$ = $1; }
          | print_statement { $$ = $1; }
+
+if_statement: IF LPAREN expression RPAREN statement ELSE statement
+              { ast *i;
+                new_mj_if($3, $5, $7, &i);
+                $$ = i; }
 
 print_statement: PRINT LPAREN expression RPAREN SEMICOLON 
                  { ast *node;

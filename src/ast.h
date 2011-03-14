@@ -596,6 +596,9 @@ typedef struct {
 
     /** The callback for a method declaration */
     void (*on_mj_method_decl)(mj_method_decl *node, void *result);
+
+    /** The callback for an if-else statement */
+    void (*on_mj_if)(mj_if *node, void *result);
 } ast_callbacks;
 
 /**

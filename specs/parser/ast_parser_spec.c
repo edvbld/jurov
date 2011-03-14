@@ -237,10 +237,34 @@ begin_example(ast_parser, should_handle_method_declarations)
     delete_parser(tree);
 end_example
 
+begin_example(ast_parser, should_handle_an_if_else_statement)
+    ast *tree;
+    char *program = 
+        "class Main {\n"
+        "   public static void main(String[] args) {\n"
+        "   }\n"
+        "}\n"
+        "class Foo {\n"
+        "   public boolean check() {\n"
+        "       if(true) {\n"
+        "           System.out.println(true);\n"
+        "       } else {\n"
+        "           System.out.println(false);\n"
+        "       }\n"
+        "       return true;\n"
+        "   }\n"
+        "}";
+
+    should_pass(parse_string(program, &tree))
+
+    delete_parser(tree);
+end_example
+
 begin_description(ast_parser)
     add_example(should_create_an_ast_from_the_empty_program)
     add_example(should_create_an_ast_for_the_boolean_printer_program)
     add_example(should_handle_several_classes)
     add_example(should_handle_variable_declarations)
     add_example(should_handle_method_declarations)
+    add_example(should_handle_an_if_else_statement)
 end_description
