@@ -239,6 +239,12 @@ end_example
 
 begin_example(ast_parser, should_handle_an_if_else_statement)
     ast *tree;
+    mj_ast_list *classes, *methods, *if_stmts;
+    mj_class *foo;
+    mj_method_decl *check;
+    mj_if *mif;
+    mj_boolean *cond, *print_arg;
+    mj_print *print;
     char *program = 
         "class Main {\n"
         "   public static void main(String[] args) {\n"
@@ -256,6 +262,39 @@ begin_example(ast_parser, should_handle_an_if_else_statement)
         "}";
 
     should_pass(parse_string(program, &tree))
+
+    should_eq_int(MJ_AST_LIST, tree->type)
+    classes = (mj_ast_list *) tree;
+    should_eq_int(2, classes->list->size)
+    should_neq_ptr(NULL, classes->list->last)
+    foo = classes->list->last->data;
+    
+    methods = (mj_ast_list *) foo->method_declarations;
+    should_eq_int(1, methods->list->size)
+    check = methods->list->first->data;
+    
+    should_eq_int(1, check->statements->list->size)
+    mif = check->statements->list->first->data;
+    should_eq_int(MJ_IF, mif->type)
+    cond = (mj_boolean *) mif->condition;
+    should_eq_int(MJ_BOOLEAN, cond->type)
+    should_eq_int(1, cond->value)
+    if_stmts = (mj_ast_list *) mif->true_statement;
+    should_eq_int(MJ_AST_LIST, if_stmts->type)
+    should_eq_int(1, if_stmts->list->size)
+    print = if_stmts->list->first->data;
+    should_eq_int(MJ_PRINT, print->type)
+    should_eq_int(MJ_BOOLEAN, print->expression->type)
+    print_arg = (mj_boolean *) print->expression;
+    should_eq_int(1, print_arg->value)
+    if_stmts = (mj_ast_list *) mif->false_statement;
+    should_eq_int(MJ_AST_LIST, if_stmts->type)
+    should_eq_int(1, if_stmts->list->size)
+    print = if_stmts->list->first->data;
+    should_eq_int(MJ_PRINT, print->type)
+    should_eq_int(MJ_BOOLEAN, print->expression->type)
+    print_arg = (mj_boolean *) print->expression;
+    should_eq_int(0, print_arg->value) 
 
     delete_parser(tree);
 end_example
