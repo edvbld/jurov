@@ -22,7 +22,7 @@
 %token TRUE FALSE
 %token THIS NEW
 %token BOOLEAN INT STRING
-%token AND LESS PLUS MINUS MUL BANG DOT COMMA SEMICOLON
+%token AND LESS PLUS MINUS MUL BANG DOT COMMA SEMICOLON EQUALS
 %token <id> ID
 %token <number> NUMBER
 
@@ -31,7 +31,7 @@
              class_declarations class_declaration variable_declarations 
              variable_declaration method_declarations method_declaration
              arguments more_arguments argument type identifier 
-             if_statement while_statement
+             if_statement while_statement assign_statement method_body
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
@@ -39,7 +39,7 @@
                                 variable_declaration method_declarations 
                                 method_declaration arguments more_arguments 
                                 argument type identifier if_statement
-                                while_statement
+                                while_statement assign_statement method_body
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -91,11 +91,26 @@ method_declarations: /* nothing, return the empty list */
                        $$ = $2; }
 
 method_declaration: PUBLIC type identifier LPAREN arguments RPAREN LCURLY 
-                    variable_declarations statements RETURN expression 
+                    method_body RETURN expression 
                     SEMICOLON RCURLY
                     { ast *method;
-                      new_mj_method_decl($2, $3, $5, $8, $9, $11, &method);
+                      new_mj_method_decl($2, $3, $5, $8, $10, &method);
                       $$ = method; }
+
+method_body: /* nothing */
+            { ast *vars, *stmts, *b;
+              empty_mj_ast_list(&vars);
+              empty_mj_ast_list(&stmts);
+              new_mj_method_body(vars, stmts, &b);
+              $$ = b; }
+           | variable_declaration method_body
+             { mj_method_body_add_var_decl($1, $2); 
+               $$ = $2; }
+           | statement statements
+             { ast *b;
+               new_mj_method_body(NULL, $2, &b);
+               mj_method_body_add_statement($1, b);
+               $$ = b; }
 
 arguments: /* nothing, return the empty list */
            { ast *node;
@@ -154,6 +169,12 @@ statement: LCURLY statements RCURLY { $$ = $2; }
          | if_statement { $$ = $1; }
          | print_statement { $$ = $1; }
          | while_statement { $$ = $1; }
+         | assign_statement { $$ = $1; }
+
+assign_statement: identifier EQUALS expression SEMICOLON
+                  { ast *a;
+                    new_mj_assignment($1, $3, &a);
+                    $$ = a; }
 
 while_statement: WHILE LPAREN expression RPAREN statement
                  { ast *w;

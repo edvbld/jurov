@@ -52,6 +52,8 @@ typedef enum {
     MJ_METHOD_ARG,
     /** Represents a method declaration in MJ */
     MJ_METHOD_DECL,
+    /** Represents the body of a method in MJ */
+    MJ_METHOD_BODY,
     /** Represents an if expression in MJ */
     MJ_IF,
     /** Represents a while loop in MJ */
@@ -445,6 +447,49 @@ typedef struct {
 int new_mj_method_arg(ast *type, ast *id, ast **node);
 
 /**
+ * Reperesents a method body in MJ
+ */
+typedef struct {
+    /** The type of the node */
+    nodetype type;
+
+    /** The variable declarations in the method body */
+    mj_ast_list *var_declarations;
+
+    /** The statements in the method */
+    mj_ast_list *statements;
+} mj_method_body;
+
+/**
+ * Creates a new method body in the MiniJava language
+ *
+ * @param[in] var_declarations The variable declarations in the method body
+ * @param[in] statements The statements in the method body
+ * @param[out] node The address of the pointer that the result will be 
+ *                  assigned to
+ * @return The result of the function
+ */
+int new_mj_method_body(ast *var_declarations, ast *statements, ast **node);
+
+/**
+ * Adds a statement to a method body
+ *
+ * @param[in] statement The statement to add to the method_body
+ * @param[in] method_body The method_body to add the statement to
+ * @return The result of the function
+ */
+int mj_method_body_add_statement(ast *statement, ast *method_body);
+
+/**
+ * Adds a variable declaration to a method body
+ *
+ * @param[in] var_decl The variable declaration to add
+ * @param[in] method_body The method to add the variable declaration to
+ * @return The result of the function
+ */
+int mj_method_body_add_var_decl(ast *var_decl, ast *method_body);
+
+/**
  * Represents a method declaration and definition in the MJ language
  */
 typedef struct {
@@ -460,11 +505,8 @@ typedef struct {
     /** The argument list */
     mj_ast_list *arguments;
 
-    /** The variable declarations in the method body */
-    mj_ast_list *var_declarations;
-
-    /** The statements in the method */
-    mj_ast_list *statements;
+    /** The body of the method */
+    mj_method_body *body;
 
     /** The expression yielding the return value */
     ast *return_expression;
@@ -485,8 +527,7 @@ typedef struct {
  * @return The result of the function
  */
 int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
-                       ast *var_declarations, ast *statements, 
-                       ast *return_expression, ast **node);
+                       ast *body, ast *return_expression, ast **node);
 
 /**
  * Represents an if-else expression in MiniJava

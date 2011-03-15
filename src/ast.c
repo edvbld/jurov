@@ -287,9 +287,52 @@ int new_mj_method_arg(ast *type, ast *id, ast **node)
     return JRV_SUCCESS;
 }
 
+int new_mj_method_body(ast *var_declarations, ast *statements, ast **node)
+{
+    mj_method_body *b;
+
+    if(!is_of_type(MJ_AST_LIST, var_declarations)) {
+        return invalid_type(node);
+    }
+
+    if(!is_of_type(MJ_AST_LIST, statements)) {
+        return invalid_type(node);
+    }
+
+    b = jrv_malloc(sizeof(mj_method_body));
+    b->type = MJ_METHOD_BODY;
+    b->var_declarations = (mj_ast_list *) var_declarations;
+    b->statements = (mj_ast_list *) statements;
+    *node = (ast *) b;
+    return JRV_SUCCESS;
+}
+
+int mj_method_body_add_statement(ast *statement, ast *method_body)
+{
+    mj_method_body *b;
+    if(!is_of_type(MJ_METHOD_BODY, method_body)) {
+        return JRV_INVALID_TYPE;
+    }
+    
+    b = (mj_method_body *) method_body;
+    mj_ast_list_prepend((ast *) b->statements, statement);
+    return JRV_SUCCESS;
+}
+
+int mj_method_body_add_var_decl(ast *var_decl, ast *method_body)
+{
+    mj_method_body *b;
+    if(!is_of_type(MJ_METHOD_BODY, method_body)) {
+        return JRV_INVALID_TYPE;
+    }
+
+    b = (mj_method_body *) method_body;
+    mj_ast_list_prepend((ast *) b->var_declarations, var_decl);
+    return JRV_SUCCESS;
+}
+
 int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
-                       ast *var_declarations, ast *statements, 
-                       ast *return_expression, ast **node)
+                       ast *body, ast *return_expression, ast **node)
 {
     mj_method_decl *m;
 
@@ -304,12 +347,8 @@ int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
     if(!is_of_type(MJ_AST_LIST, arguments)) {
         return invalid_type(node);
     }
-    
-    if(!is_of_type(MJ_AST_LIST, var_declarations)) {
-        return invalid_type(node);
-    }
 
-    if(!is_of_type(MJ_AST_LIST, statements)) {
+    if(!is_of_type(MJ_METHOD_BODY, body)) {
         return invalid_type(node);
     }
 
@@ -318,8 +357,7 @@ int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
     m->return_type = (mj_type *) return_type;
     m->id = (mj_identifier *) id;
     m->arguments = (mj_ast_list *) arguments;
-    m->var_declarations = (mj_ast_list *) var_declarations;
-    m->statements = (mj_ast_list *) statements;
+    m->body = (mj_method_body *) body;
     m->return_expression = return_expression;
     *node = (ast *) m;
     return JRV_SUCCESS;
@@ -624,8 +662,7 @@ void delete_mj_method_decl(mj_method_decl *node, void *p)
     delete_mj_type(node->return_type, p);
     delete_mj_identifier(node->id, p);
     ast_visit((ast *) node->arguments, p);
-    ast_visit((ast *) node->var_declarations, p);
-    ast_visit((ast *) node->statements, p);
+    ast_visit((ast *) node->body, p);
     ast_visit(node->return_expression, p);
     jrv_free(&node);
 }
