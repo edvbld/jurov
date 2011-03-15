@@ -107,8 +107,9 @@ method_body: /* nothing */
              { mj_method_body_add_var_decl($1, $2); 
                $$ = $2; }
            | statement statements
-             { ast *b;
-               new_mj_method_body(NULL, $2, &b);
+             { ast *b, *vars;
+               empty_mj_ast_list(&vars);
+               new_mj_method_body(vars, $2, &b);
                mj_method_body_add_statement($1, b);
                $$ = b; }
 

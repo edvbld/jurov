@@ -165,193 +165,194 @@ begin_example(ast_parser, should_handle_variable_declarations)
     delete_parser(tree);
 end_example
 
-/*begin_example(ast_parser, should_handle_method_declarations)*/
-    /*ast *tree;*/
-    /*mj_ast_list *classes, *vars, *methods, *args, *method_vars;*/
-    /*mj_var_decl *a, *y;*/
-    /*mj_class *d;*/
-    /*mj_method_decl *m;*/
-    /*mj_method_arg *arg;*/
-    /*mj_boolean *ret;*/
-    /*char *program = */
-        /*"class Main {\n"*/
-        /*"   public static void main(String[] args) {\n"*/
-        /*"   }\n"*/
-        /*"}\n"*/
-        /*"class Double {\n"*/
-        /*"   int[] a;\n"*/
-        /*"   public int double(int x) {\n"*/
-        /*"       int y;\n"*/
-        /*"       return true;\n"*/
-        /*"   }\n"*/
-        /*"}";*/
+begin_example(ast_parser, should_handle_method_declarations)
+    ast *tree;
+    mj_ast_list *classes, *vars, *methods, *args, *method_vars;
+    mj_var_decl *a, *y;
+    mj_class *d;
+    mj_method_decl *m;
+    mj_method_arg *arg;
+    mj_boolean *ret;
+    char *program =
+        "class Main {\n"
+        "   public static void main(String[] args) {\n"
+        "   }\n"
+        "}\n"
+        "class Double {\n"
+        "   int[] a;\n"
+        "   public int double(int x) {\n"
+        "       int y;\n"
+        "       return true;\n"
+        "   }\n"
+        "}";
     
-    /*should_pass(parse_string(program, &tree))*/
+    should_pass(parse_string(program, &tree))
     
-    /*should_eq_int(MJ_AST_LIST, tree->type)*/
-    /*classes = (mj_ast_list *) tree;*/
-    /*should_eq_int(2, classes->list->size)*/
-    /*should_neq_ptr(NULL, classes->list->last)*/
+    should_eq_int(MJ_AST_LIST, tree->type)
+    classes = (mj_ast_list *) tree;
+    should_eq_int(2, classes->list->size)
+    should_neq_ptr(NULL, classes->list->last)
     
-    /*d = classes->list->last->data;*/
-    /*should_eq_int(MJ_CLASS, d->type)*/
-    /*should_eq_str("Double", d->id->name)*/
+    d = classes->list->last->data;
+    should_eq_int(MJ_CLASS, d->type)
+    should_eq_str("Double", d->id->name)
 
-    /*should_eq_int(MJ_AST_LIST, d->var_declarations->type)*/
-    /*vars = (mj_ast_list *) d->var_declarations;*/
-    /*should_eq_int(1, vars->list->size)*/
+    should_eq_int(MJ_AST_LIST, d->var_declarations->type)
+    vars = (mj_ast_list *) d->var_declarations;
+    should_eq_int(1, vars->list->size)
 
-    /*a = vars->list->first->data;*/
-    /*should_eq_int(MJ_VAR_DECL, a->type);*/
-    /*should_eq_int(MJ_TYPE_INT_ARRAY, a->mj_type->mj_type)*/
-    /*should_eq_str("a", a->id->name)*/
+    a = vars->list->first->data;
+    should_eq_int(MJ_VAR_DECL, a->type);
+    should_eq_int(MJ_TYPE_INT_ARRAY, a->mj_type->mj_type)
+    should_eq_str("a", a->id->name)
     
-    /*methods = (mj_ast_list *) d->method_declarations;*/
-    /*should_eq_int(1, methods->list->size)*/
-    /*should_neq_ptr(NULL, methods->list->first)*/
-    /*m = methods->list->first->data;*/
-    /*should_eq_int(MJ_TYPE_INTEGER, m->return_type->mj_type)*/
-    /*should_eq_str("double", m->id->name)*/
-    /*args = m->arguments;*/
-    /*should_eq_int(1, args->list->size)*/
+    methods = (mj_ast_list *) d->method_declarations;
+    should_eq_int(1, methods->list->size)
+    should_neq_ptr(NULL, methods->list->first)
+    m = methods->list->first->data;
+    should_eq_int(MJ_TYPE_INTEGER, m->return_type->mj_type)
+    should_eq_str("double", m->id->name)
+    args = m->arguments;
+    should_eq_int(1, args->list->size)
 
-    /*arg = args->list->first->data;*/
-    /*should_eq_int(MJ_METHOD_ARG, arg->type)*/
-    /*should_eq_int(MJ_TYPE_INTEGER, arg->mj_type->mj_type)*/
-    /*should_eq_str("x", arg->id->name)*/
+    arg = args->list->first->data;
+    should_eq_int(MJ_METHOD_ARG, arg->type)
+    should_eq_int(MJ_TYPE_INTEGER, arg->mj_type->mj_type)
+    should_eq_str("x", arg->id->name)
 
-    /*method_vars = m->var_declarations;*/
-    /*should_eq_int(1, method_vars->list->size)*/
-    /*y =  method_vars->list->first->data;*/
+    method_vars = m->body->var_declarations;
+    should_eq_int(1, method_vars->list->size)
+    y =  method_vars->list->first->data;
 
-    /*should_eq_int(MJ_VAR_DECL, y->type)*/
-    /*should_eq_int(MJ_TYPE_INTEGER, y->mj_type->mj_type)*/
-    /*should_eq_str("y", y->id->name)*/
+    should_eq_int(MJ_VAR_DECL, y->type)
+    should_eq_int(MJ_TYPE_INTEGER, y->mj_type->mj_type)
+    should_eq_str("y", y->id->name)
 
-    /*should_eq_int(0, m->statements->list->size)*/
+    should_eq_int(0, m->body->statements->list->size)
 
-    /*should_eq_int(MJ_BOOLEAN, m->return_expression->type)*/
-    /*ret = (mj_boolean *) m->return_expression;*/
-    /*should_eq_int(1, ret->value)*/
+    should_eq_int(MJ_BOOLEAN, m->return_expression->type)
+    ret = (mj_boolean *) m->return_expression;
+    should_eq_int(1, ret->value)
    
-    /*delete_parser(tree);*/
-/*end_example*/
+    delete_parser(tree);
+end_example
 
-/*begin_example(ast_parser, should_handle_an_if_else_statement)*/
-    /*ast *tree;*/
-    /*mj_ast_list *classes, *methods, *if_stmts;*/
-    /*mj_class *foo;*/
-    /*mj_method_decl *check;*/
-    /*mj_if *mif;*/
-    /*mj_boolean *cond, *print_arg;*/
-    /*mj_print *print;*/
-    /*char *program = */
-        /*"class Main {\n"*/
-        /*"   public static void main(String[] args) {\n"*/
-        /*"   }\n"*/
-        /*"}\n"*/
-        /*"class Foo {\n"*/
-        /*"   public boolean check() {\n"*/
-        /*"       if(true) {\n"*/
-        /*"           System.out.println(true);\n"*/
-        /*"       } else {\n"*/
-        /*"           System.out.println(false);\n"*/
-        /*"       }\n"*/
-        /*"       return true;\n"*/
-        /*"   }\n"*/
-        /*"}";*/
+begin_example(ast_parser, should_handle_an_if_else_statement)
+    ast *tree;
+    mj_ast_list *classes, *methods, *if_stmts;
+    mj_class *foo;
+    mj_method_decl *check;
+    mj_if *mif;
+    mj_boolean *cond, *print_arg;
+    mj_print *print;
+    char *program =
+        "class Main {\n"
+        "   public static void main(String[] args) {\n"
+        "   }\n"
+        "}\n"
+        "class Foo {\n"
+        "   public boolean check() {\n"
+        "       if(true) {\n"
+        "           System.out.println(true);\n"
+        "       } else {\n"
+        "           System.out.println(false);\n"
+        "       }\n"
+        "       return true;\n"
+        "   }\n"
+        "}";
 
-    /*should_pass(parse_string(program, &tree))*/
+    should_pass(parse_string(program, &tree))
 
-    /*should_eq_int(MJ_AST_LIST, tree->type)*/
-    /*classes = (mj_ast_list *) tree;*/
-    /*should_eq_int(2, classes->list->size)*/
-    /*should_neq_ptr(NULL, classes->list->last)*/
-    /*foo = classes->list->last->data;*/
+    should_eq_int(MJ_AST_LIST, tree->type)
+    classes = (mj_ast_list *) tree;
+    should_eq_int(2, classes->list->size)
+    should_neq_ptr(NULL, classes->list->last)
+    foo = classes->list->last->data;
     
-    /*methods = (mj_ast_list *) foo->method_declarations;*/
-    /*should_eq_int(1, methods->list->size)*/
-    /*check = methods->list->first->data;*/
-    
-    /*should_eq_int(1, check->statements->list->size)*/
-    /*mif = check->statements->list->first->data;*/
-    /*should_eq_int(MJ_IF, mif->type)*/
-    /*cond = (mj_boolean *) mif->condition;*/
-    /*should_eq_int(MJ_BOOLEAN, cond->type)*/
-    /*should_eq_int(1, cond->value)*/
-    /*if_stmts = (mj_ast_list *) mif->true_statement;*/
-    /*should_eq_int(MJ_AST_LIST, if_stmts->type)*/
-    /*should_eq_int(1, if_stmts->list->size)*/
-    /*print = if_stmts->list->first->data;*/
-    /*should_eq_int(MJ_PRINT, print->type)*/
-    /*should_eq_int(MJ_BOOLEAN, print->expression->type)*/
-    /*print_arg = (mj_boolean *) print->expression;*/
-    /*should_eq_int(1, print_arg->value)*/
-    /*if_stmts = (mj_ast_list *) mif->false_statement;*/
-    /*should_eq_int(MJ_AST_LIST, if_stmts->type)*/
-    /*should_eq_int(1, if_stmts->list->size)*/
-    /*print = if_stmts->list->first->data;*/
-    /*should_eq_int(MJ_PRINT, print->type)*/
-    /*should_eq_int(MJ_BOOLEAN, print->expression->type)*/
-    /*print_arg = (mj_boolean *) print->expression;*/
-    /*should_eq_int(0, print_arg->value) */
+    methods = (mj_ast_list *) foo->method_declarations;
+    should_eq_int(1, methods->list->size)
+    check = methods->list->first->data;
+   
+    should_neq_ptr(NULL, check->body)
+    should_eq_int(1, check->body->statements->list->size)
+    mif = check->body->statements->list->first->data;
+    should_eq_int(MJ_IF, mif->type)
+    cond = (mj_boolean *) mif->condition;
+    should_eq_int(MJ_BOOLEAN, cond->type)
+    should_eq_int(1, cond->value)
+    if_stmts = (mj_ast_list *) mif->true_statement;
+    should_eq_int(MJ_AST_LIST, if_stmts->type)
+    should_eq_int(1, if_stmts->list->size)
+    print = if_stmts->list->first->data;
+    should_eq_int(MJ_PRINT, print->type)
+    should_eq_int(MJ_BOOLEAN, print->expression->type)
+    print_arg = (mj_boolean *) print->expression;
+    should_eq_int(1, print_arg->value)
+    if_stmts = (mj_ast_list *) mif->false_statement;
+    should_eq_int(MJ_AST_LIST, if_stmts->type)
+    should_eq_int(1, if_stmts->list->size)
+    print = if_stmts->list->first->data;
+    should_eq_int(MJ_PRINT, print->type)
+    should_eq_int(MJ_BOOLEAN, print->expression->type)
+    print_arg = (mj_boolean *) print->expression;
+    should_eq_int(0, print_arg->value)
 
-    /*delete_parser(tree);*/
-/*end_example*/
+    delete_parser(tree);
+end_example
 
-/*begin_example(ast_parser, should_handle_while_statement)*/
-    /*ast *tree;*/
-    /*mj_ast_list *classes, *methods;*/
-    /*mj_class *foo;*/
-    /*mj_method_decl *fun;*/
-    /*mj_while *w;*/
-    /*mj_boolean *cond, *print_arg;*/
-    /*mj_print *print;*/
-    /*char *program = */
-        /*"class Main {\n"*/
-        /*"   public static void main(String[] args) {\n"*/
-        /*"   }\n"*/
-        /*"}\n"*/
-        /*"class Foo {\n"*/
-        /*"   public int fun() {\n"*/
-        /*"       while(true)\n"*/
-        /*"           System.out.println(true);\n"*/
-        /*"       return false;\n"*/
-        /*"   }\n"*/
-        /*"}";*/
+begin_example(ast_parser, should_handle_while_statement)
+    ast *tree;
+    mj_ast_list *classes, *methods;
+    mj_class *foo;
+    mj_method_decl *fun;
+    mj_while *w;
+    mj_boolean *cond, *print_arg;
+    mj_print *print;
+    char *program =
+        "class Main {\n"
+        "   public static void main(String[] args) {\n"
+        "   }\n"
+        "}\n"
+        "class Foo {\n"
+        "   public int fun() {\n"
+        "       while(true)\n"
+        "           System.out.println(true);\n"
+        "       return false;\n"
+        "   }\n"
+        "}";
         
-    /*should_pass(parse_string(program, &tree))*/
-    /*should_eq_int(MJ_AST_LIST, tree->type)*/
-    /*classes = (mj_ast_list *) tree;*/
-    /*should_eq_int(2, classes->list->size)*/
-    /*foo = classes->list->last->data;*/
-    /*should_eq_int(MJ_AST_LIST, foo->method_declarations->type)*/
-    /*methods = (mj_ast_list *) foo->method_declarations;*/
-    /*should_eq_int(1, methods->list->size)*/
-    /*fun = methods->list->first->data;*/
-    /*should_eq_int(MJ_METHOD_DECL, fun->type)*/
-    /*should_eq_int(1, fun->statements->list->size)*/
-    /*w = fun->statements->list->first->data;*/
-    /*should_eq_int(MJ_WHILE, w->type)*/
-    /*should_eq_int(MJ_BOOLEAN, w->condition->type)*/
-    /*cond = (mj_boolean *) w->condition;*/
-    /*should_eq_int(1, cond->value)*/
+    should_pass(parse_string(program, &tree))
+    should_eq_int(MJ_AST_LIST, tree->type)
+    classes = (mj_ast_list *) tree;
+    should_eq_int(2, classes->list->size)
+    foo = classes->list->last->data;
+    should_eq_int(MJ_AST_LIST, foo->method_declarations->type)
+    methods = (mj_ast_list *) foo->method_declarations;
+    should_eq_int(1, methods->list->size)
+    fun = methods->list->first->data;
+    should_eq_int(MJ_METHOD_DECL, fun->type)
+    should_eq_int(1, fun->body->statements->list->size)
+    w = fun->body->statements->list->first->data;
+    should_eq_int(MJ_WHILE, w->type)
+    should_eq_int(MJ_BOOLEAN, w->condition->type)
+    cond = (mj_boolean *) w->condition;
+    should_eq_int(1, cond->value)
 
-    /*should_eq_int(MJ_PRINT, w->statement->type)*/
-    /*print = (mj_print *) w->statement;*/
-    /*should_eq_int(MJ_BOOLEAN, print->expression->type)*/
-    /*print_arg = (mj_boolean *) print->expression;*/
-    /*should_eq_int(1, print_arg->value)*/
+    should_eq_int(MJ_PRINT, w->statement->type)
+    print = (mj_print *) w->statement;
+    should_eq_int(MJ_BOOLEAN, print->expression->type)
+    print_arg = (mj_boolean *) print->expression;
+    should_eq_int(1, print_arg->value)
 
-    /*delete_parser(tree);*/
-/*end_example*/
+    delete_parser(tree);
+end_example
 
 begin_description(ast_parser)
     add_example(should_create_an_ast_from_the_empty_program)
     add_example(should_create_an_ast_for_the_boolean_printer_program)
     add_example(should_handle_several_classes)
     add_example(should_handle_variable_declarations)
-    /*add_example(should_handle_method_declarations)*/
-    /*add_example(should_handle_an_if_else_statement)*/
-    /*add_example(should_handle_while_statement)*/
+    add_example(should_handle_method_declarations)
+    add_example(should_handle_an_if_else_statement)
+    add_example(should_handle_while_statement)
 end_description

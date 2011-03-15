@@ -689,6 +689,9 @@ typedef struct {
     /** The callback for a method argument */
     void (*on_mj_method_arg)(mj_method_arg *node, void *result);
 
+    /** The callback for a method body */
+    void (*on_mj_method_body)(mj_method_body *node, void *result);
+
     /** The callback for a method declaration */
     void (*on_mj_method_decl)(mj_method_decl *node, void *result);
 

@@ -534,6 +534,11 @@ void ast_visit(ast *node, void *result)
                 _callbacks.on_mj_method_arg((mj_method_arg *) node, result);
             }
             break;
+        case MJ_METHOD_BODY:
+            if(_callbacks.on_mj_method_body != NULL) {
+                _callbacks.on_mj_method_body((mj_method_body *) node, result);
+            }
+            break;
         case MJ_METHOD_DECL:
             if(_callbacks.on_mj_method_decl != NULL) {
                 _callbacks.on_mj_method_decl((mj_method_decl *) node, result);
@@ -657,6 +662,13 @@ void delete_mj_method_arg(mj_method_arg *node, void *p)
     jrv_free(&node);
 }
 
+void delete_mj_method_body(mj_method_body *node, void *p)
+{
+    delete_mj_ast_list(node->var_declarations, p);
+    delete_mj_ast_list(node->statements, p);
+    jrv_free(&node);
+}
+
 void delete_mj_method_decl(mj_method_decl *node, void *p)
 {
     delete_mj_type(node->return_type, p);
@@ -707,6 +719,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_type = &delete_mj_type;
     callbacks.on_mj_var_decl = &delete_mj_var_decl;
     callbacks.on_mj_method_arg = &delete_mj_method_arg;
+    callbacks.on_mj_method_body = &delete_mj_method_body;
     callbacks.on_mj_method_decl = &delete_mj_method_decl;
     callbacks.on_mj_if = &delete_mj_if;
     callbacks.on_mj_while = &delete_mj_while;
