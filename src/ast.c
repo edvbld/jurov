@@ -310,6 +310,7 @@ int new_mj_method_body(ast *var_declarations, ast *statements, ast **node)
 int mj_method_body_add_statement(ast *statement, ast *method_body)
 {
     mj_method_body *b;
+
     if(!is_of_type(MJ_METHOD_BODY, method_body)) {
         return JRV_INVALID_TYPE;
     }
@@ -322,7 +323,12 @@ int mj_method_body_add_statement(ast *statement, ast *method_body)
 int mj_method_body_add_var_decl(ast *var_decl, ast *method_body)
 {
     mj_method_body *b;
+
     if(!is_of_type(MJ_METHOD_BODY, method_body)) {
+        return JRV_INVALID_TYPE;
+    }
+
+    if(!is_of_type(MJ_VAR_DECL, var_decl)) {
         return JRV_INVALID_TYPE;
     }
 
@@ -650,8 +656,8 @@ void delete_mj_type(mj_type *node, void *p)
 
 void delete_mj_var_decl(mj_var_decl *node, void *p)
 {
-    delete_mj_type(node->mj_type, p);
-    delete_mj_identifier(node->id, p);
+    ast_visit((ast *) node->mj_type, p);
+    ast_visit((ast *) node->id, p);
     jrv_free(&node);
 }
 
