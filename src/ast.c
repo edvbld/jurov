@@ -351,6 +351,22 @@ int new_mj_while(ast *condition, ast *statement, ast **node)
     return JRV_SUCCESS;
 }
 
+int new_mj_assignment(ast *id, ast *expression, ast **node)
+{
+    mj_assignment *a;
+
+    if(!is_of_type(MJ_IDENTIFIER, id)) {
+        return invalid_type(node);
+    }
+
+    a = jrv_malloc(sizeof(mj_assignment));
+    a->type = MJ_ASSIGNMENT;
+    a->id = (mj_identifier *) id;
+    a->expression = expression;
+    *node = (ast *) a;
+    return JRV_SUCCESS;
+}
+
 ast_callbacks _callbacks;
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
 {
