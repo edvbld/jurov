@@ -59,7 +59,9 @@ typedef enum {
     /** Represents a while loop in MJ */
     MJ_WHILE,
     /** Represents an assignment in MJ */
-    MJ_ASSIGNMENT
+    MJ_ASSIGNMENT,
+    /** Represents an array assignment in MJ */
+    MJ_ARRAY_ASSIGNMENT
 } nodetype;
 
 typedef enum {
@@ -611,6 +613,36 @@ typedef struct {
 int new_mj_assignment(ast *id, ast *expression, ast **node);
 
 /**
+ * Represents an array assignment in the MiniJava language
+ */
+typedef struct {
+    /** The type of the node (MJ_ARRAY_ASSIGNMENT) */
+    nodetype type;
+
+    /** The id of the array */
+    mj_identifier *id;
+
+    /** The expression to yield the array index */
+    ast *index_exp;
+
+    /** The expression to assign to the array index */
+    ast *value_exp;
+} mj_array_assignment;
+
+/**
+ * Creates a new array assignment statement in MiniJava
+ *
+ * @param[in] id The identifier of the array
+ * @param[in] index_exp The expression that yields the index to assign to
+ * @param[in] value_exp The expression that yields the value to assign to 
+ *                      the object at the index
+ * @param[out] node The address of the pointer that the result will be 
+ *                  assigned to
+ * @return The result of the function
+ */
+int new_mj_array_assignment(ast *id, ast *index_exp, ast *value_exp,
+                            ast **node);
+/**
  * This struct stores the callbacks for the ast_walk function. Each time the 
  * ast_walk function encounters a node of a given type, the corresponding 
  * callback will be called.
@@ -703,6 +735,9 @@ typedef struct {
 
     /** The callback for an assignment statement */
     void (*on_mj_assignment)(mj_assignment *node, void *result);
+
+    /** The callback for an array assignment statement */
+    void (*on_mj_array_assignment)(mj_array_assignment *node, void *result);
 } ast_callbacks;
 
 /**
