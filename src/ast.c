@@ -75,10 +75,9 @@ int new_mj_boolean(int value, ast **node)
 int new_mj_new_object(ast *class_id, ast **node)
 {
     mj_new_object *no;
-    
-    if(class_id != NULL && class_id->type != MJ_IDENTIFIER) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+   
+    if(!is_of_type(MJ_IDENTIFIER, class_id)) {
+        return invalid_type(node);
     }
 
     no = jrv_malloc(sizeof(mj_new_object));
@@ -136,10 +135,9 @@ int mj_ast_list_prepend(ast *list, ast *node)
 int new_mj_call(ast *object, ast *method, mj_ast_list *parameters, ast **node)
 {
     mj_call *c;
-    
-    if(method != NULL && method->type != MJ_IDENTIFIER) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+   
+    if(!is_of_type(MJ_IDENTIFIER, method)) {
+        return invalid_type(node);
     }
 
     c = jrv_malloc(sizeof(mj_call));
@@ -172,15 +170,13 @@ int new_mj_main_class(ast *class_id, ast *parameter_id, ast* statements,
                       ast **node)
 {
     mj_main_class *mc;
-    
-    if(class_id != NULL && class_id->type != MJ_IDENTIFIER) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+   
+    if(!is_of_type(MJ_IDENTIFIER, class_id)) {
+        return invalid_type(node);
     }
-    
-    if(parameter_id != NULL && parameter_id->type != MJ_IDENTIFIER) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+   
+    if(!is_of_type(MJ_IDENTIFIER, parameter_id)) {
+        return invalid_type(node);
     }
     
     mc = jrv_malloc(sizeof(mj_main_class));
@@ -197,20 +193,16 @@ int new_mj_class(ast *id, ast *var_declarations,
 {
     mj_class *mc;
 
-    if(id != NULL && id->type != MJ_IDENTIFIER) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+    if(!is_of_type(MJ_IDENTIFIER, id)) {
+        return invalid_type(node);
     }
 
-    if(var_declarations != NULL && var_declarations->type != MJ_AST_LIST) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+    if(!is_of_type(MJ_AST_LIST, var_declarations)) {
+        return invalid_type(node);
     }
 
-    if(method_declarations != NULL && 
-       method_declarations->type != MJ_AST_LIST) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+    if(!is_of_type(MJ_AST_LIST, method_declarations)) {
+        return invalid_type(node);
     }
     
     mc = jrv_malloc(sizeof(mj_class));
@@ -226,9 +218,8 @@ int new_mj_type(minijava_type type, ast *id, ast **node)
 {
     mj_type *t;
 
-    if(id != NULL && id->type != MJ_IDENTIFIER) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+    if(!is_of_type(MJ_IDENTIFIER, id)) {
+        return invalid_type(node);
     }
 
     t = jrv_malloc(sizeof(mj_type));
@@ -247,14 +238,12 @@ int new_mj_var_decl(ast *type, ast *id, ast **node)
 {
     mj_var_decl *d;
 
-    if(type != NULL && type->type != MJ_TYPE) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+    if(!is_of_type(MJ_TYPE, type)) {
+        return invalid_type(node);
     }
-
-    if(id != NULL && id->type != MJ_IDENTIFIER) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+    
+    if(!is_of_type(MJ_IDENTIFIER, id)) {
+        return invalid_type(node);
     }
 
     d = jrv_malloc(sizeof(mj_var_decl));
@@ -269,14 +258,12 @@ int new_mj_method_arg(ast *type, ast *id, ast **node)
 {
     mj_method_arg *a;
 
-    if(type != NULL && type->type !=  MJ_TYPE) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+    if(!is_of_type(MJ_TYPE, type)) {
+        return invalid_type(node);
     }
-
-    if(id != NULL && id->type != MJ_IDENTIFIER) {
-        *node = NULL;
-        return JRV_INVALID_TYPE;
+    
+    if(!is_of_type(MJ_IDENTIFIER, id)) {
+        return invalid_type(node);
     }
 
     a = jrv_malloc(sizeof(mj_method_arg));
