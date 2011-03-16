@@ -32,6 +32,7 @@
              variable_declaration method_declarations method_declaration
              arguments more_arguments argument type identifier 
              if_statement while_statement assign_statement method_body
+             array_assignment_statement
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
@@ -40,6 +41,7 @@
                                 method_declaration arguments more_arguments 
                                 argument type identifier if_statement
                                 while_statement assign_statement method_body
+                                array_assignment_statement
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -171,6 +173,13 @@ statement: LCURLY statements RCURLY { $$ = $2; }
          | print_statement { $$ = $1; }
          | while_statement { $$ = $1; }
          | assign_statement { $$ = $1; }
+         | array_assignment_statement { $$ = $1; }
+
+array_assignment_statement: identifier LSQUARE expression RSQUARE EQUALS 
+                            expression SEMICOLON
+                            { ast *aa;
+                              new_mj_array_assignment($1, $3, $6, &aa);
+                              $$ = aa; }
 
 assign_statement: identifier EQUALS expression SEMICOLON
                   { ast *a;
