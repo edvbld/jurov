@@ -347,6 +347,43 @@ begin_example(ast_parser, should_handle_while_statement)
     delete_parser(tree);
 end_example
 
+begin_example(ast_parser, should_handle_assignment_statement)
+    ast *tree;
+    mj_ast_list *classes, *methods;
+    mj_class *foo;
+    mj_method_decl *bar;
+    mj_assignment *a;
+    mj_boolean *b;
+    char *program = 
+        "class Main {\n"
+        "   public static void main(String[] args) {\n"
+        "   }\n"
+        "}\n"
+        "class Foo {\n"
+        "   public boolean bar() {\n"
+        "       boolean b;\n"
+        "       b = false;\n"
+        "       return true;\n"
+        "   }\n"
+        "}";
+
+    should_pass(parse_string(program, &tree))
+
+    classes = (mj_ast_list *) tree;
+    foo = classes->list->last->data;
+    methods = (mj_ast_list *) foo->method_declarations;
+    bar = methods->list->first->data;
+    should_eq_int(1, bar->body->statements->list->size)
+    a = bar->body->statements->list->first->data;
+    should_eq_int(MJ_ASSIGNMENT, a->type)
+    should_eq_str("b", a->id->name)
+    should_eq_int(MJ_BOOLEAN, a->expression->type)
+    b = (mj_boolean *) a->expression;
+    should_eq_int(0, b->value)
+
+    delete_parser(tree);
+end_example
+
 begin_description(ast_parser)
     add_example(should_create_an_ast_from_the_empty_program)
     add_example(should_create_an_ast_for_the_boolean_printer_program)
@@ -355,4 +392,5 @@ begin_description(ast_parser)
     add_example(should_handle_method_declarations)
     add_example(should_handle_an_if_else_statement)
     add_example(should_handle_while_statement)
+    add_example(should_handle_assignment_statement)
 end_description

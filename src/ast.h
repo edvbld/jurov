@@ -700,6 +700,9 @@ typedef struct {
 
     /** The callback for a while statement */
     void (*on_mj_while)(mj_while *node, void *result);
+
+    /** The callback for an assignment statement */
+    void (*on_mj_assignment)(mj_assignment *node, void *result);
 } ast_callbacks;
 
 /**

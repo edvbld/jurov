@@ -560,6 +560,11 @@ void ast_visit(ast *node, void *result)
                 _callbacks.on_mj_while((mj_while *) node, result);
             }
             break;
+        case MJ_ASSIGNMENT:
+            if(_callbacks.on_mj_assignment != NULL) {
+                _callbacks.on_mj_assignment((mj_assignment *) node, result);
+            }
+            break;
         default:
             jrv_die("Unknown AST node found");
     }
@@ -700,6 +705,13 @@ void delete_mj_while(mj_while *node, void *p)
     jrv_free(&node);
 }
 
+void delete_mj_assignment(mj_assignment *node, void *p)
+{
+    ast_visit((ast *) node->id, p);
+    ast_visit(node->expression, p);
+    jrv_free(&node);
+}
+
 void delete_ast(ast *tree)
 {
     ast_callbacks callbacks;
@@ -729,5 +741,6 @@ void delete_ast(ast *tree)
     callbacks.on_mj_method_decl = &delete_mj_method_decl;
     callbacks.on_mj_if = &delete_mj_if;
     callbacks.on_mj_while = &delete_mj_while;
+    callbacks.on_mj_assignment = &delete_mj_assignment;
     ast_walk(tree, callbacks, NULL);
 }
