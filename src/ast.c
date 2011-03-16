@@ -629,7 +629,7 @@ void delete_mj_binary_operation(mj_binary_operation *node, void *p)
 
 void delete_mj_new_object(mj_new_object *node, void *p)
 {
-    delete_mj_identifier(node->class_id, NULL);
+    ast_visit((ast *) node->class_id, NULL);
     jrv_free(&node);
 }
 
@@ -647,8 +647,8 @@ void delete_mj_ast_list(mj_ast_list *node, void *p)
 void delete_mj_call(mj_call *node, void *p)
 {
     ast_visit(node->object, p);
-    delete_mj_identifier(node->method, p);
-    delete_mj_ast_list(node->parameters, p);
+    ast_visit((ast *) node->method, p);
+    ast_visit((ast *) node->parameters, p);
     jrv_free(&node);
 }
 
@@ -660,15 +660,15 @@ void delete_mj_print(mj_print *node, void *p)
 
 void delete_mj_main_class(mj_main_class *node, void *p)
 {
-    delete_mj_identifier(node->class_id, p);
-    delete_mj_identifier(node->parameter_id, p);
+    ast_visit((ast *) node->class_id, p);
+    ast_visit((ast *) node->parameter_id, p);
     ast_visit(node->statements, p);
     jrv_free(&node);
 }
 
 void delete_mj_class(mj_class *node, void *p)
 {
-    delete_mj_identifier(node->id, p);
+    ast_visit((ast *) node->id, p);
     ast_visit(node->var_declarations, p);
     ast_visit(node->method_declarations, p);
     jrv_free(&node);
@@ -676,9 +676,7 @@ void delete_mj_class(mj_class *node, void *p)
 
 void delete_mj_type(mj_type *node, void *p)
 {
-    if(node->mj_type == MJ_TYPE_USER_DEFINED) {
-        delete_mj_identifier(node->id, p);
-    }
+    ast_visit((ast *) node->id, p);
     jrv_free(&node);
 }
 
@@ -691,22 +689,22 @@ void delete_mj_var_decl(mj_var_decl *node, void *p)
 
 void delete_mj_method_arg(mj_method_arg *node, void *p)
 {
-    delete_mj_type(node->mj_type, p);
-    delete_mj_identifier(node->id, p);
+    ast_visit((ast *) node->mj_type, p);
+    ast_visit((ast *) node->id, p);
     jrv_free(&node);
 }
 
 void delete_mj_method_body(mj_method_body *node, void *p)
 {
-    delete_mj_ast_list(node->var_declarations, p);
-    delete_mj_ast_list(node->statements, p);
+    ast_visit((ast *) node->var_declarations, p);
+    ast_visit((ast *) node->statements, p);
     jrv_free(&node);
 }
 
 void delete_mj_method_decl(mj_method_decl *node, void *p)
 {
-    delete_mj_type(node->return_type, p);
-    delete_mj_identifier(node->id, p);
+    ast_visit((ast *) node->return_type, p);
+    ast_visit((ast *) node->id, p);
     ast_visit((ast *) node->arguments, p);
     ast_visit((ast *) node->body, p);
     ast_visit(node->return_expression, p);
