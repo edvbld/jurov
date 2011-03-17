@@ -468,6 +468,11 @@ void ast_visit(ast *node, void *result)
                                               result);
             }
             break;
+        case MJ_AND:
+            if(_callbacks.on_mj_and != NULL) {
+                _callbacks.on_mj_and((mj_binary_operation *) node, result);
+            }
+            break;
         case MJ_ARRAY_LENGTH:
             if(_callbacks.on_mj_array_length != NULL) {
                 _callbacks.on_mj_array_length((mj_unary_operation *) node, 
@@ -736,6 +741,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_subtraction = &delete_mj_binary_operation;
     callbacks.on_mj_division = &delete_mj_binary_operation;
     callbacks.on_mj_multiplication = &delete_mj_binary_operation;
+    callbacks.on_mj_and = &delete_mj_binary_operation;
     callbacks.on_mj_less_than = &delete_mj_binary_operation;
     callbacks.on_mj_array_lookup = &delete_mj_binary_operation;
     callbacks.on_mj_array_length = &delete_mj_unary_operation;

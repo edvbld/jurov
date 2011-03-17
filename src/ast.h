@@ -20,6 +20,8 @@ typedef enum {
     MJ_LESS_THAN,
     /** Array lookup, a binary_operation struct */
     MJ_ARRAY_LOOKUP,
+    /** Logical and, a binary opeartion */
+    MJ_AND,
     /** Array length, an unary_operation struct */
     MJ_ARRAY_LENGTH,
     /** Logical not, an unary_operation struct */

@@ -207,8 +207,11 @@ print_statement: PRINT LPAREN expression RPAREN SEMICOLON
                    new_mj_print($3, &node);
                    $$ = node; }
                 
-expression: /* add logical and here */
-            relational_exp { $$ = $1; }
+expression: expression AND relational_exp
+            { ast *node;
+              new_mj_binary_operation(MJ_AND, $1, $3, &node);
+              $$ = node; }
+          | relational_exp { $$ = $1; }
 
 relational_exp: relational_exp LESS additive_exp
                 { ast *node;

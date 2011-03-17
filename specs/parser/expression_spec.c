@@ -199,6 +199,25 @@ begin_example(exp_parser, should_handle_array_lookup)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_logical_and)
+    ast *tree;
+    mj_binary_operation *and;
+    mj_boolean *lhs, *rhs;
+    char *exp = "true && false";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &and))
+    should_eq_int(MJ_AND, and->type)
+    should_eq_int(MJ_BOOLEAN, and->left_operand->type)
+    lhs = (mj_boolean *) and->left_operand;
+    should_eq_int(1, lhs->value)
+    should_eq_int(MJ_BOOLEAN, and->right_operand->type)
+    rhs = (mj_boolean *) and->right_operand;
+    should_eq_int(0, rhs->value)
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
@@ -210,4 +229,5 @@ begin_description(exp_parser)
     add_example(should_handle_parenthesized_exp)
     add_example(should_handle_length_exp)
     add_example(should_handle_array_lookup)
+    add_example(should_handle_logical_and)
 end_description
