@@ -218,6 +218,82 @@ begin_example(exp_parser, should_handle_logical_and)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_addition)
+    ast *tree;
+    mj_binary_operation *add;
+    mj_integer *lhs, *rhs;
+    char *exp = "1 + 2";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &add))
+    should_eq_int(MJ_ADDITION, add->type)
+    should_eq_int(MJ_INTEGER, add->left_operand->type)
+    lhs = (mj_integer *) add->left_operand;
+    should_eq_int(1, lhs->value)
+    should_eq_int(MJ_INTEGER, add->right_operand->type)
+    rhs = (mj_integer *) add->right_operand;
+    should_eq_int(2, rhs->value)
+
+    delete_parser(tree);
+end_example
+
+begin_example(exp_parser, should_handle_subtraction)
+    ast *tree;
+    mj_binary_operation *sub;
+    mj_integer *lhs, *rhs;
+    char *exp = "1 - 2";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &sub))
+    should_eq_int(MJ_SUBTRACTION, sub->type)
+    should_eq_int(MJ_INTEGER, sub->left_operand->type)
+    lhs = (mj_integer *) sub->left_operand;
+    should_eq_int(1, lhs->value)
+    should_eq_int(MJ_INTEGER, sub->right_operand->type)
+    rhs = (mj_integer *) sub->right_operand;
+    should_eq_int(2, rhs->value)
+
+    delete_parser(tree);
+end_example
+
+begin_example(exp_parser, should_handle_multiplication)
+    ast *tree;
+    mj_binary_operation *mul;
+    mj_integer *lhs, *rhs;
+    char *exp = "1 * 2";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &mul))
+    should_eq_int(MJ_MULTIPLICATION, mul->type)
+    should_eq_int(MJ_INTEGER, mul->left_operand->type)
+    lhs = (mj_integer *) mul->left_operand;
+    should_eq_int(1, lhs->value)
+    should_eq_int(MJ_INTEGER, mul->right_operand->type)
+    rhs = (mj_integer *) mul->right_operand;
+    should_eq_int(2, rhs->value)
+
+    delete_parser(tree);
+end_example
+
+begin_example(exp_parser, should_handle_less_than)
+    ast *tree;
+    mj_binary_operation *lt;
+    mj_integer *lhs, *rhs;
+    char *exp = "1 < 2";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &lt))
+    should_eq_int(MJ_LESS_THAN, lt->type)
+    should_eq_int(MJ_INTEGER, lt->left_operand->type)
+    lhs = (mj_integer *) lt->left_operand;
+    should_eq_int(1, lhs->value)
+    should_eq_int(MJ_INTEGER, lt->right_operand->type)
+    rhs = (mj_integer *) lt->right_operand;
+    should_eq_int(2, rhs->value)
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
@@ -230,4 +306,8 @@ begin_description(exp_parser)
     add_example(should_handle_length_exp)
     add_example(should_handle_array_lookup)
     add_example(should_handle_logical_and)
+    add_example(should_handle_addition)
+    add_example(should_handle_subtraction)
+    add_example(should_handle_multiplication)
+    add_example(should_handle_less_than)
 end_description
