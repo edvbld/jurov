@@ -32,8 +32,10 @@
              variable_declaration method_declarations method_declaration
              arguments more_arguments argument type identifier 
              if_statement while_statement assign_statement method_body
-             array_assignment_statement boolean number this new_object
-             new_array not
+             array_assignment_statement boolean number this relational_exp 
+             additive_exp multiplicative_exp new_exp call_exp basic_exp
+             unary_exp
+             
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
@@ -43,7 +45,9 @@
                                 argument type identifier if_statement
                                 while_statement assign_statement method_body
                                 array_assignment_statement boolean number
-                                this new_object new_array not
+                                this relational_exp additive_exp 
+                                multiplicative_exp new_exp call_exp basic_exp
+                                unary_exp
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -203,30 +207,59 @@ print_statement: PRINT LPAREN expression RPAREN SEMICOLON
                    new_mj_print($3, &node);
                    $$ = node; }
                 
+expression: /* add logical and here */
+            relational_exp { $$ = $1; }
 
-expression: boolean { $$ = $1; }
-          | number { $$ = $1; }
-          | this { $$ = $1; }
-          | identifier { $$ = $1; }
-          | new_object { $$ = $1; }
-          | new_array { $$ = $1; }
-          | not { $$ = $1; }
-          | LPAREN expression RPAREN { $$ = $2; }
+relational_exp: relational_exp LESS additive_exp
+                { ast *node;
+                  new_mj_binary_operation(MJ_LESS_THAN, $1, $3, &node);
+                  $$ = node; }
+              | additive_exp { $$ = $1; }
 
-not: BANG expression
-     { ast *node;
-       new_mj_unary_operation(MJ_NOT, $2, &node);
-       $$ = node; }
+additive_exp: additive_exp PLUS multiplicative_exp
+              { ast *node;
+                new_mj_binary_operation(MJ_ADDITION, $1, $3, &node);
+                $$ = node; }
+            | additive_exp MINUS multiplicative_exp
+              { ast *node;
+                new_mj_binary_operation(MJ_SUBTRACTION, $1, $3, &node);
+                $$ = node; }
+            | multiplicative_exp { $$ = $1; }
 
-new_array: NEW INT LSQUARE expression RSQUARE
+multiplicative_exp: multiplicative_exp MUL new_exp
+                    { ast *node;
+                      new_mj_binary_operation(MJ_MULTIPLICATION, $1, $3, &node);
+                      $$ = node; }
+                  | new_exp { $$ = $1; }
+
+new_exp: NEW identifier LPAREN RPAREN
+         { ast *node;
+           new_mj_new_object($2, &node);
+           $$ = node; }
+       | NEW INT LSQUARE new_exp RSQUARE
+         { ast *node;
+           new_mj_unary_operation(MJ_NEW_ARRAY, $4, &node);
+           $$ = node; }
+       | unary_exp { $$ = $1; }
+
+unary_exp: BANG unary_exp
            { ast *node;
-             new_mj_unary_operation(MJ_NEW_ARRAY, $4, &node);
+             new_mj_unary_operation(MJ_NOT, $2, &node);
              $$ = node; }
+         | call_exp { $$ = $1; }
 
-new_object: NEW identifier LPAREN RPAREN
-            { ast *node;
-              new_mj_new_object($2, &node);
-              $$ = node; }
+call_exp: call_exp DOT LENGTH
+          { ast *node;
+            new_mj_unary_operation(MJ_ARRAY_LENGTH, $1, &node);
+            $$ = node; }
+        /* add method call here */
+        | basic_exp { $$ = $1; }
+
+basic_exp: boolean { $$ = $1; }
+         | number { $$ = $1; }
+         | this { $$ = $1; }
+         | identifier { $$ = $1; }
+         | LPAREN expression RPAREN { $$ = $2; }
 
 this: THIS
       { ast *node;

@@ -163,6 +163,22 @@ begin_example(exp_parser, should_handle_parenthesized_exp)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_length_exp)
+    ast *tree;
+    mj_unary_operation *length;
+    mj_identifier *id;
+    char *exp = "foo.length";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &length))
+    should_eq_int(MJ_ARRAY_LENGTH, length->type)
+    should_eq_int(MJ_IDENTIFIER, length->operand->type)
+    id = (mj_identifier *) length->operand;
+    should_eq_str("foo", id->name);
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
@@ -172,4 +188,5 @@ begin_description(exp_parser)
     add_example(should_handle_new_array_exp)
     add_example(should_handle_not_exp)
     add_example(should_handle_parenthesized_exp)
+    add_example(should_handle_length_exp)
 end_description
