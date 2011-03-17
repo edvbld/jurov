@@ -32,7 +32,7 @@
              variable_declaration method_declarations method_declaration
              arguments more_arguments argument type identifier 
              if_statement while_statement assign_statement method_body
-             array_assignment_statement
+             array_assignment_statement boolean number
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
@@ -41,7 +41,7 @@
                                 method_declaration arguments more_arguments 
                                 argument type identifier if_statement
                                 while_statement assign_statement method_body
-                                array_assignment_statement
+                                array_assignment_statement boolean number
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -202,8 +202,22 @@ print_statement: PRINT LPAREN expression RPAREN SEMICOLON
                    $$ = node; }
                 
 
-expression: TRUE { ast *node; new_mj_boolean(1, &node); $$ = node; }
-          | FALSE { ast *node; new_mj_boolean(0, &node); $$ = node; }
+expression: boolean { $$ = $1; }
+          | number { $$ = $1; }
+
+boolean: TRUE 
+         { ast *node; 
+           new_mj_boolean(1, &node); 
+           $$ = node; }
+       | FALSE 
+         { ast *node; 
+           new_mj_boolean(0, &node); 
+           $$ = node; }
+
+number: NUMBER 
+        { ast *node;
+          new_mj_integer($1, &node);
+          $$ = node; }
 
 %%
 
