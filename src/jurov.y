@@ -253,6 +253,10 @@ call_exp: call_exp DOT LENGTH
             new_mj_unary_operation(MJ_ARRAY_LENGTH, $1, &node);
             $$ = node; }
         /* add method call here */
+        | call_exp LSQUARE basic_exp RSQUARE
+          { ast *node;
+            new_mj_binary_operation(MJ_ARRAY_LOOKUP, $1, $3, &node);
+            $$ = node; }
         | basic_exp { $$ = $1; }
 
 basic_exp: boolean { $$ = $1; }

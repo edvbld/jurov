@@ -179,6 +179,26 @@ begin_example(exp_parser, should_handle_length_exp)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_array_lookup)
+    ast *tree;
+    mj_binary_operation *b;
+    mj_identifier *id;
+    mj_integer *num;
+    char *exp = "foo[3]";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &b))
+    should_eq_int(MJ_ARRAY_LOOKUP, b->type)
+    should_eq_int(MJ_IDENTIFIER, b->left_operand->type)
+    id = (mj_identifier *) b->left_operand;
+    should_eq_str("foo", id->name)
+    should_eq_int(MJ_INTEGER, b->right_operand->type)
+    num = (mj_integer *) b->right_operand;
+    should_eq_int(3, num->value)
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
@@ -189,4 +209,5 @@ begin_description(exp_parser)
     add_example(should_handle_not_exp)
     add_example(should_handle_parenthesized_exp)
     add_example(should_handle_length_exp)
+    add_example(should_handle_array_lookup)
 end_description
