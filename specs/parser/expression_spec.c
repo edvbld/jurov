@@ -89,8 +89,21 @@ begin_example(exp_parser, should_handle_this_exp)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_id_exp)
+    ast *tree;
+    mj_identifier *id;
+    char *exp = "foo";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &id))
+    should_eq_str("foo", id->name)
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
     add_example(should_handle_this_exp)
+    add_example(should_handle_id_exp)
 end_description

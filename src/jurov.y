@@ -206,6 +206,7 @@ print_statement: PRINT LPAREN expression RPAREN SEMICOLON
 expression: boolean { $$ = $1; }
           | number { $$ = $1; }
           | this { $$ = $1; }
+          | identifier { $$ = $1; }
 
 this: THIS
       { ast *node;
