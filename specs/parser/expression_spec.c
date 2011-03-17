@@ -53,6 +53,7 @@ begin_example(exp_parser, should_handle_boolean_exp)
 
     should_pass(parse_expression(exp, &tree))
     should_pass(get_expression(tree, (ast **) &b))
+    should_eq_int(MJ_BOOLEAN, b->type)
     should_eq_int(1, b->value)
 
     delete_parser(tree);
@@ -60,6 +61,7 @@ begin_example(exp_parser, should_handle_boolean_exp)
     exp = "false";
     should_pass(parse_expression(exp, &tree))
     should_pass(get_expression(tree, (ast **) &b))
+    should_eq_int(MJ_BOOLEAN, b->type)
     should_eq_int(0, b->value)
 
     delete_parser(tree);
@@ -72,6 +74,7 @@ begin_example(exp_parser, should_handle_integer_exp)
 
     should_pass(parse_expression(exp, &tree))
     should_pass(get_expression(tree, (ast **) &i))
+    should_eq_int(MJ_INTEGER, i->type)
     should_eq_int(9, i->value)
 
     delete_parser(tree);
@@ -96,7 +99,21 @@ begin_example(exp_parser, should_handle_id_exp)
 
     should_pass(parse_expression(exp, &tree))
     should_pass(get_expression(tree, (ast **) &id))
+    should_eq_int(MJ_IDENTIFIER, id->type)
     should_eq_str("foo", id->name)
+
+    delete_parser(tree);
+end_example
+
+begin_example(exp_parser, should_handle_new_object_exp)
+    ast *tree;
+    mj_new_object *o;
+    char *exp = "new Foo()";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &o))
+    should_eq_int(MJ_NEW_OBJECT, o->type)
+    should_eq_str("Foo", o->class_id->name)
 
     delete_parser(tree);
 end_example
@@ -106,4 +123,5 @@ begin_description(exp_parser)
     add_example(should_handle_integer_exp)
     add_example(should_handle_this_exp)
     add_example(should_handle_id_exp)
+    add_example(should_handle_new_object_exp)
 end_description

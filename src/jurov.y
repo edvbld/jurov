@@ -32,7 +32,7 @@
              variable_declaration method_declarations method_declaration
              arguments more_arguments argument type identifier 
              if_statement while_statement assign_statement method_body
-             array_assignment_statement boolean number this
+             array_assignment_statement boolean number this new_object
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
                                 print_statement expression class_declarations
@@ -42,7 +42,7 @@
                                 argument type identifier if_statement
                                 while_statement assign_statement method_body
                                 array_assignment_statement boolean number
-                                this
+                                this new_object
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -207,6 +207,12 @@ expression: boolean { $$ = $1; }
           | number { $$ = $1; }
           | this { $$ = $1; }
           | identifier { $$ = $1; }
+          | new_object { $$ = $1; }
+
+new_object: NEW identifier LPAREN RPAREN
+            { ast *node;
+              new_mj_new_object($2, &node);
+              $$ = node; }
 
 this: THIS
       { ast *node;
