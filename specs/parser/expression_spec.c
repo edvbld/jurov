@@ -77,7 +77,20 @@ begin_example(exp_parser, should_handle_integer_exp)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_this_exp)
+    ast *tree;
+    ast *t;
+    char *exp = "this";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &t))
+    should_eq_int(MJ_THIS, t->type)
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
+    add_example(should_handle_this_exp)
 end_description
