@@ -294,6 +294,33 @@ begin_example(exp_parser, should_handle_less_than)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_call_exp)
+    ast *tree;
+    mj_call *call;
+    mj_identifier *obj;
+    mj_integer *first, *snd;
+    mj_identifier *method;
+    char *exp = "foo.double(1,2)";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &call))
+    should_eq_int(MJ_CALL, call->type)
+    should_eq_int(MJ_IDENTIFIER, call->object->type)
+    obj = (mj_identifier *) call->object;
+    should_eq_str("foo", obj->name)
+    should_eq_int(MJ_IDENTIFIER, call->method->type)
+    method = (mj_identifier *) call->method;
+    should_eq_str("double", method->name);
+    should_eq_int(MJ_AST_LIST, call->parameters->type)
+    should_eq_int(2, call->parameters->list->size)
+    first = call->parameters->list->first->data;
+    should_eq_int(1, first->value)
+    snd = call->parameters->list->last->data;
+    should_eq_int(2, snd->value)
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
@@ -310,4 +337,5 @@ begin_description(exp_parser)
     add_example(should_handle_subtraction)
     add_example(should_handle_multiplication)
     add_example(should_handle_less_than)
+    add_example(should_handle_call_exp)
 end_description

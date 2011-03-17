@@ -132,7 +132,7 @@ int mj_ast_list_prepend(ast *list, ast *node)
     return JRV_SUCCESS;
 }
 
-int new_mj_call(ast *object, ast *method, mj_ast_list *parameters, ast **node)
+int new_mj_call(ast *object, ast *method, ast *parameters, ast **node)
 {
     mj_call *c;
    
@@ -140,11 +140,15 @@ int new_mj_call(ast *object, ast *method, mj_ast_list *parameters, ast **node)
         return invalid_type(node);
     }
 
+    if(!is_of_type(MJ_AST_LIST, parameters)) {
+        return invalid_type(node);
+    }
+
     c = jrv_malloc(sizeof(mj_call));
     c->type = MJ_CALL;
     c->object = object;
     c->method = (mj_identifier *) method;
-    c->parameters = parameters;
+    c->parameters = (mj_ast_list *) parameters;
     *node = (ast *) c;
     return JRV_SUCCESS;
 }

@@ -280,7 +280,7 @@ typedef struct {
  *                  of the function
  * @return An integer describing the result of the function
  */
-int new_mj_call(ast *object, ast *method, mj_ast_list *parameters, ast **node);
+int new_mj_call(ast *object, ast *method, ast *parameters, ast **node);
 
 /**
  * Creates a new ast struct with type nodetype.THIS

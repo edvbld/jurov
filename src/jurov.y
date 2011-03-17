@@ -34,7 +34,7 @@
              if_statement while_statement assign_statement method_body
              array_assignment_statement boolean number this relational_exp 
              additive_exp multiplicative_exp new_exp call_exp basic_exp
-             unary_exp
+             unary_exp expressions more_expressions
              
 %destructor { delete_ast($$); } program main_class main_method begin_class 
                                 function_body statements statement 
@@ -47,7 +47,7 @@
                                 array_assignment_statement boolean number
                                 this relational_exp additive_exp 
                                 multiplicative_exp new_exp call_exp basic_exp
-                                unary_exp
+                                unary_exp expressions more_expressions
 %destructor { jrv_free(&$$); } ID
 %%
 start: program { *result = $1; }
@@ -206,7 +206,23 @@ print_statement: PRINT LPAREN expression RPAREN SEMICOLON
                  { ast *node;
                    new_mj_print($3, &node);
                    $$ = node; }
-                
+
+expressions: /* nothing, return the empty list */
+             { ast *node;
+               empty_mj_ast_list(&node);
+               $$ = node; }
+           | expression more_expressions
+             { mj_ast_list_prepend($2, $1);
+               $$ = $2; }
+
+more_expressions: /* nothing, return the empty list */
+                  { ast *node;
+                    empty_mj_ast_list(&node);
+                    $$ = node; }
+                | COMMA expression more_expressions
+                  { mj_ast_list_prepend($3, $2);
+                    $$ = $3; }
+
 expression: expression AND relational_exp
             { ast *node;
               new_mj_binary_operation(MJ_AND, $1, $3, &node);
@@ -255,7 +271,10 @@ call_exp: call_exp DOT LENGTH
           { ast *node;
             new_mj_unary_operation(MJ_ARRAY_LENGTH, $1, &node);
             $$ = node; }
-        /* add method call here */
+        | call_exp DOT identifier LPAREN expressions RPAREN
+          { ast *node;
+            new_mj_call($1, $3, $5, &node);
+            $$ = node; }
         | call_exp LSQUARE basic_exp RSQUARE
           { ast *node;
             new_mj_binary_operation(MJ_ARRAY_LOOKUP, $1, $3, &node);

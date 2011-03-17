@@ -4,13 +4,13 @@
 
 begin_example(mj_call, should_have_mj_call_as_type)
     list *list;
-    mj_ast_list *params;
+    ast *params;
     ast *method;
     ast *obj;
     mj_call *c;
   
     should_pass(new_list(&list))
-    should_pass(new_mj_ast_list(list, (ast **) &params))
+    should_pass(new_mj_ast_list(list, &params))
     should_pass(new_mj_identifier("bar", &obj))
     should_pass(new_mj_identifier("foo", &method))
     should_pass(new_mj_call(obj, method, params, (ast **) &c))
@@ -25,13 +25,13 @@ end_example
 
 begin_example(mj_call, should_have_the_parameters_as_members)
     list *list;
-    mj_ast_list *params;
+    ast *params;
     ast *method;
     ast *obj;
     mj_call *c;
   
     should_pass(new_list(&list))
-    should_pass(new_mj_ast_list(list, (ast **) &params))
+    should_pass(new_mj_ast_list(list, &params))
     should_pass(new_mj_identifier("foo", &method))
     should_pass(new_mj_identifier("bar", &obj))
     should_pass(new_mj_call(obj, method, params, (ast **) &c))
