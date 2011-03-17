@@ -211,6 +211,7 @@ expression: boolean { $$ = $1; }
           | new_object { $$ = $1; }
           | new_array { $$ = $1; }
           | not { $$ = $1; }
+          | LPAREN expression RPAREN { $$ = $2; }
 
 not: BANG expression
      { ast *node;
