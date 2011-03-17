@@ -118,10 +118,27 @@ begin_example(exp_parser, should_handle_new_object_exp)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_new_array_exp)
+    ast *tree;
+    mj_unary_operation *na;
+    mj_integer *i;
+    char *exp = "new int [5]";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &na))
+    should_eq_int(MJ_NEW_ARRAY, na->type)
+    should_eq_int(MJ_INTEGER, na->operand->type)
+    i = (mj_integer *) na->operand;
+    should_eq_int(5, i->value)
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
     add_example(should_handle_this_exp)
     add_example(should_handle_id_exp)
     add_example(should_handle_new_object_exp)
+    add_example(should_handle_new_array_exp)
 end_description
