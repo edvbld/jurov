@@ -134,6 +134,22 @@ begin_example(exp_parser, should_handle_new_array_exp)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_not_exp)
+    ast *tree;
+    mj_unary_operation *not;
+    mj_boolean *b;
+    char *exp = "!true";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &not))
+    should_eq_int(MJ_NOT, not->type)
+    should_eq_int(MJ_BOOLEAN, not->operand->type)
+    b = (mj_boolean *) not->operand;
+    should_eq_int(1, b->value)
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
@@ -141,4 +157,5 @@ begin_description(exp_parser)
     add_example(should_handle_id_exp)
     add_example(should_handle_new_object_exp)
     add_example(should_handle_new_array_exp)
+    add_example(should_handle_not_exp)
 end_description
