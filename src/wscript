@@ -1,7 +1,7 @@
 def build(bld):
-    bld(features = 'c bison', source = 'jurov.y', 
+    bld(features = 'c bison', source = 'grammar.y', 
         includes = '.', name = 'parser')
-    bld(features = 'c flex', source = 'jurov.l', includes = '.', 
+    bld(features = 'c flex', source = 'lexer.l', includes = '.', 
         name = 'lexer', cflags = bld.env.CFLAGS + ['-D _POSIX_SOURCE'])
     sources = bld.path.ant_glob('*.c') 
     bld(features = 'c', source = sources, includes = '.', 

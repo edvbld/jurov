@@ -2,7 +2,7 @@
 
 %{
 #include "string.h"
-#include "jurov.tab.h"
+#include "grammar.tab.h"
 %}
 
 WS      ([\t\n ])

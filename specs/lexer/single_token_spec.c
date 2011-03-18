@@ -1,5 +1,5 @@
 #include "expectations.h"
-#include "jurov.tab.h"
+#include "grammar.tab.h"
 #include "lex.yy.h"
 
 begin_example(single_token_lexer, should_lex_public_static_void_main_to_MAIN)

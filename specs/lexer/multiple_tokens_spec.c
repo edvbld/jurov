@@ -1,5 +1,5 @@
 #include "expectations.h"
-#include "jurov.tab.h"
+#include "grammar.tab.h"
 #include "lex.yy.h"
 
 begin_example(multiple_token_lexer, should_lex_two_tokens_separated_by_space)
