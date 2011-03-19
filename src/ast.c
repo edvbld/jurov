@@ -18,52 +18,6 @@ int is_of_type(nodetype type, ast *node)
     return node->type == type;
 }
 
-int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
-                       ast *body, ast *return_expression, ast **node)
-{
-    mj_method_decl *m;
-
-    if(!is_of_type(MJ_TYPE, return_type)) {
-        return invalid_type(node);
-    }
-    
-    if(!is_of_type(MJ_IDENTIFIER, id)) {
-        return invalid_type(node);
-    }
-    
-    if(!is_of_type(MJ_AST_LIST, arguments)) {
-        return invalid_type(node);
-    }
-
-    if(!is_of_type(MJ_METHOD_BODY, body)) {
-        return invalid_type(node);
-    }
-
-    m = jrv_malloc(sizeof(mj_method_decl));
-    m->type = MJ_METHOD_DECL;
-    m->return_type = (mj_type *) return_type;
-    m->id = (mj_identifier *) id;
-    m->arguments = (mj_ast_list *) arguments;
-    m->body = (mj_method_body *) body;
-    m->return_expression = return_expression;
-    *node = (ast *) m;
-    return JRV_SUCCESS;
-}
-
-int new_mj_if(ast *condition, ast *true_statement, ast *false_statement, 
-              ast **node)
-{
-    mj_if *mi;
-
-    mi = jrv_malloc(sizeof(mj_if));
-    mi->type = MJ_IF;
-    mi->condition = condition;
-    mi->true_statement = true_statement;
-    mi->false_statement = false_statement;
-    *node = (ast *) mi;
-    return JRV_SUCCESS;
-}
-
 int new_mj_while(ast *condition, ast *statement, ast **node)
 {
     mj_while *w;
@@ -358,22 +312,14 @@ static void del_mj_method_body(mj_method_body *node, void *p)
     delete_mj_method_body(node);
 }
 
-void delete_mj_method_decl(mj_method_decl *node, void *p)
+static void del_mj_method_decl(mj_method_decl *node, void *p)
 {
-    ast_visit((ast *) node->return_type, p);
-    ast_visit((ast *) node->id, p);
-    ast_visit((ast *) node->arguments, p);
-    ast_visit((ast *) node->body, p);
-    ast_visit(node->return_expression, p);
-    jrv_free(&node);
+    delete_mj_method_decl(node);
 }
 
-void delete_mj_if(mj_if *node, void *p)
+static void del_mj_if(mj_if *node, void *p)
 {
-    ast_visit(node->condition, p);
-    ast_visit(node->true_statement, p);
-    ast_visit(node->false_statement, p);
-    jrv_free(&node);
+    delete_mj_if(node);
 }
 
 void delete_mj_while(mj_while *node, void *p)
@@ -425,8 +371,8 @@ void delete_ast(ast *tree)
     callbacks.on_mj_var_decl = &del_mj_var_decl;
     callbacks.on_mj_method_arg = &del_mj_method_arg;
     callbacks.on_mj_method_body = &del_mj_method_body;
-    callbacks.on_mj_method_decl = &delete_mj_method_decl;
-    callbacks.on_mj_if = &delete_mj_if;
+    callbacks.on_mj_method_decl = &del_mj_method_decl;
+    callbacks.on_mj_if = &del_mj_if;
     callbacks.on_mj_while = &delete_mj_while;
     callbacks.on_mj_assignment = &delete_mj_assignment;
     callbacks.on_mj_array_assignment = &delete_mj_array_assignment;

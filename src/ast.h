@@ -18,77 +18,9 @@
 #include "ast/mj_var_decl.h"
 #include "ast/mj_method_arg.h"
 #include "ast/mj_method_body.h"
+#include "ast/mj_method_decl.h"
+#include "ast/mj_if.h"
 
-/**
- * Represents a method declaration and definition in the MJ language
- */
-typedef struct {
-    /** The type of the node (MJ_METHOD_DECL) */
-    nodetype type;
-
-    /** The return type of the method */
-    mj_type *return_type;
-
-    /** The identifier (name) of the method */
-    mj_identifier *id;
-    
-    /** The argument list */
-    mj_ast_list *arguments;
-
-    /** The body of the method */
-    mj_method_body *body;
-
-    /** The expression yielding the return value */
-    ast *return_expression;
-} mj_method_decl;
-
-/**
- * Creates a new method declaration in MJ
- *
- * @param[in] return_type The MJ type the method returns
- * @param[in] id The identifier (name) of the method
- * @param[in] arguments A list of the arguments to the method
- * @param[in] var_declarations A list of the variable declaration in the 
- *                             method body
- * @param[in] statements A list of the statements in the method body
- * @param[in] return_expression The expression yielding the return value
- * @param[out] node The address of the pointer the created node will be 
- *                  assigned to
- * @return The result of the function
- */
-int new_mj_method_decl(ast *return_type, ast *id, ast *arguments,
-                       ast *body, ast *return_expression, ast **node);
-
-/**
- * Represents an if-else expression in MiniJava
- */
-typedef struct {
-    /** The type of the node (MJ_IF) */
-    nodetype type;
-
-    /** The expression to evaulate to a boolean value */
-    ast *condition;
-
-    /** The statement(s) to execute if the condition is true */
-    ast *true_statement;
-
-    /** The statement(s) to execute if the condition is false */
-    ast *false_statement;
-} mj_if;
-
-/**
- * Creates a new if-else statement in the MiniJava language
- *
- * @param[in] condition The expression to evaluate as the condition for the 
- *                      if statement
- * @param[in] true_statement The statement(s) to run if the condition is true
- * @param[in] false_statement The statement(s) to run if the condition is false
- * @param[out] node The address of the pointer that the pointer to the created 
- *                  node will be assigned to
- * @return The result of the function
- */
-int new_mj_if(ast *condition, ast *true_statement, ast *false_statement, 
-              ast **node);
     
 /**
  * Reprents a while loop in the MiniJava programming language
