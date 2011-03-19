@@ -12,36 +12,7 @@
 #include "ast/mj_this.h"
 #include "ast/mj_print.h"
 #include "ast/mj_main_class.h"
-
-/**
- * Reprents a class in the MiniJava language
- */
-typedef struct {
-    /** The type of the node (MJ_CLASS) */
-    nodetype type;
-
-    /** The identifier (name) of the class */
-    mj_identifier *id;
-
-    /** A list of the variable declarations */
-    ast *var_declarations;
-
-    /** A list of the methods declarations */
-    ast *method_declarations;
-} mj_class;
-
-/**
- * Creates new class node with the given parameters
- *
- * @param[in] id The id (name) of the class
- * @param[in] var_declarations A list of the variable declarations of the class
- * @param[in] method_declarations A list of the method declarations of the class
- * @param[out] node The address of the pointer that mj_class node will be 
- *                  assigned to
- * @return An integer describing the result
- */
-int new_mj_class(ast *id, ast *var_declarations, 
-                 ast *method_declarations, ast **node);
+#include "ast/mj_class.h"
 
 /**
  * Represents a type in the MiniJava language, such as int or boolean

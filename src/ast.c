@@ -18,32 +18,6 @@ int is_of_type(nodetype type, ast *node)
     return node->type == type;
 }
 
-int new_mj_class(ast *id, ast *var_declarations,
-                 ast *method_declarations, ast **node)
-{
-    mj_class *mc;
-
-    if(!is_of_type(MJ_IDENTIFIER, id)) {
-        return invalid_type(node);
-    }
-
-    if(!is_of_type(MJ_AST_LIST, var_declarations)) {
-        return invalid_type(node);
-    }
-
-    if(!is_of_type(MJ_AST_LIST, method_declarations)) {
-        return invalid_type(node);
-    }
-    
-    mc = jrv_malloc(sizeof(mj_class));
-    mc->type = MJ_CLASS;
-    mc->id = (mj_identifier *) id;
-    mc->var_declarations = var_declarations;
-    mc->method_declarations = method_declarations;
-    *node = (ast *) mc;
-    return JRV_SUCCESS;
-}
-
 int new_mj_type(minijava_type type, ast *id, ast **node)
 {
     mj_type *t;
@@ -464,17 +438,14 @@ static void del_mj_print(mj_print *node, void *p)
     delete_mj_print(node);
 }
 
-void del_mj_main_class(mj_main_class *node, void *p)
+static void del_mj_main_class(mj_main_class *node, void *p)
 {
     delete_mj_main_class(node);
 }
 
-void delete_mj_class(mj_class *node, void *p)
+static void del_mj_class(mj_class *node, void *p)
 {
-    ast_visit((ast *) node->id, p);
-    ast_visit(node->var_declarations, p);
-    ast_visit(node->method_declarations, p);
-    jrv_free(&node);
+    delete_mj_class(node);
 }
 
 void delete_mj_type(mj_type *node, void *p)
@@ -566,7 +537,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_call = &del_mj_call;
     callbacks.on_mj_print = &del_mj_print;
     callbacks.on_mj_main_class = &del_mj_main_class;
-    callbacks.on_mj_class = &delete_mj_class;
+    callbacks.on_mj_class = &del_mj_class;
     callbacks.on_mj_type = &delete_mj_type;
     callbacks.on_mj_var_decl = &delete_mj_var_decl;
     callbacks.on_mj_method_arg = &delete_mj_method_arg;
