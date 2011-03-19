@@ -771,3 +771,8 @@ void delete_ast(ast *tree)
     callbacks.on_mj_array_assignment = &delete_mj_array_assignment;
     ast_walk(tree, callbacks, NULL);
 }
+
+char *ast_format(ast *tree)
+{
+    return "";
+}

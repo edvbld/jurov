@@ -765,6 +765,14 @@ void ast_walk(ast* tree, ast_callbacks callbacks, void *result);
  */
 void ast_visit(ast* node, void *result);
 
+/** 
+ * Formats the ast into a string that is suitable for printing
+ *
+ * @param tree The AST to format
+ * @result A string representation of the tree
+ */
+char* ast_format(ast *tree);
+
 /**
  * Deletes an AST and all the nodes in the AST. 
  * NOTE: it also frees the char* in an mj_identifier, so make sure that you 
