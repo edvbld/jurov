@@ -10,27 +10,7 @@
 #include "ast/ast_list.h"
 #include "ast/mj_call.h"
 #include "ast/mj_this.h"
-
-/**
- * This struct represents a print statement
- */
-typedef struct {
-    /** The type of the node (nodetype.PRINT) */
-    nodetype type;
-
-    /** The expression that will evaluate to the print argument */
-    ast *expression;
-} mj_print;
-
-/**
- * Creates a new print node with the given expression.
- *
- * @param[in] expression The expression which result will be printed
- * @param[out] node The addres of the pointer that will point at the result 
- *                  of the function
- * @return An integer describing the result of the function
- */
-int new_mj_print(ast* expression, ast **node);
+#include "ast/mj_print.h"
 
 /**
  * Represents the main class of a MiniJava program
