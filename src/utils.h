@@ -46,4 +46,13 @@ void jrv_die(char *msg);
  */
 void* jrv_malloc(size_t n);
 
+/**
+ * Appends a string to another string and returns the result
+ *
+ * @param str1 The string to append the second string to
+ * @param str2 The string to append to the first string
+ * @return A pointer to the new string
+ */
+char* jrv_str_append(char *str1, char *str2);
+
 #endif /* INCLUDE_jrv_utils_h__ */

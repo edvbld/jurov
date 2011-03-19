@@ -71,12 +71,14 @@ end_description
 begin_description(jurov)
     use_description(list)
     use_description(errors)
+    use_description(utils)
 
     add_description(ast)
     add_description(lexer)
     add_description(parser)
     add_description(list)
     add_description(errors)
+    add_description(utils)
 end_description
 
 int main()
