@@ -1,5 +1,7 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/ast_walker.h"
+#include "ast/mj_binary_operation.h"
+#include "ast/mj_integer.h"
 
 static void on_add(mj_binary_operation *op, void *result)
 {

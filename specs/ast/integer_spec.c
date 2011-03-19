@@ -1,5 +1,5 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_integer.h"
 
 begin_example(mj_integer, should_have_mj_integer_as_type)
     mj_integer *node;

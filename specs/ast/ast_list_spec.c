@@ -1,6 +1,6 @@
 #include "expectations.h"
-#include "ast.h"
 #include "list.h"
+#include "ast/ast_list.h"
 
 begin_example(mj_ast_list, should_have_mj_ast_list_as_type)
     list *list;

@@ -1,5 +1,5 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_type.h"
 
 begin_example(mj_type, should_have_mj_type_as_type)
     mj_type *t;

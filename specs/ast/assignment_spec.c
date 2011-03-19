@@ -1,5 +1,7 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_assignment.h"
+#include "ast/mj_integer.h"
+#include "ast/mj_boolean.h"
 
 begin_example(mj_assignment, should_have_mj_assignmnent_as_type)
     mj_assignment *a;

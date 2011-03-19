@@ -1,5 +1,6 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_boolean.h"
+#include "ast/mj_while.h"
 
 begin_example(mj_while, should_have_mj_while_as_type)
     mj_while *w;

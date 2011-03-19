@@ -1,5 +1,9 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/ast_list.h"
+#include "ast/mj_print.h"
+#include "ast/mj_var_decl.h"
+#include "ast/mj_identifier.h"
+#include "ast/mj_method_body.h"
 
 begin_example(mj_method_body, should_have_mj_method_body_as_type)
     mj_method_body *b;

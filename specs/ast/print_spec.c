@@ -1,5 +1,6 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_identifier.h"
+#include "ast/mj_print.h"
 
 begin_example(mj_print, should_have_mj_print_as_type)
     mj_print *p;

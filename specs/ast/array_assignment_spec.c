@@ -1,5 +1,7 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_array_assignment.h"
+#include "ast/mj_identifier.h"
+#include "ast/mj_integer.h"
 
 begin_example(mj_array_assignment, should_have_mj_array_assignment_as_type)
     mj_array_assignment *aa;

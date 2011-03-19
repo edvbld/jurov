@@ -1,5 +1,5 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_new_object.h"
 
 begin_example(mj_new_object, should_have_mj_new_object_as_type)
     ast *class_id;

@@ -1,5 +1,5 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_identifier.h"
 
 begin_example(mj_identifier, should_fail_if_name_is_empty_or_null)
     ast *id;

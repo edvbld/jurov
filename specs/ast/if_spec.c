@@ -1,5 +1,7 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_print.h"
+#include "ast/mj_boolean.h"
+#include "ast/mj_if.h"
 
 begin_example(mj_if, should_have_mj_if_as_type)
     mj_if *mi;

@@ -1,5 +1,6 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_integer.h"
+#include "ast/mj_var_decl.h"
 
 begin_example(mj_var_decl, should_have_mj_var_decl_as_type)
     mj_var_decl *d;

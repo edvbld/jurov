@@ -1,5 +1,5 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_boolean.h"
 
 begin_example(mj_boolean, should_have_mj_boolean_as_type)
     mj_boolean *node;

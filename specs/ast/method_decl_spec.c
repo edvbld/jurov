@@ -1,5 +1,6 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_integer.h"
+#include "ast/mj_method_decl.h"
 
 begin_example(mj_method_decl, should_have_mj_method_decl_as_type)
     mj_method_decl *m;

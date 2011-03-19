@@ -1,5 +1,7 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/ast_list.h"
+#include "ast/mj_identifier.h"
+#include "ast/mj_main_class.h"
 
 begin_example(mj_main_class, should_have_mj_main_class_as_type)
     mj_main_class *mc;

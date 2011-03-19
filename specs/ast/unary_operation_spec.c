@@ -1,5 +1,6 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_boolean.h"
+#include "ast/mj_unary_operation.h"
 
 begin_example(mj_unary_operation, should_have_mj_unary_operation_as_type)
     mj_unary_operation *node;

@@ -1,5 +1,5 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_this.h"
 
 begin_example(mj_this, should_have_mj_this_as_type)
     ast *node;

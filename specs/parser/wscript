@@ -3,6 +3,5 @@ def build(bld):
     bld(features = 'c',
         source = sources,
         includes = [bld.env.INCLUDE_GENERATED_SRC, bld.env.INCLUDE_SPECTACULAR, 
-                    bld.env.INCLUDE_SRC, bld.env.INCLUDE_SPECS, 
-                    bld.env.INCLUDE_INCLUDE],
+                    bld.env.INCLUDE_SRC, bld.env.INCLUDE_SPECS],
         name = 'parser_specs')

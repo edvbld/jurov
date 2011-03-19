@@ -1,5 +1,6 @@
 #include "expectations.h"
-#include "ast.h"
+#include "ast/mj_binary_operation.h"
+#include "ast/mj_integer.h"
 
 begin_example(mj_binary_operation, should_have_the_given_type)
     mj_binary_operation *op;
