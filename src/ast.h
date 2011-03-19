@@ -7,45 +7,7 @@
 #include "ast/mj_integer.h"
 #include "ast/mj_boolean.h"
 #include "ast/mj_new_object.h"
-#include "list.h"
-
-/**
- * This struct represents a list of ast elements
- */
-typedef struct {
-    /** The type of the node, this will be nodetype.AST_LIST */
-    nodetype type;
-
-    /** The actual list of ast nodes */
-    list* list;
-} mj_ast_list;
-
-/**
- * Creates a new ast list with the given list.
- *
- * @param[in] list The list of of AST nodes
- * @param[out] node The addres of the pointer that will point at the result 
- *                  of the function
- * @return An integer describing the result of the function
- */
-int new_mj_ast_list(list* list, ast **node);
-
-/**
- * Creates an empty ast list and assigns it to node
- *
- * @param[out] The address of the pointer that will point to the empty list
- * @return An integer describing the result
- */
-int empty_mj_ast_list(ast **node);
-
-/**
- * Prepends an AST node to a ast_list
- *
- * @param[in] list The list of AST nodes
- * @param[in] node The AST node to prepend
- * @return An integer describing the result of the function
- */
-int mj_ast_list_prepend(ast *list, ast *node);
+#include "ast/ast_list.h"
 
 /**
  * Represents a method call in the AST
