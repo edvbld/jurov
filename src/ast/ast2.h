@@ -93,4 +93,22 @@ typedef struct ast_ {
  */
 void delete_ast(ast* tree);
 
+/**
+ * Returns if the given AST node has the given type or not. 
+ *
+ * @param type The type of the node
+ * @param node The node
+ * @returns 0 if the node doesn't have the type, 1 if it has and -1 if 
+ *          the node is NULL
+ */
+int is_of_type(nodetype type, ast *node);
+
+/**
+ * Reports that the given ast node is of bad type
+ *
+ * @param node The address of the pointer that points to  node is of bad type
+ * @returns JRV_INVALID_TYPE
+ */
+int invalid_type(ast **node);
+
 #endif /* INCLUDE_jrv_ast2_h__ */

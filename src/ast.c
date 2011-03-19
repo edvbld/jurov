@@ -4,33 +4,18 @@
 #include "ast.h"
 #include "utils.h"
 
-static int invalid_type(ast **node)
+int invalid_type(ast **node)
 {
     *node = NULL;
     return JRV_INVALID_TYPE;
 }
 
-static int is_of_type(nodetype type, ast *node)
+int is_of_type(nodetype type, ast *node)
 {
     if(node == NULL) {
-        return 2;
+        return -1;
     }
     return node->type == type;
-}
-
-int new_mj_new_object(ast *class_id, ast **node)
-{
-    mj_new_object *no;
-   
-    if(!is_of_type(MJ_IDENTIFIER, class_id)) {
-        return invalid_type(node);
-    }
-
-    no = jrv_malloc(sizeof(mj_new_object));
-    no->type = MJ_NEW_OBJECT;
-    no->class_id = (mj_identifier *) class_id;
-    *node = (ast *) no;
-    return JRV_SUCCESS;
 }
 
 int new_mj_ast_list(list *list, ast **node)
@@ -535,40 +520,39 @@ void ast_visit(ast *node, void *result)
     }
 }
 
-void delete_mj_this(ast *node, void *p)
+static void delete_mj_this(ast *node, void *p)
 {
     jrv_free(&node);
 }
 
-void del_mj_boolean(mj_boolean *node, void *p)
+static void del_mj_boolean(mj_boolean *node, void *p)
 {
     delete_mj_boolean(node);
 }
 
-void del_mj_integer(mj_integer *node, void *p)
+static void del_mj_integer(mj_integer *node, void *p)
 {
     delete_mj_integer(node);
 }
 
-void del_mj_identifier(mj_identifier *node, void *p)
+static void del_mj_identifier(mj_identifier *node, void *p)
 {
     delete_mj_identifier(node);
 }
 
-void del_mj_unary_operation(mj_unary_operation *node, void *p)
+static void del_mj_unary_operation(mj_unary_operation *node, void *p)
 {
     delete_mj_unary_operation(node);
 }
 
-void del_mj_binary_operation(mj_binary_operation *node, void *p)
+static void del_mj_binary_operation(mj_binary_operation *node, void *p)
 {
     delete_mj_binary_operation(node);
 }
 
-void delete_mj_new_object(mj_new_object *node, void *p)
+static void del_mj_new_object(mj_new_object *node, void *p)
 {
-    ast_visit((ast *) node->class_id, NULL);
-    jrv_free(&node);
+    delete_mj_new_object(node);
 }
 
 void delete_mj_ast_list_element(void *data)
@@ -697,7 +681,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_this = &delete_mj_this;
     callbacks.on_mj_boolean = &del_mj_boolean;
     callbacks.on_mj_ast_list = &delete_mj_ast_list;
-    callbacks.on_mj_new_object = &delete_mj_new_object;
+    callbacks.on_mj_new_object = &del_mj_new_object;
     callbacks.on_mj_call = &delete_mj_call;
     callbacks.on_mj_print = &delete_mj_print;
     callbacks.on_mj_main_class = &delete_mj_main_class;
