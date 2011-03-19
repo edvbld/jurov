@@ -19,16 +19,6 @@ static int is_of_type(nodetype type, ast *node)
 }
 
 
-int new_mj_binary_operation(nodetype type, ast *left_operand, 
-                            ast *right_operand, ast **node)
-{
-    mj_binary_operation *op = jrv_malloc(sizeof(mj_binary_operation));
-    op->type = type;
-    op->left_operand = left_operand;
-    op->right_operand = right_operand;
-    *node = (ast *) op;
-    return JRV_SUCCESS;
-}
 
 int new_mj_integer(int value, ast **node)
 {
@@ -590,11 +580,9 @@ void del_mj_unary_operation(mj_unary_operation *node, void *p)
     delete_mj_unary_operation(node);
 }
 
-void delete_mj_binary_operation(mj_binary_operation *node, void *p)
+void del_mj_binary_operation(mj_binary_operation *node, void *p)
 {
-    ast_visit(node->left_operand, p);
-    ast_visit(node->right_operand, p);
-    jrv_free(&node);
+    delete_mj_binary_operation(node);
 }
 
 void delete_mj_new_object(mj_new_object *node, void *p)
@@ -715,13 +703,13 @@ void delete_ast(ast *tree)
 {
     ast_callbacks callbacks;
     callbacks.on_mj_identifier = &del_mj_identifier;
-    callbacks.on_mj_addition = &delete_mj_binary_operation;
-    callbacks.on_mj_subtraction = &delete_mj_binary_operation;
-    callbacks.on_mj_division = &delete_mj_binary_operation;
-    callbacks.on_mj_multiplication = &delete_mj_binary_operation;
-    callbacks.on_mj_and = &delete_mj_binary_operation;
-    callbacks.on_mj_less_than = &delete_mj_binary_operation;
-    callbacks.on_mj_array_lookup = &delete_mj_binary_operation;
+    callbacks.on_mj_addition = &del_mj_binary_operation;
+    callbacks.on_mj_subtraction = &del_mj_binary_operation;
+    callbacks.on_mj_division = &del_mj_binary_operation;
+    callbacks.on_mj_multiplication = &del_mj_binary_operation;
+    callbacks.on_mj_and = &del_mj_binary_operation;
+    callbacks.on_mj_less_than = &del_mj_binary_operation;
+    callbacks.on_mj_array_lookup = &del_mj_binary_operation;
     callbacks.on_mj_array_length = &del_mj_unary_operation;
     callbacks.on_mj_not = &del_mj_unary_operation;
     callbacks.on_mj_new_array = &del_mj_unary_operation;
