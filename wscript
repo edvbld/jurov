@@ -16,7 +16,7 @@ def options(opt):
 
 def run_valgrind(bld):
     print "Starting to run valgrind"
-    run_all_specs = '{0}/specs/run_all_specs'.format(os.path.abspath(out))
+    run_all_specs = '{0}/test/spec/run_all_specs'.format(os.path.abspath(out))
     if platform.system() == 'Darwin':
         cmd = 'valgrind --dsymutil=yes '
     else:
@@ -29,7 +29,7 @@ def run_valgrind(bld):
 
 def run_specs(bld):
     print "Starting to run specs"
-    run_all_specs = '{0}/specs/run_all_specs'.format(os.path.abspath(out))
+    run_all_specs = '{0}/test/spec/run_all_specs'.format(os.path.abspath(out))
     res = bld.exec_command(run_all_specs)
     if res != 0:
         bld.fatal("The specifications were not fulfilled!")
@@ -37,7 +37,7 @@ def run_specs(bld):
 def configure(conf):
     conf.env.CFLAGS = ['-g', '-Wall', '-Werror', '-ansi', '-pedantic']
     conf.env.FLEXFLAGS = ['--header-file=src/lex.yy.h']
-    conf.env.INCLUDE_SPECS = os.path.abspath('specs')
+    conf.env.INCLUDE_SPECS = os.path.abspath('test/spec')
     conf.env.INCLUDE_SPECTACULAR = os.path.abspath('lib/spectacular')
     conf.env.INCLUDE_GENERATED_SRC = os.path.abspath('{0}/src'.format(out))
     conf.env.INCLUDE_SRC = os.path.abspath('src')
@@ -51,7 +51,7 @@ def configure(conf):
     conf.load('bison')
 
 def build(bld):
-    bld.recurse(['lib', 'src', 'specs'])
+    bld.recurse(['lib', 'src', 'test'])
     if Options.options.spec:
         bld.add_post_fun(run_specs)
     if Options.options.valgrind and bld.env.VALGRIND:
