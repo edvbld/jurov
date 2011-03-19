@@ -4,27 +4,8 @@
 #include "ast/mj_identifier.h"
 #include "ast/mj_unary_operation.h"
 #include "ast/mj_binary_operation.h"
+#include "ast/mj_integer.h"
 #include "list.h"
-
-/**
- * Represents an integer node in the AST
- */
-typedef struct {
-    /** the type of the integer (nodetype.INTEGER) */
-    nodetype type;
-    /** the value of the integer */
-    int value;
-} mj_integer;
-
-/**
- * Creates a new integer with the given value.
- *
- * @param[in] value The value of the integer
- * @param[out] node The addres of the pointer that will point at the result 
- *                  of the function
- * @return An integer describing the result of the function
- */
-int new_mj_integer(int value, ast **node);
 
 /**
  * Represents a boolean in the AST

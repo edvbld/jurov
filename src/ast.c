@@ -18,17 +18,6 @@ static int is_of_type(nodetype type, ast *node)
     return node->type == type;
 }
 
-
-
-int new_mj_integer(int value, ast **node)
-{
-    mj_integer *i = jrv_malloc(sizeof(mj_integer));
-    i->value = value;
-    i->type = MJ_INTEGER;
-    *node = (ast *) i;
-    return JRV_SUCCESS;
-}
-
 int new_mj_boolean(int value, ast **node)
 {
     mj_boolean *b = jrv_malloc(sizeof(mj_boolean));
@@ -565,9 +554,9 @@ void delete_mj_boolean(mj_boolean *node, void *p)
     jrv_free(&node);
 }
 
-void delete_mj_integer(mj_integer *node, void *p)
+void del_mj_integer(mj_integer *node, void *p)
 {
-    jrv_free(&node);
+    delete_mj_integer(node);
 }
 
 void del_mj_identifier(mj_identifier *node, void *p)
@@ -713,7 +702,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_array_length = &del_mj_unary_operation;
     callbacks.on_mj_not = &del_mj_unary_operation;
     callbacks.on_mj_new_array = &del_mj_unary_operation;
-    callbacks.on_mj_integer = &delete_mj_integer;
+    callbacks.on_mj_integer = &del_mj_integer;
     callbacks.on_mj_this = &delete_mj_this;
     callbacks.on_mj_boolean = &delete_mj_boolean;
     callbacks.on_mj_ast_list = &delete_mj_ast_list;
