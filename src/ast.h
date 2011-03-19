@@ -21,31 +21,8 @@
 #include "ast/mj_method_decl.h"
 #include "ast/mj_if.h"
 #include "ast/mj_while.h"
+#include "ast/mj_assignment.h"
 
-/**
- * Represents an assignment in the MiniJava language
- */
-typedef struct {
-    /** The type of the node (MJ_ASSIGNMENT) */
-    nodetype type;
-
-    /** The identifier that gets assigned */
-    mj_identifier *id;
-
-    /** The expression to assing to the indentifier */
-    ast *expression;
-} mj_assignment;
-
-/**
- * Creates a new assignment statement in MiniJava
- *
- * @param[in] id The identifier that gets assigned
- * @param[in] expression The expression that yields the value to assign to 
- *                       the identifier
- * @param[out] node The address of the pointer to assign the result to
- * @return The result of the function
- */
-int new_mj_assignment(ast *id, ast *expression, ast **node);
 
 /**
  * Represents an array assignment in the MiniJava language

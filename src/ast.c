@@ -1,8 +1,7 @@
 #include "stddef.h"
-#include "string.h"
 #include "errors.h"
-#include "ast.h"
 #include "utils.h"
+#include "ast.h"
 
 int invalid_type(ast **node)
 {
@@ -16,22 +15,6 @@ int is_of_type(nodetype type, ast *node)
         return -1;
     }
     return node->type == type;
-}
-
-int new_mj_assignment(ast *id, ast *expression, ast **node)
-{
-    mj_assignment *a;
-
-    if(!is_of_type(MJ_IDENTIFIER, id)) {
-        return invalid_type(node);
-    }
-
-    a = jrv_malloc(sizeof(mj_assignment));
-    a->type = MJ_ASSIGNMENT;
-    a->id = (mj_identifier *) id;
-    a->expression = expression;
-    *node = (ast *) a;
-    return JRV_SUCCESS;
 }
 
 int new_mj_array_assignment(ast *id, ast *index_exp, ast *value_exp, ast **node)
@@ -315,11 +298,9 @@ static void del_mj_while(mj_while *node, void *p)
     delete_mj_while(node);
 }
 
-void delete_mj_assignment(mj_assignment *node, void *p)
+static void del_mj_assignment(mj_assignment *node, void *p)
 {
-    ast_visit((ast *) node->id, p);
-    ast_visit(node->expression, p);
-    jrv_free(&node);
+    delete_mj_assignment(node);
 }
 
 void delete_mj_array_assignment(mj_array_assignment *node, void *p)
@@ -360,7 +341,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_method_decl = &del_mj_method_decl;
     callbacks.on_mj_if = &del_mj_if;
     callbacks.on_mj_while = &del_mj_while;
-    callbacks.on_mj_assignment = &delete_mj_assignment;
+    callbacks.on_mj_assignment = &del_mj_assignment;
     callbacks.on_mj_array_assignment = &delete_mj_array_assignment;
     ast_walk(tree, callbacks, NULL);
 }
