@@ -17,23 +17,6 @@ int is_of_type(nodetype type, ast *node)
     return node->type == type;
 }
 
-int new_mj_array_assignment(ast *id, ast *index_exp, ast *value_exp, ast **node)
-{
-    mj_array_assignment *aa;
-
-    if(!is_of_type(MJ_IDENTIFIER, id)) {
-        return invalid_type(node);
-    }
-
-    aa = jrv_malloc(sizeof(mj_array_assignment));
-    aa->type = MJ_ARRAY_ASSIGNMENT;
-    aa->id = (mj_identifier *) id;
-    aa->index_exp = index_exp;
-    aa->value_exp = value_exp;
-    *node = (ast *) aa;
-    return JRV_SUCCESS;
-}
-
 ast_callbacks _callbacks;
 void ast_walk(ast* tree, ast_callbacks callbacks, void *result)
 {
@@ -303,12 +286,9 @@ static void del_mj_assignment(mj_assignment *node, void *p)
     delete_mj_assignment(node);
 }
 
-void delete_mj_array_assignment(mj_array_assignment *node, void *p)
+static void del_mj_array_assignment(mj_array_assignment *node, void *p)
 {
-    ast_visit((ast *) node->id, p);
-    ast_visit(node->index_exp, p);
-    ast_visit(node->value_exp, p);
-    jrv_free(&node);
+    delete_mj_array_assignment(node);
 }
 
 void delete_ast(ast *tree)
@@ -342,7 +322,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_if = &del_mj_if;
     callbacks.on_mj_while = &del_mj_while;
     callbacks.on_mj_assignment = &del_mj_assignment;
-    callbacks.on_mj_array_assignment = &delete_mj_array_assignment;
+    callbacks.on_mj_array_assignment = &del_mj_array_assignment;
     ast_walk(tree, callbacks, NULL);
 }
 
