@@ -1,7 +1,7 @@
 #ifndef INCLUDE_mj_class_h__
 #define INCLUDE_mj_class_h__
 
-#include "ast2.h"
+#include "ast.h"
 #include "mj_identifier.h"
 #include "ast_list.h"
 

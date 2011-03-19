@@ -6,8 +6,7 @@ def build(bld):
         includes = '.', name = 'parser')
     bld(features = 'c flex', source = 'lexer.l', includes = '.', 
         name = 'lexer', cflags = bld.env.CFLAGS + ['-D _POSIX_SOURCE'])
-    sources = ['ast.c',
-               'errors.c',
+    sources = ['errors.c',
                'list.c',
                'parser.c',
                'jrv_string.c',

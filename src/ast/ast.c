@@ -1,6 +1,7 @@
 #include "stddef.h"
 #include "errors.h"
 #include "utils.h"
+#include "ast_walker.h"
 #include "ast.h"
 
 int invalid_type(ast **node)

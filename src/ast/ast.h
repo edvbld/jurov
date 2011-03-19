@@ -93,6 +93,14 @@ typedef struct ast_ {
  */
 void delete_ast(ast* tree);
 
+/** 
+ * Formats the ast into a string that is suitable for printing
+ *
+ * @param tree The AST to format
+ * @result A string representation of the tree
+ */
+char* ast_format(ast *tree);
+
 /**
  * Returns if the given AST node has the given type or not. 
  *

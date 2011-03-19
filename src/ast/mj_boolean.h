@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_boolean_h__
 #define INCLUDE_jrv_mj_boolean_h__
 
-#include "ast2.h"
+#include "ast.h"
 
 /**
  * Represents a boolean in the AST

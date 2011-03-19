@@ -1,7 +1,8 @@
 #ifndef INCLUDE_jrv_ast_h__
 #define INCLUDE_jrv_ast_h__
 
-#include "ast/ast2.h"
+#include "ast/ast.h"
+#include "ast/ast_walker.h"
 #include "ast/mj_identifier.h"
 #include "ast/mj_unary_operation.h"
 #include "ast/mj_binary_operation.h"
@@ -23,14 +24,5 @@
 #include "ast/mj_while.h"
 #include "ast/mj_assignment.h"
 #include "ast/mj_array_assignment.h"
-#include "ast/ast_walker.h"
-
-/** 
- * Formats the ast into a string that is suitable for printing
- *
- * @param tree The AST to format
- * @result A string representation of the tree
- */
-char* ast_format(ast *tree);
 
 #endif /* INCLUDE_jrv_ast_h__ */

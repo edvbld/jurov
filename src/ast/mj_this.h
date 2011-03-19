@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_this_h__
 #define INCLUDE_jrv_mj_this_h__
 
-#include "ast2.h"
+#include "ast.h"
 
 /**
  * Creates a new ast struct with type THIS

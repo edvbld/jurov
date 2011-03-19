@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_if_h__
 #define INCLUDE_jrv_mj_if_h__
 
-#include "ast2.h"
+#include "ast.h"
 
 /**
  * Represents an if-else expression in MiniJava

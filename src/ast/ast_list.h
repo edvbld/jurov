@@ -2,7 +2,7 @@
 #define INCLUDE_jrv_ast_list_h__
 
 #include "list.h"
-#include "ast2.h"
+#include "ast.h"
 
 /**
  * This struct represents a list of ast elements

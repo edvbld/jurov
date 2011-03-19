@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_method_body_h__
 #define INCLUDE_jrv_mj_method_body_h__
 
-#include "ast2.h"
+#include "ast.h"
 #include "ast_list.h"
 
 /**

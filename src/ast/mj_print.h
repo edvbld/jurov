@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_print_h__
 #define INCLUDE_jrv_mj_print_h__
 
-#include "ast2.h"
+#include "ast.h"
 
 /**
  * This struct represents a print statement

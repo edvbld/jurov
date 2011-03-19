@@ -1,6 +1,7 @@
 #include "string.h"
 #include "expectations.h"
 #include "parser.h"
+#include "ast.h"
 
 int parse_expression(char *expression, ast **tree)
 {

@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_binary_operation_h__
 #define INCLUDE_jrv_mj_binary_operation_h__
 
-#include "ast2.h"
+#include "ast.h"
 
 /**
  * Represents a binary operation (such as +,-,*,< etc.) node in the AST

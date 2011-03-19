@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_integer_h__
 #define INCLUDE_jrv_mj_integer_h__
 
-#include "ast2.h"
+#include "ast.h"
 
 /**
  * Represents an integer node in t

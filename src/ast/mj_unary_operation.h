@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_unary_operation_h__
 #define INCLUDE_jrv_mj_unary_operation_h__
 
-#include "ast2.h"
+#include "ast.h"
 
 /**
  * Represents an unary operation (such as .length, new, not) node in the AST

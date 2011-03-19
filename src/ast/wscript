@@ -1,4 +1,4 @@
 def build(bld):
     sources = bld.path.ant_glob('*.c')
-    bld(features = 'c', source = sources, includes = '..', 
+    bld(features = 'c', source = sources, includes = ['.', '..'], 
         name = 'ast')

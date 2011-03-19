@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_array_assignment_h__
 #define INCLUDE_jrv_mj_array_assignment_h__
 
-#include "ast2.h"
+#include "ast.h"
 #include "mj_identifier.h"
 
 /**

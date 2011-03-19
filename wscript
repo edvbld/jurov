@@ -41,6 +41,7 @@ def configure(conf):
     conf.env.INCLUDE_SPECTACULAR = os.path.abspath('lib/spectacular')
     conf.env.INCLUDE_GENERATED_SRC = os.path.abspath('{0}/src'.format(out))
     conf.env.INCLUDE_SRC = os.path.abspath('src')
+    conf.env.INCLUDE_INCLUDE = os.path.abspath('include')
     try:
         conf.find_program('valgrind')
     except conf.errors.ConfigurationError:

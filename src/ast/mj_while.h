@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_while_h__
 #define INCLUDE_jrv_mj_while_h__
 
-#include "ast2.h"
+#include "ast.h"
 
 /**
  * Reprents a while loop in the MiniJava programming language

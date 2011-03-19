@@ -1,5 +1,6 @@
 #include "expectations.h"
 #include "parser.h"
+#include "ast.h"
 
 begin_example(ast_parser, should_create_an_ast_from_the_empty_program)
     char *program = 

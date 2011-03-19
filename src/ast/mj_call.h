@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_mj_call_h__
 #define INCLUDE_jrv_mj_call_h__
 
-#include "ast2.h"
+#include "ast.h"
 #include "mj_identifier.h"
 #include "ast_list.h"
 

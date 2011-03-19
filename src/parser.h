@@ -1,7 +1,7 @@
 #ifndef INCLUDE_jrv_parser_h__
 #define INCLUDE_jrv_parser_h__
 
-#include "ast.h"
+#include "ast/ast.h"
 #include "lex.yy.h"
 
 /**
