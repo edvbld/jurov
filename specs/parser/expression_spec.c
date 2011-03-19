@@ -321,6 +321,29 @@ begin_example(exp_parser, should_handle_call_exp)
     delete_parser(tree);
 end_example
 
+begin_example(exp_parser, should_handle_new_object_and_method_call)
+    ast *tree;
+    mj_call *call;
+    mj_new_object *fac;
+    mj_integer *arg;
+    char *exp = "new Fac().ComputeFac(10)";
+
+    should_pass(parse_expression(exp, &tree))
+    should_pass(get_expression(tree, (ast **) &call))
+    should_eq_int(MJ_CALL, call->type)
+    should_eq_int(MJ_NEW_OBJECT, call->object->type)
+    fac = (mj_new_object *) call->object;
+    should_eq_str("Fac", fac->class_id->name)
+    should_eq_str("ComputeFac", call->method->name)
+    should_eq_int(1, call->parameters->list->size)
+    arg = call->parameters->list->first->data;
+    should_eq_int(MJ_INTEGER, arg->type)
+    should_eq_int(10, arg->value)
+
+
+    delete_parser(tree);
+end_example
+
 begin_description(exp_parser)
     add_example(should_handle_boolean_exp)
     add_example(should_handle_integer_exp)
@@ -338,4 +361,5 @@ begin_description(exp_parser)
     add_example(should_handle_multiplication)
     add_example(should_handle_less_than)
     add_example(should_handle_call_exp)
+    add_example(should_handle_new_object_and_method_call)
 end_description

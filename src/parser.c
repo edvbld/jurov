@@ -11,6 +11,15 @@ int parse_string(char *str, ast **tree)
     return res;
 }
 
+int parse_file(FILE *stream, ast **tree)
+{
+    int res = 0;
+    *tree = NULL;
+    yyin = stream;
+    res = yyparse(tree);
+    return res;
+}
+
 void delete_parser(ast *tree)
 {
     if(tree != NULL) {

@@ -425,6 +425,64 @@ begin_example(ast_parser, should_handle_array_assignment)
     delete_parser(tree);
 end_example
 
+begin_example(ast_parser, should_handle_factorial_program)
+    ast *tree;
+    mj_ast_list *classes; /* *methods; */
+
+    mj_main_class *Factorial;
+    mj_print *main_statement;
+    mj_ast_list *main_statements;
+    mj_call *main_call;
+    mj_new_object *Fac_creation;
+    mj_integer *main_parameter;
+    char *program = 
+        "class Factorial{\n"
+        "   public static void main(String[] a){\n"
+        "       System.out.println(new Fac().ComputeFac(10));\n"
+        "   }\n"
+        "}\n"
+        "\n"
+        "class Fac {\n"
+        "\n"
+        "   public int ComputeFac(int num){\n"
+        "       int num_aux ;\n"
+        "       if (num < 1)\n"
+        "           num_aux = 1 ;\n"
+        "       else\n"
+        "           num_aux = num * (this.ComputeFac(num-1)) ;\n"
+        "       return num_aux ;\n"
+        "   }\n"
+        "\n"
+        "}";
+    should_pass(parse_string(program, &tree))
+
+    should_eq_int(MJ_AST_LIST, tree->type)
+    classes = (mj_ast_list *) tree;
+    should_eq_int(2, classes->list->size)
+    Factorial = (mj_main_class *) classes->list->first->data;
+    should_eq_int(MJ_MAIN_CLASS, Factorial->type)
+    should_eq_str("Factorial", Factorial->class_id->name)
+    should_eq_str("a", Factorial->parameter_id->name)
+    should_eq_int(MJ_AST_LIST, Factorial->statements->type)
+    main_statements = (mj_ast_list *) Factorial->statements;
+    should_eq_int(1, main_statements->list->size)
+    main_statement = main_statements->list->first->data;
+    should_eq_int(MJ_PRINT, main_statement->type)
+    should_eq_int(MJ_CALL, main_statement->expression->type)
+    main_call = (mj_call *) main_statement->expression;
+    should_eq_str("ComputeFac", main_call->method->name)
+    should_eq_int(MJ_NEW_OBJECT, main_call->object->type)
+    Fac_creation = (mj_new_object *) main_call->object;
+    should_eq_str("Fac", Fac_creation->class_id->name)
+    should_eq_int(1, main_call->parameters->list->size)
+    main_parameter = main_call->parameters->list->first->data;
+    should_eq_int(MJ_INTEGER, main_parameter->type)
+    should_eq_int(10, main_parameter->value)
+
+    /* TODO: Verify class Fac */
+    delete_parser(tree);
+end_example
+
 begin_description(ast_parser)
     add_example(should_create_an_ast_from_the_empty_program)
     add_example(should_create_an_ast_for_the_boolean_printer_program)
@@ -435,4 +493,5 @@ begin_description(ast_parser)
     add_example(should_handle_while_statement)
     add_example(should_handle_assignment_statement)
     add_example(should_handle_array_assignment)
+    add_example(should_handle_factorial_program)
 end_description

@@ -5,6 +5,8 @@
     #include "utils.h"
     void yyerror(ast **result, char *s);
     int yylex(void);
+    extern int yylineno;
+    extern char *yytext;
 %}
 
 %parse-param {ast **result}
@@ -245,21 +247,11 @@ additive_exp: additive_exp PLUS multiplicative_exp
                 $$ = node; }
             | multiplicative_exp { $$ = $1; }
 
-multiplicative_exp: multiplicative_exp MUL new_exp
+multiplicative_exp: multiplicative_exp MUL unary_exp
                     { ast *node;
                       new_mj_binary_operation(MJ_MULTIPLICATION, $1, $3, &node);
                       $$ = node; }
-                  | new_exp { $$ = $1; }
-
-new_exp: NEW identifier LPAREN RPAREN
-         { ast *node;
-           new_mj_new_object($2, &node);
-           $$ = node; }
-       | NEW INT LSQUARE new_exp RSQUARE
-         { ast *node;
-           new_mj_unary_operation(MJ_NEW_ARRAY, $4, &node);
-           $$ = node; }
-       | unary_exp { $$ = $1; }
+                  | unary_exp { $$ = $1; }
 
 unary_exp: BANG unary_exp
            { ast *node;
@@ -275,11 +267,21 @@ call_exp: call_exp DOT LENGTH
           { ast *node;
             new_mj_call($1, $3, $5, &node);
             $$ = node; }
-        | call_exp LSQUARE basic_exp RSQUARE
+        | call_exp LSQUARE new_exp RSQUARE
           { ast *node;
             new_mj_binary_operation(MJ_ARRAY_LOOKUP, $1, $3, &node);
             $$ = node; }
-        | basic_exp { $$ = $1; }
+        | new_exp { $$ = $1; }
+
+new_exp: NEW identifier LPAREN RPAREN
+         { ast *node;
+           new_mj_new_object($2, &node);
+           $$ = node; }
+       | NEW INT LSQUARE new_exp RSQUARE
+         { ast *node;
+           new_mj_unary_operation(MJ_NEW_ARRAY, $4, &node);
+           $$ = node; }
+       | basic_exp { $$ = $1; }
 
 basic_exp: boolean { $$ = $1; }
          | number { $$ = $1; }
@@ -308,7 +310,7 @@ number: NUMBER
 
 %%
 
-void yyerror(ast **result, char *s)
+void yyerror(ast **result, char *msg)
 {
-    /* do nothing for now */
+    fprintf(stderr, "%d: %s at '%s'\n", yylineno, msg, yytext);
 }

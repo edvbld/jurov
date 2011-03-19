@@ -41,8 +41,8 @@ WS      ([\t\n ])
 ","                                                 { return COMMA; }
 ";"                                                 { return SEMICOLON; }
 "="                                                 { return EQUALS; }
-[a-zA-Z][a-zA-Z0-9]*                                { char *id = 
-                                                        malloc(yyleng + 1);
+[a-zA-Z_][a-zA-Z0-9_]*                              { char *id = 
+                                                       malloc(yyleng + 1);
                                                       strncpy(id, yytext, 
                                                               yyleng);
                                                       yylval.id = id;

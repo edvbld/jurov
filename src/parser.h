@@ -15,6 +15,16 @@
 int parse_string(char *str, ast **tree);
 
 /**
+ * Parses the given file into an AST.
+ *
+ * @param stream The file to parser
+ * @param tree A pointer to the pointer to store the result in
+ *
+ * @return The result of the function
+ */
+int parse_file(FILE *stream, ast **tree);
+
+/**
  * Frees all the data allocated during the parsing
  *
  * @param tree The AST to delete

@@ -1,8 +1,18 @@
+import os
+
 def build(bld):
     bld(features = 'c bison', source = 'grammar.y', 
         includes = '.', name = 'parser')
     bld(features = 'c flex', source = 'lexer.l', includes = '.', 
         name = 'lexer', cflags = bld.env.CFLAGS + ['-D _POSIX_SOURCE'])
-    sources = bld.path.ant_glob('*.c') 
+    sources = ['ast.c',
+               'errors.c',
+               'list.c',
+               'parser.c',
+               'utils.c']
     bld(features = 'c', source = sources, includes = '.', 
         name = 'objects')
+    bld(features = 'c cprogram', source = 'jurov.c',
+        use = ['objects', 'parser', 'lexer'], 
+        includes = '.',
+        target = 'jurov')
