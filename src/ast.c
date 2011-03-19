@@ -18,26 +18,6 @@ int is_of_type(nodetype type, ast *node)
     return node->type == type;
 }
 
-int new_mj_call(ast *object, ast *method, ast *parameters, ast **node)
-{
-    mj_call *c;
-   
-    if(!is_of_type(MJ_IDENTIFIER, method)) {
-        return invalid_type(node);
-    }
-
-    if(!is_of_type(MJ_AST_LIST, parameters)) {
-        return invalid_type(node);
-    }
-
-    c = jrv_malloc(sizeof(mj_call));
-    c->type = MJ_CALL;
-    c->object = object;
-    c->method = (mj_identifier *) method;
-    c->parameters = (mj_ast_list *) parameters;
-    *node = (ast *) c;
-    return JRV_SUCCESS;
-}
 
 int new_mj_this(ast **node)
 {
@@ -513,12 +493,10 @@ static void del_mj_ast_list(mj_ast_list *list, void *p)
 {
     delete_mj_ast_list(list);
 }
-void delete_mj_call(mj_call *node, void *p)
+
+static void del_mj_call(mj_call *node, void *p)
 {
-    ast_visit(node->object, p);
-    ast_visit((ast *) node->method, p);
-    ast_visit((ast *) node->parameters, p);
-    jrv_free(&node);
+    delete_mj_call(node);
 }
 
 void delete_mj_print(mj_print *node, void *p)
@@ -629,7 +607,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_boolean = &del_mj_boolean;
     callbacks.on_mj_ast_list = &del_mj_ast_list;
     callbacks.on_mj_new_object = &del_mj_new_object;
-    callbacks.on_mj_call = &delete_mj_call;
+    callbacks.on_mj_call = &del_mj_call;
     callbacks.on_mj_print = &delete_mj_print;
     callbacks.on_mj_main_class = &delete_mj_main_class;
     callbacks.on_mj_class = &delete_mj_class;

@@ -8,35 +8,7 @@
 #include "ast/mj_boolean.h"
 #include "ast/mj_new_object.h"
 #include "ast/ast_list.h"
-
-/**
- * Represents a method call in the AST
- */
-typedef struct {
-    /** The type of the node, this will be nodetype.CALL */
-    nodetype type;
-    
-    /* The expression that evaluates to the object to call the method on */
-    ast* object;
-
-    /* The id of the method to invoke */
-    mj_identifier *method;
-
-    /* The parameters to the method */
-    mj_ast_list *parameters;
-} mj_call;
-
-/**
- * Creates a new call node for the AST with the given parameters.
- *
- * @param[in] object The object to call the method on
- * @param[in] method_id The id of the method to call
- * @param[in] parameters The parameters for the method call
- * @param[out] node The addres of the pointer that will point at the result 
- *                  of the function
- * @return An integer describing the result of the function
- */
-int new_mj_call(ast *object, ast *method, ast *parameters, ast **node);
+#include "ast/mj_call.h"
 
 /**
  * Creates a new ast struct with type nodetype.THIS
