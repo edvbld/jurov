@@ -18,26 +18,6 @@ int is_of_type(nodetype type, ast *node)
     return node->type == type;
 }
 
-int new_mj_method_body(ast *var_declarations, ast *statements, ast **node)
-{
-    mj_method_body *b;
-
-    if(!is_of_type(MJ_AST_LIST, var_declarations)) {
-        return invalid_type(node);
-    }
-
-    if(!is_of_type(MJ_AST_LIST, statements)) {
-        return invalid_type(node);
-    }
-
-    b = jrv_malloc(sizeof(mj_method_body));
-    b->type = MJ_METHOD_BODY;
-    b->var_declarations = (mj_ast_list *) var_declarations;
-    b->statements = (mj_ast_list *) statements;
-    *node = (ast *) b;
-    return JRV_SUCCESS;
-}
-
 int mj_method_body_add_statement(ast *statement, ast *method_body)
 {
     mj_method_body *b;
@@ -403,11 +383,9 @@ static void del_mj_method_arg(mj_method_arg *node, void *p)
     delete_mj_method_arg(node);
 }
 
-void delete_mj_method_body(mj_method_body *node, void *p)
+static void del_mj_method_body(mj_method_body *node, void *p)
 {
-    ast_visit((ast *) node->var_declarations, p);
-    ast_visit((ast *) node->statements, p);
-    jrv_free(&node);
+    delete_mj_method_body(node);
 }
 
 void delete_mj_method_decl(mj_method_decl *node, void *p)
@@ -476,7 +454,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_type = &del_mj_type;
     callbacks.on_mj_var_decl = &del_mj_var_decl;
     callbacks.on_mj_method_arg = &del_mj_method_arg;
-    callbacks.on_mj_method_body = &delete_mj_method_body;
+    callbacks.on_mj_method_body = &del_mj_method_body;
     callbacks.on_mj_method_decl = &delete_mj_method_decl;
     callbacks.on_mj_if = &delete_mj_if;
     callbacks.on_mj_while = &delete_mj_while;
