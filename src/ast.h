@@ -16,31 +16,7 @@
 #include "ast/mj_class.h"
 #include "ast/mj_type.h"
 #include "ast/mj_var_decl.h"
-
-/**
- * Represents an argument to a method in MiniJava
- */
-typedef struct {
-    /** The type of the node (MJ_METHOD_ARG) */
-    nodetype type;
-
-    /** The type of the argument */
-    mj_type *mj_type;
-
-    /** The identifier (name) of the argument */
-    mj_identifier *id;
-} mj_method_arg;
-
-/**
- * Creates a new method argument in the MiniJava language
- *
- * @param[in] mj_type The MiniJava type of the argument
- * @param[in] id The identifier of the argument
- * @param[out] node The address of the pointer that the newly created 
- *                  mj_method_arg will be assigned to
- * @return The result of the function
- */
-int new_mj_method_arg(ast *type, ast *id, ast **node);
+#include "ast/mj_method_arg.h"
 
 /**
  * Reperesents a method body in MJ
