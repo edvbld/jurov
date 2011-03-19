@@ -5,28 +5,9 @@
 #include "ast/mj_unary_operation.h"
 #include "ast/mj_binary_operation.h"
 #include "ast/mj_integer.h"
+#include "ast/mj_boolean.h"
 #include "list.h"
 
-/**
- * Represents a boolean in the AST
- */
-typedef struct {
-    /** The type of the node (nodetype.BOOL) */
-    nodetype type;
-    /** The value of the boolean */
-    int value;
-} mj_boolean;
-
-/**
- * Creates a new boolean with the given value.
- *
- * @param[in] value The value of the boolean expression
- * @param[out] node The addres of the pointer that will point at the result 
- *                  of the function
- * @return An integer describing the result of the function
- */
-int new_mj_boolean(int value, ast **node);
- 
 /**
  * Represents a new object operation in the AST
  */
