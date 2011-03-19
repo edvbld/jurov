@@ -18,18 +18,6 @@ int is_of_type(nodetype type, ast *node)
     return node->type == type;
 }
 
-int new_mj_while(ast *condition, ast *statement, ast **node)
-{
-    mj_while *w;
-
-    w = jrv_malloc(sizeof(mj_while));
-    w->type = MJ_WHILE;
-    w->condition = condition;
-    w->statement = statement;
-    *node = (ast *) w;
-    return JRV_SUCCESS;
-}
-
 int new_mj_assignment(ast *id, ast *expression, ast **node)
 {
     mj_assignment *a;
@@ -322,11 +310,9 @@ static void del_mj_if(mj_if *node, void *p)
     delete_mj_if(node);
 }
 
-void delete_mj_while(mj_while *node, void *p)
+static void del_mj_while(mj_while *node, void *p)
 {
-    ast_visit(node->condition, p);
-    ast_visit(node->statement, p);
-    jrv_free(&node);
+    delete_mj_while(node);
 }
 
 void delete_mj_assignment(mj_assignment *node, void *p)
@@ -373,7 +359,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_method_body = &del_mj_method_body;
     callbacks.on_mj_method_decl = &del_mj_method_decl;
     callbacks.on_mj_if = &del_mj_if;
-    callbacks.on_mj_while = &delete_mj_while;
+    callbacks.on_mj_while = &del_mj_while;
     callbacks.on_mj_assignment = &delete_mj_assignment;
     callbacks.on_mj_array_assignment = &delete_mj_array_assignment;
     ast_walk(tree, callbacks, NULL);
