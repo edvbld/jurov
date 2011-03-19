@@ -13,6 +13,8 @@ def options(opt):
                    help = 'Runs all the speficications')
     opt.add_option('--valgrind', action = 'store_true', default = False,
                    help = 'Runs all the specifications in valgrind')
+    opt.add_option('--integration', action = 'store_true', default = False,
+                   help = 'Runs all the integration tests')
 
 def run_valgrind(bld):
     print "Starting to run valgrind"
@@ -26,13 +28,19 @@ def run_valgrind(bld):
     if res != 0:
         bld.fatal("Memory leaks detected!")
 
-
 def run_specs(bld):
     print "Starting to run specs"
     run_all_specs = '{0}/test/spec/run_all_specs'.format(os.path.abspath(out))
     res = bld.exec_command(run_all_specs)
     if res != 0:
         bld.fatal("The specifications were not fulfilled!")
+
+def run_integration(bld):
+    print "Starting to run integration tests"
+    cmd = 'python test/integration/runner.py'
+    res = bld.exec_command(cmd)
+    if res != 0:
+        bld.fatal("The integration tests did not pass!")
 
 def configure(conf):
     conf.env.CFLAGS = ['-g', '-Wall', '-Werror', '-ansi', '-pedantic']
@@ -56,3 +64,5 @@ def build(bld):
         bld.add_post_fun(run_specs)
     if Options.options.valgrind and bld.env.VALGRIND:
         bld.add_post_fun(run_valgrind)
+    if Options.options.integration:
+        bld.add_post_fun(run_integration)
