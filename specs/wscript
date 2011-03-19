@@ -6,4 +6,4 @@ def build(bld):
         target = 'run_all_specs',
         includes = [bld.env.INCLUDE_SPECTACULAR, bld.env.INCLUDE_SRC],
         use = ['lexer_specs', 'parser_specs', 'ast_specs', 'parser', 'lexer', 
-               'spectacular', 'objects'])
+               'spectacular', 'objects', 'ast'])

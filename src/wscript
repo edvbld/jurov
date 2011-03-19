@@ -1,6 +1,7 @@
 import os
 
 def build(bld):
+    bld.recurse(['ast'])
     bld(features = 'c bison', source = 'grammar.y', 
         includes = '.', name = 'parser')
     bld(features = 'c flex', source = 'lexer.l', includes = '.', 
@@ -14,6 +15,6 @@ def build(bld):
     bld(features = 'c', source = sources, includes = '.', 
         name = 'objects')
     bld(features = 'c cprogram', source = 'jurov.c',
-        use = ['objects', 'parser', 'lexer'], 
+        use = ['objects', 'ast', 'parser', 'lexer'], 
         includes = '.',
         target = 'jurov')

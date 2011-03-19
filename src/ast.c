@@ -18,21 +18,6 @@ static int is_of_type(nodetype type, ast *node)
     return node->type == type;
 }
 
-int new_mj_identifier(char *name, ast **node)
-{
-    mj_identifier *id;
-
-    if(name == NULL || strlen(name) == 0) {
-        *node = NULL;
-        return JRV_INVALID_STRING;
-    }
-
-    id = jrv_malloc(sizeof(mj_identifier));
-    id->name = name; 
-    id->type = MJ_IDENTIFIER;
-    *node = (ast *) id;
-    return JRV_SUCCESS;
-}
 
 int new_mj_binary_operation(nodetype type, ast *left_operand, 
                             ast *right_operand, ast **node)
@@ -604,10 +589,9 @@ void delete_mj_integer(mj_integer *node, void *p)
     jrv_free(&node);
 }
 
-void delete_mj_identifier(mj_identifier *node, void *p)
+void del_mj_id(mj_identifier *node, void *p)
 {
-    jrv_free(&node->name);
-    jrv_free(&node);
+    delete_mj_identifier(node);
 }
 
 void delete_mj_unary_operation(mj_unary_operation *node, void *p)
@@ -740,7 +724,7 @@ void delete_mj_array_assignment(mj_array_assignment *node, void *p)
 void delete_ast(ast *tree)
 {
     ast_callbacks callbacks;
-    callbacks.on_mj_identifier = &delete_mj_identifier;
+    callbacks.on_mj_identifier = &del_mj_id;
     callbacks.on_mj_addition = &delete_mj_binary_operation;
     callbacks.on_mj_subtraction = &delete_mj_binary_operation;
     callbacks.on_mj_division = &delete_mj_binary_operation;
