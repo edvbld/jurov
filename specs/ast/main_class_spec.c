@@ -18,7 +18,7 @@ begin_example(mj_main_class, should_have_the_given_parameters_as_members)
 
     should_pass(new_mj_identifier("args", &param_id))
     should_pass(new_mj_identifier("Main", &class_id))
-    should_pass(new_mj_print(NULL, &statement))
+    should_pass(empty_mj_ast_list(&statement))
     should_pass(new_mj_main_class(class_id, param_id, statement, (ast **) &mc))
     should_eq_ptr(class_id, mc->class_id)
     should_eq_ptr(param_id, mc->parameter_id)
@@ -26,7 +26,7 @@ begin_example(mj_main_class, should_have_the_given_parameters_as_members)
 
     free(class_id);
     free(param_id);
-    free(statement);
+    delete_ast(statement);
     free(mc);
 end_example
 
