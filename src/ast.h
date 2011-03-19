@@ -19,25 +19,6 @@
 #include "ast/mj_method_arg.h"
 #include "ast/mj_method_body.h"
 
-
-/**
- * Adds a statement to a method body
- *
- * @param[in] statement The statement to add to the method_body
- * @param[in] method_body The method_body to add the statement to
- * @return The result of the function
- */
-int mj_method_body_add_statement(ast *statement, ast *method_body);
-
-/**
- * Adds a variable declaration to a method body
- *
- * @param[in] var_decl The variable declaration to add
- * @param[in] method_body The method to add the variable declaration to
- * @return The result of the function
- */
-int mj_method_body_add_var_decl(ast *var_decl, ast *method_body);
-
 /**
  * Represents a method declaration and definition in the MJ language
  */
