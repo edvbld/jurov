@@ -84,4 +84,13 @@ typedef struct ast_ {
     nodetype type; 
 } ast;
 
+/**
+ * Deletes an AST and all the nodes in the AST. 
+ * NOTE: it also frees the char* in an mj_identifier, so make sure that you 
+ * have copied this pointer if you use it elsewhere.
+ *
+ * @parameter tree The tree to delete
+ */
+void delete_ast(ast* tree);
+
 #endif /* INCLUDE_jrv_ast2_h__ */

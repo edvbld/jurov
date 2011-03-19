@@ -2,6 +2,7 @@
 #define INCLUDE_jrv_ast_h__
 #include "ast/ast2.h"
 #include "ast/mj_identifier.h"
+#include "ast/mj_unary_operation.h"
 #include "list.h"
 
 /**
@@ -30,28 +31,6 @@ typedef struct {
  */
 int new_mj_binary_operation(nodetype type, ast* left_operand, 
                             ast* right_operand, ast **node);
-
-/**
- * Represents an unary operation (such as .length, new, not) node in the AST
- */
-typedef struct {
-    /** The type of the node */
-    nodetype type;
-    /** The argument to the operation */
-    ast *operand;
-} mj_unary_operation;
-
-/**
- * Creates a new unary operation with the given type and 
- * operand.
- *
- * @param[in] type The type of the operation
- * @param[in] operand The operand of the expression
- * @param[out] node The addres of the pointer that will point at the result 
- *                  of the function
- * @return An integer describing the result of the function
- */
-int new_mj_unary_operation(nodetype type, ast* operand, ast **node);
 
 /**
  * Represents an integer node in the AST
@@ -671,14 +650,5 @@ void ast_visit(ast* node, void *result);
  * @result A string representation of the tree
  */
 char* ast_format(ast *tree);
-
-/**
- * Deletes an AST and all the nodes in the AST. 
- * NOTE: it also frees the char* in an mj_identifier, so make sure that you 
- * have copied this pointer if you use it elsewhere.
- *
- * @parameter tree The tree to delete
- */
-void delete_ast(ast* tree);
 
 #endif /* INCLUDE_jrv_ast_h__ */
