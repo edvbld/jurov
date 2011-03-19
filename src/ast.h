@@ -9,15 +9,7 @@
 #include "ast/mj_new_object.h"
 #include "ast/ast_list.h"
 #include "ast/mj_call.h"
-
-/**
- * Creates a new ast struct with type nodetype.THIS
- *
- * @param[out] node The addres of the pointer that will point at the result 
- *                  of the function
- * @return An integer describing the result of the function
- */
-int new_mj_this(ast **node);
+#include "ast/mj_this.h"
 
 /**
  * This struct represents a print statement

@@ -18,15 +18,6 @@ int is_of_type(nodetype type, ast *node)
     return node->type == type;
 }
 
-
-int new_mj_this(ast **node)
-{
-    ast* this = jrv_malloc(sizeof(ast));
-    this->type = MJ_THIS;
-    *node = this;
-    return JRV_SUCCESS;
-}
-
 int new_mj_print(ast* expression, ast **node)
 {
     mj_print *p = jrv_malloc(sizeof(mj_print));
@@ -455,9 +446,9 @@ void ast_visit(ast *node, void *result)
     }
 }
 
-static void delete_mj_this(ast *node, void *p)
+static void del_mj_this(ast *node, void *p)
 {
-    jrv_free(&node);
+    delete_mj_this(node);
 }
 
 static void del_mj_boolean(mj_boolean *node, void *p)
@@ -603,7 +594,7 @@ void delete_ast(ast *tree)
     callbacks.on_mj_not = &del_mj_unary_operation;
     callbacks.on_mj_new_array = &del_mj_unary_operation;
     callbacks.on_mj_integer = &del_mj_integer;
-    callbacks.on_mj_this = &delete_mj_this;
+    callbacks.on_mj_this = &del_mj_this;
     callbacks.on_mj_boolean = &del_mj_boolean;
     callbacks.on_mj_ast_list = &del_mj_ast_list;
     callbacks.on_mj_new_object = &del_mj_new_object;
