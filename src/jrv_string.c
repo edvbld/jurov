@@ -4,30 +4,22 @@
 
 char* jrv_str_append(int num_strings, ...)
 {
-    char *current;
-    char *res, *p;
-    int i, length, total_length;
+    char *current, *res, *tmp;
+    int length, i;
     va_list vl;
     
+    res = jrv_malloc(1);
+    *res = '\0';
     va_start(vl, num_strings);
     for(i = 0; i < num_strings; i++) {
         current = va_arg(vl, char*);
-        total_length += strlen(current);
-    }
-    
-    total_length += 1; /* +1 for '\0' */
-    res = jrv_malloc(total_length);
-    
-    va_start(vl, num_strings);
-    p = res;
-    for(i = 0; i < num_strings; i++) {
-        current = va_arg(vl, char*);
-        length = strlen(current);
-        if(length > 0) {
-            memcpy(p, current, length);
-            p += length;
+        if(strlen(current) > 0) {
+            length = strlen(res) + strlen(current) + 1; /* +1 for \0 */ 
+            tmp = res;
+            res = jrv_malloc(length);
+            sprintf(res, "%s%s", tmp, current);
+            jrv_free(&tmp);
         }
     }
-    memcpy(p, "\0", 1);
     return res;
 }
